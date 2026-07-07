@@ -35,23 +35,24 @@ Phase-wise checklist. Check off items as completed.
 
 ## Phase 1: Project Setup
 
-- [ ] Initialize Next.js 14+ with App Router and TypeScript
-- [ ] Configure Tailwind CSS
-- [ ] Initialize Shadcn UI (card, button, input)
-- [ ] Install Framer Motion
-- [ ] Install Zod
-- [ ] Install React Three Fiber + drei + three
-- [ ] Install @google/generative-ai
-- [ ] Configure ESLint
-- [ ] Configure TypeScript strict mode
-- [ ] Create folder structure (src/app, src/components, src/lib)
-- [ ] Create basic layout.tsx with fonts and metadata
-- [ ] Configure next.config.js with standalone output
-- [ ] Verify: `npx tsc --noEmit` passes
-- [ ] Verify: `npm run lint` passes
-- [ ] Verify: `npm run build` passes
-- [ ] Update brain/STATE.md
-- [ ] Update brain/PROGRESS_LOG.md
+- [x] Initialize Next.js 14+ with App Router and TypeScript
+- [x] Configure Tailwind CSS
+- [ ] Initialize Shadcn UI (deferred by narrowed Phase 1 scope)
+- [ ] Install Framer Motion (deferred by narrowed Phase 1 scope)
+- [ ] Install Zod (deferred by narrowed Phase 1 scope)
+- [ ] Install React Three Fiber + drei + three (deferred by narrowed Phase 1 scope)
+- [ ] Install @google/generative-ai (deferred by narrowed Phase 1 scope)
+- [x] Configure ESLint
+- [x] Configure TypeScript strict mode
+- [x] Create foundation folder structure (`src/app`)
+- [x] Create basic layout.tsx with metadata
+- [x] Create minimal placeholder home page
+- [x] Configure next.config.ts with standalone output
+- [x] Verify: `npx tsc --noEmit` passes
+- [x] Verify: `npm run lint` passes
+- [x] Verify: `npm run build` passes
+- [x] Update brain/STATE.md
+- [x] Update brain/PROGRESS_LOG.md
 
 ---
 

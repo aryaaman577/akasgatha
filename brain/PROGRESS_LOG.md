@@ -36,3 +36,41 @@
 ### Next Steps
 
 - Phase 1: Project Setup (Next.js initialization)
+
+---
+
+## Entry 002 — Phase 1 Complete
+
+| Field | Value |
+|---|---|
+| **Date** | 2026-07-07 15:08:44 +05:30 |
+| **Phase** | Phase 1 — Project Setup |
+| **Status** | ✅ Complete |
+
+### What Was Done
+
+- Created the minimal Next.js App Router foundation in `src/app`.
+- Added TypeScript strict mode, Tailwind CSS, PostCSS, ESLint, and Next.js config files.
+- Added a minimal placeholder home page for AkasGatha.
+- Installed only foundation dependencies required for setup.
+- Preserved Phase 0 docs, brain files, `.env.example`, and `.gitignore`.
+- Avoided backend routes, LLM integration, auth, database, 3D scenes, and final frontend UI.
+
+### What Was Tested
+
+- `npm install`
+- `npm run lint`
+- `npm run type-check`
+- `npm run build`
+
+### Issues Found
+
+- `npm` was blocked by PowerShell execution policy, so `npm.cmd` was used.
+- Initial dependency install timed out once, then completed with a longer timeout.
+- ESLint needed direct Next.js flat config imports for the installed Next.js/ESLint versions.
+- TypeScript 6 deprecated `baseUrl`; the unused option was removed.
+- npm warned that the configured registry connection is plaintext HTTP. No npm config was changed.
+
+### Next Steps
+
+- Phase 2: Frontend Foundation.

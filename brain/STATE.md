@@ -9,9 +9,9 @@
 | Field | Value |
 |---|---|
 | **Project** | AkasGatha |
-| **Current Phase** | Phase 0 — Documentation and Brain Setup |
+| **Current Phase** | Phase 1 — Project Setup |
 | **Phase Status** | ✅ Complete |
-| **Next Phase** | Phase 1 — Project Setup |
+| **Next Phase** | Phase 2 — Frontend Foundation |
 | **Last Updated** | 2026-07-07 |
 
 ---
@@ -19,12 +19,13 @@
 ## Completed Phases
 
 - [x] Phase 0: Documentation and Brain Setup
+- [x] Phase 1: Project Setup
 
 ---
 
 ## In Progress
 
-- [ ] Phase 1: Project Setup (next)
+None
 
 ---
 
@@ -58,13 +59,19 @@ These are currently out of scope. Do not implement:
 
 ---
 
-## Known Issues
+## Phase 1 Setup Status
 
-None yet (Phase 0 — documentation only).
+- Next.js App Router foundation created under `src/app`.
+- TypeScript strict mode configured.
+- Tailwind CSS and PostCSS configured.
+- ESLint configured with the installed Next.js flat config.
+- Minimal placeholder home page created.
+- No API routes, LLM integration, auth, database, or 3D scenes added.
+- Verification passed: `npm install`, `npm run lint`, `npm run type-check`, `npm run build`.
 
 ---
 
-## Dependencies Needed (Phase 1)
+## Installed Dependencies (Phase 1 Foundation)
 
 ```
 next
@@ -74,16 +81,11 @@ typescript
 tailwindcss
 postcss
 autoprefixer
-@shadcn/ui (via npx shadcn-ui init)
-framer-motion
-zod
-@react-three/fiber
-@react-three/drei
-three
-@google/generative-ai
-@types/react
-@types/react-dom
-@types/three
 eslint
 eslint-config-next
+@types/node
+@types/react
+@types/react-dom
 ```
+
+Deferred by the narrowed Phase 1 request: Shadcn UI, Framer Motion, Zod, React Three Fiber, drei, three, Gemini SDK, backend routes, and LLM integration.
