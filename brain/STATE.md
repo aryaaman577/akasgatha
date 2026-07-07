@@ -9,9 +9,9 @@
 | Field | Value |
 |---|---|
 | **Project** | AkasGatha |
-| **Current Phase** | Phase 1 — Project Setup |
+| **Current Phase** | Phase 2 - Frontend Foundation |
 | **Phase Status** | ✅ Complete |
-| **Next Phase** | Phase 2 — Frontend Foundation |
+| **Next Phase** | Phase 3 - Mock Jigyasa UI |
 | **Last Updated** | 2026-07-07 |
 
 ---
@@ -20,6 +20,7 @@
 
 - [x] Phase 0: Documentation and Brain Setup
 - [x] Phase 1: Project Setup
+- [x] Phase 2: Frontend Foundation
 
 ---
 
@@ -31,7 +32,6 @@ None
 
 ## Not Started
 
-- [ ] Phase 2: Frontend Foundation
 - [ ] Phase 3: Mock Jigyasa UI
 - [ ] Phase 4: Mock Backend API
 - [ ] Phase 5: Real LLM Integration
@@ -89,3 +89,15 @@ eslint-config-next
 ```
 
 Deferred by the narrowed Phase 1 request: Shadcn UI, Framer Motion, Zod, React Three Fiber, drei, three, Gemini SDK, backend routes, and LLM integration.
+
+---
+
+## Phase 2 Frontend Foundation Status
+
+- Static frontend routes created: `/`, `/granth`, `/ask`, and `/about`.
+- Reusable layout, landing, shared card, section shell, and static config files created.
+- Dark cosmic responsive UI applied with Tailwind CSS and CSS-only motion/transition treatment.
+- Jigyasa Engine remains a disabled preview form only; no backend, API route, LLM call, auth, database, 3D, audio, or user data storage added.
+- Validation passed: `npm.cmd run lint`, `npm.cmd run type-check`, and `npm.cmd run build`.
+- Note: direct `npm run lint` was blocked by PowerShell execution policy for `npm.ps1`, so the equivalent Windows shim `npm.cmd` was used for all validation scripts.
+- Phase 2 commit hash: pending until the Phase 2 Git commit is created.

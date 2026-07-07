@@ -1,22 +1,43 @@
+import { AkasDwar } from "@/components/landing/AkasDwar";
+import { FeatureGrid } from "@/components/landing/FeatureGrid";
+import { GlowCard } from "@/components/shared/GlowCard";
+import { SectionShell } from "@/components/shared/SectionShell";
+
 export default function Home() {
   return (
-    <main className="min-h-screen bg-slate-950 px-6 py-16 text-slate-100">
-      <section className="mx-auto flex max-w-3xl flex-col gap-6">
-        <p className="text-sm font-medium uppercase tracking-wider text-sky-300">
-          Phase 1 setup complete
-        </p>
-        <h1 className="text-4xl font-semibold tracking-normal text-white">
-          AkasGatha
-        </h1>
-        <p className="text-lg leading-8 text-slate-300">
-          Ancient sky stories explained with modern space science.
-        </p>
-        <p className="max-w-2xl text-base leading-7 text-slate-400">
-          This foundation page confirms the Next.js App Router, TypeScript, and
-          Tailwind CSS setup. Full product UI, backend routes, LLM integration,
-          and 3D scenes will be added in later phases.
-        </p>
-      </section>
+    <main className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100">
+      <AkasDwar />
+      <FeatureGrid />
+      <SectionShell
+        eyebrow="Learning stance"
+        title="Respectful stories. Separate science. Honest evidence."
+        description="AkasGatha is designed so learners can enjoy cultural meaning while still seeing what science can measure, what remains symbolic, and what is unknown."
+        className="border-t border-white/10 bg-slate-950/70"
+      >
+        <div className="grid gap-4 md:grid-cols-3">
+          <GlowCard>
+            <h3 className="text-lg font-semibold text-white">Narrative layer</h3>
+            <p className="mt-3 text-sm leading-6 text-slate-300">
+              Stories are framed as cultural narratives that can inspire
+              curiosity and memory.
+            </p>
+          </GlowCard>
+          <GlowCard>
+            <h3 className="text-lg font-semibold text-white">Science layer</h3>
+            <p className="mt-3 text-sm leading-6 text-slate-300">
+              Scientific explanations are kept evidence-aware, observational,
+              and separate from symbolic meaning.
+            </p>
+          </GlowCard>
+          <GlowCard>
+            <h3 className="text-lg font-semibold text-white">Safety layer</h3>
+            <p className="mt-3 text-sm leading-6 text-slate-300">
+              The platform avoids personal prediction claims, miracle claims,
+              and mythology-as-proof language.
+            </p>
+          </GlowCard>
+        </div>
+      </SectionShell>
     </main>
   );
 }

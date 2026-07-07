@@ -17,6 +17,47 @@ body {
 
 body {
   margin: 0;
-  background: #020617;
+  background:
+    radial-gradient(circle at 12% 12%, rgba(56, 189, 248, 0.16), transparent 26rem),
+    radial-gradient(circle at 82% 8%, rgba(251, 191, 36, 0.1), transparent 24rem),
+    linear-gradient(180deg, #020617 0%, #07111f 48%, #020617 100%);
   color: #e2e8f0;
+}
+
+a,
+button,
+input,
+select,
+textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.star-dust {
+  background-image:
+    radial-gradient(circle, rgba(255, 255, 255, 0.74) 0 1px, transparent 1.6px),
+    radial-gradient(circle, rgba(125, 211, 252, 0.5) 0 1px, transparent 1.8px);
+  background-position:
+    0 0,
+    34px 42px;
+  background-size:
+    90px 90px,
+    140px 140px;
+}
+
+.cosmic-wash {
+  background:
+    radial-gradient(circle at 22% 22%, rgba(14, 165, 233, 0.2), transparent 24rem),
+    radial-gradient(circle at 78% 38%, rgba(245, 158, 11, 0.15), transparent 23rem),
+    linear-gradient(180deg, rgba(2, 6, 23, 0.15), rgba(2, 6, 23, 0.92));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
 }

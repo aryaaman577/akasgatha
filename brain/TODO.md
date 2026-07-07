@@ -58,20 +58,20 @@ Phase-wise checklist. Check off items as completed.
 
 ## Phase 2: Frontend Foundation
 
-- [ ] Build Navbar component
-- [ ] Build Footer component
-- [ ] Build AkasDwar hero section
-- [ ] Build AkasGranth topic grid
-- [ ] Build FeatureGrid highlights
-- [ ] Assemble Home page
-- [ ] Build About page
-- [ ] Build Ask page placeholder
-- [ ] Apply dark cosmic theme
-- [ ] Add Framer Motion entrance animations
-- [ ] Ensure mobile responsive layout
-- [ ] Verify: Build passes, all pages render correctly
-- [ ] Update brain/STATE.md
-- [ ] Update brain/PROGRESS_LOG.md
+- [x] Build Navbar component
+- [x] Build Footer component
+- [x] Build AkasDwar hero section
+- [x] Build AkasGranth topic grid
+- [x] Build FeatureGrid highlights
+- [x] Assemble Home page
+- [x] Build About page
+- [x] Build Ask page placeholder
+- [x] Apply dark cosmic theme
+- [x] Add subtle CSS transition-only motion (Framer Motion not installed for this phase)
+- [x] Ensure mobile responsive layout
+- [x] Verify: `npm.cmd run lint`, `npm.cmd run type-check`, and `npm.cmd run build` pass
+- [x] Update brain/STATE.md
+- [x] Update brain/PROGRESS_LOG.md
 
 ---
 

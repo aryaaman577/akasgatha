@@ -74,3 +74,43 @@
 ### Next Steps
 
 - Phase 2: Frontend Foundation.
+
+---
+
+## Entry 003 - Phase 2 Complete
+
+| Field | Value |
+|---|---|
+| **Date** | 2026-07-07 15:45:27 +05:30 |
+| **Phase** | Phase 2 - Frontend Foundation |
+| **Status** | Complete |
+
+### What Was Done
+
+- Created a responsive Navbar and Footer for the shared app layout.
+- Built the Akas Dwar hero, FeatureGrid, GlowCard, and SectionShell components.
+- Added static navigation, topic, and feature config data.
+- Created the Home, Akas Granth, Jigyasa Engine placeholder, and About pages.
+- Applied a dark cosmic Tailwind theme with glassmorphism cards, CSS-only transitions, and reduced-motion handling.
+- Kept Jigyasa as a disabled preview form only.
+- Avoided backend routes, API calls, LLM integration, auth, database, 3D scenes, audio, analytics, and user data storage.
+
+### What Was Tested
+
+- `npm run lint` was attempted and blocked by PowerShell execution policy for `npm.ps1`.
+- `npm.cmd run lint` passed.
+- `npm.cmd run type-check` passed.
+- `npm.cmd run build` passed and prerendered `/`, `/about`, `/ask`, and `/granth`.
+
+### Issues Found
+
+- PowerShell blocked the `npm.ps1` wrapper, so validation used the equivalent `npm.cmd` Windows shim.
+- No project lint, type-check, or build errors remained.
+
+### Commit
+
+- Phase 2 commit hash: pending until the Phase 2 Git commit is created.
+
+### Next Steps
+
+- Phase 3: Mock Jigyasa UI.
