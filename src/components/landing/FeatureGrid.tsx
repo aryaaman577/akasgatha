@@ -1,6 +1,7 @@
 import { featureItems } from "@/config/features";
 import { GlowCard } from "@/components/shared/GlowCard";
 import { SectionShell } from "@/components/shared/SectionShell";
+import { InteractiveSpaceModel } from "@/components/visual/InteractiveSpaceModel";
 
 export function FeatureGrid() {
   return (
@@ -12,17 +13,18 @@ export function FeatureGrid() {
     >
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {featureItems.map((feature) => (
-          <GlowCard key={feature.title} className="min-h-[238px]">
-            <div className="mb-5 h-1 w-12 rounded bg-gradient-to-r from-amber-200 via-sky-300 to-teal-300" />
-            <h3 className="text-lg font-semibold tracking-normal text-white">
-              {feature.title}
-            </h3>
-            <p className="mt-3 text-sm leading-6 text-slate-300">
-              {feature.description}
-            </p>
-            <p className="mt-4 text-sm leading-6 text-amber-100/90">
-              {feature.whyItMatters}
-            </p>
+          <GlowCard key={feature.title} className="flex min-h-[280px] flex-col relative overflow-hidden group">
+            <div className="absolute right-[-20%] top-[-10%] h-32 w-32 opacity-30 transition-opacity duration-500 group-hover:opacity-100">
+              <InteractiveSpaceModel variant={feature.variant} aria-hidden={true} />
+            </div>
+            <div className="relative z-10 flex flex-1 flex-col justify-end mt-16">
+              <h3 className="font-display text-2xl font-light tracking-wide text-[var(--color-antique-gold)]">
+                {feature.title}
+              </h3>
+              <p className="mt-3 text-base leading-relaxed text-[var(--color-ivory)]/80">
+                {feature.description}
+              </p>
+            </div>
           </GlowCard>
         ))}
       </div>

@@ -18,14 +18,14 @@ export function SectionShell({
   headingLevel = "h2",
 }: SectionShellProps) {
   const headingClasses =
-    "max-w-3xl text-3xl font-semibold tracking-normal text-white sm:text-4xl";
+    "font-display max-w-3xl text-4xl md:text-5xl lg:text-6xl font-light tracking-tight text-[var(--color-ivory)]";
 
   return (
-    <section className={["px-5 py-16 sm:px-6 lg:px-8", className].join(" ")}>
+    <section className={["px-6 py-20 sm:py-28 lg:px-8", className].join(" ")}>
       <div className="mx-auto max-w-7xl">
-        <div className="mb-8 max-w-3xl">
+        <div className="mb-12 max-w-3xl">
           {eyebrow ? (
-            <p className="mb-3 text-sm font-semibold uppercase tracking-normal text-amber-200">
+            <p className="mb-4 text-sm font-medium uppercase tracking-widest text-[var(--color-antique-gold)]">
               {eyebrow}
             </p>
           ) : null}
@@ -35,7 +35,7 @@ export function SectionShell({
             <h2 className={headingClasses}>{title}</h2>
           )}
           {description ? (
-            <p className="mt-4 text-base leading-7 text-slate-300 sm:text-lg">
+            <p className="mt-6 text-base leading-relaxed text-[var(--color-ivory)]/70 sm:text-lg">
               {description}
             </p>
           ) : null}

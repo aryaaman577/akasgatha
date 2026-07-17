@@ -77,21 +77,21 @@ Phase-wise checklist. Check off items as completed.
 
 ## Phase 3: Mock Jigyasa UI
 
-- [ ] Build QuestionInput component
-- [ ] Build ResponseView layout
-- [ ] Build KathaMandal card
-- [ ] Build RahasyaChakra card
-- [ ] Build VigyanDrishti card
-- [ ] Build SatyaSetu card
-- [ ] Build PramaanMatrix card
-- [ ] Build JigyasaAgni card
-- [ ] Build SmritiQuest card
-- [ ] Create mock response data
-- [ ] Add loading state
-- [ ] Add error state
-- [ ] Verify: Ask page works end-to-end with mock data
-- [ ] Update brain/STATE.md
-- [ ] Update brain/PROGRESS_LOG.md
+- [x] Build QuestionInput component
+- [x] Build ResponseView layout
+- [x] Build KathaMandal card
+- [x] Build RahasyaChakra card
+- [x] Build VigyanDrishti card
+- [x] Build SatyaSetu card
+- [x] Build PramaanMatrix card
+- [x] Build JigyasaAgni card
+- [x] Build SmritiQuest card
+- [x] Create mock response data
+- [x] Add loading state
+- [x] Add error state
+- [x] Verify: Ask page works end-to-end with mock data
+- [x] Update brain/STATE.md
+- [x] Update brain/PROGRESS_LOG.md
 
 ---
 

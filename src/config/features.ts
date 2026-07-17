@@ -1,42 +1,50 @@
-export const featureItems = [
+import type { SpaceModelVariant } from "@/components/visual/InteractiveSpaceModel";
+
+export type FeatureItem = {
+  title: string;
+  description: string;
+  variant: SpaceModelVariant;
+};
+
+export const featureItems: FeatureItem[] = [
   {
     title: "Katha Mandal",
-    description: "Cultural sky stories are introduced as narratives with clear labels and respectful context.",
-    whyItMatters: "Learners can explore tradition without mistaking story for scientific proof.",
+    description: "Cultural sky stories presented as respectfully preserved narratives.",
+    variant: "moon_phase",
   },
   {
     title: "Rahasya Chakra",
-    description: "Mysteries and wonder questions turn cosmic topics into curiosity-driven learning paths.",
-    whyItMatters: "A sense of wonder keeps astronomy approachable and memorable.",
+    description: "Curiosity-driven learning paths exploring cosmic mysteries.",
+    variant: "mystery_orb",
   },
   {
     title: "Vigyan Drishti",
-    description: "Modern explanations focus on observations, evidence, and known scientific models.",
-    whyItMatters: "Science stays clear, testable, and separate from symbolic interpretation.",
+    description: "Modern explanations focused on observations and scientific evidence.",
+    variant: "telescope_view",
   },
   {
     title: "Satya Setu",
-    description: "Story and science are compared with care, showing where they align, diverge, or stay open.",
-    whyItMatters: "Balanced framing prevents exaggeration while honoring cultural context.",
+    description: "Comparing cultural context with modern scientific understanding.",
+    variant: "eclipse_alignment",
   },
   {
     title: "Pramaan Matrix",
-    description: "Claims are sorted into proven, symbolic, and unknown categories with evidence-aware language.",
-    whyItMatters: "Learners see how confidence levels work instead of receiving inflated claims.",
+    description: "Claims mapped by evidence: proven, symbolic, or unknown.",
+    variant: "evidence_grid",
   },
   {
     title: "Drishya Yantra",
-    description: "Future visual templates will help explain sky concepts without replacing the science.",
-    whyItMatters: "Visual learning can clarify motion, alignment, and scale when used responsibly.",
+    description: "Visual templates clarifying motion and cosmic scale.",
+    variant: "planet_orbit",
   },
   {
     title: "Jigyasa Agni",
-    description: "Follow-up prompts encourage learners to ask deeper questions about the sky.",
-    whyItMatters: "Curiosity becomes a repeatable learning loop instead of a one-time answer.",
+    description: "Deep follow-up questions to spark ongoing curiosity.",
+    variant: "question_orb",
   },
   {
     title: "Smriti Quest",
-    description: "Short review moments will help learners recall concepts after each explanation.",
-    whyItMatters: "Memory checks turn exploration into durable understanding.",
+    description: "Short review moments building durable conceptual memory.",
+    variant: "constellation_path",
   },
-] as const;
+];

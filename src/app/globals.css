@@ -4,6 +4,14 @@
 
 :root {
   color-scheme: dark;
+  --color-obsidian: #050505;
+  --color-graphite: #1a1b1e;
+  --color-ivory: #fcfbf9;
+  --color-antique-gold: #c3a343;
+  --color-cosmic-blue: #23345c;
+  
+  --font-display: "Cormorant Garamond", "Cinzel", Georgia, serif;
+  --font-body: "Inter", "Manrope", system-ui, sans-serif;
 }
 
 * {
@@ -17,11 +25,16 @@ body {
 
 body {
   margin: 0;
-  background:
-    radial-gradient(circle at 12% 12%, rgba(56, 189, 248, 0.16), transparent 26rem),
-    radial-gradient(circle at 82% 8%, rgba(251, 191, 36, 0.1), transparent 24rem),
-    linear-gradient(180deg, #020617 0%, #07111f 48%, #020617 100%);
-  color: #e2e8f0;
+  background-color: var(--color-obsidian);
+  background-image: 
+    radial-gradient(circle at 15% 50%, rgba(35, 52, 92, 0.12), transparent 30rem),
+    radial-gradient(circle at 85% 30%, rgba(195, 163, 67, 0.05), transparent 30rem);
+  color: var(--color-ivory);
+  font-family: var(--font-body);
+}
+
+h1, h2, h3, h4, h5, h6, .font-display {
+  font-family: var(--font-display);
 }
 
 a,
@@ -32,23 +45,20 @@ textarea {
   -webkit-tap-highlight-color: transparent;
 }
 
-.star-dust {
-  background-image:
-    radial-gradient(circle, rgba(255, 255, 255, 0.74) 0 1px, transparent 1.6px),
-    radial-gradient(circle, rgba(125, 211, 252, 0.5) 0 1px, transparent 1.8px);
-  background-position:
-    0 0,
-    34px 42px;
-  background-size:
-    90px 90px,
-    140px 140px;
-}
-
 .cosmic-wash {
   background:
-    radial-gradient(circle at 22% 22%, rgba(14, 165, 233, 0.2), transparent 24rem),
-    radial-gradient(circle at 78% 38%, rgba(245, 158, 11, 0.15), transparent 23rem),
-    linear-gradient(180deg, rgba(2, 6, 23, 0.15), rgba(2, 6, 23, 0.92));
+    radial-gradient(circle at 20% 30%, rgba(35, 52, 92, 0.2), transparent 30rem),
+    radial-gradient(circle at 80% 60%, rgba(195, 163, 67, 0.08), transparent 30rem),
+    linear-gradient(180deg, rgba(5, 5, 5, 0.4), rgba(5, 5, 5, 0.95));
+}
+
+@keyframes star-pan {
+  from {
+    background-position: 0% 0%;
+  }
+  to {
+    background-position: 10000px 10000px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -59,5 +69,14 @@ textarea {
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+@layer utilities {
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+  .transform-style-3d {
+    transform-style: preserve-3d;
   }
 }

@@ -14,13 +14,13 @@ export function GlowCard({
   return (
     <Component
       className={[
-        "group relative overflow-hidden rounded-lg border border-white/10 bg-white/[0.055] p-5 text-slate-100 shadow-[0_18px_80px_rgba(2,6,23,0.34)] backdrop-blur-md transition duration-300 hover:border-sky-300/40 hover:bg-white/[0.075]",
+        "group relative overflow-hidden rounded-lg border border-white/5 bg-[var(--color-graphite)]/40 p-6 text-[var(--color-ivory)] shadow-[0_8px_32px_rgba(0,0,0,0.4)] backdrop-blur-md transition-all duration-500 hover:-translate-y-1 hover:border-[var(--color-cosmic-blue)]/60 hover:bg-[var(--color-graphite)]/60 hover:shadow-[0_16px_48px_rgba(35,52,92,0.3)]",
         className,
       ]
         .filter(Boolean)
         .join(" ")}
     >
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/45 to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[var(--color-antique-gold)]/30 to-transparent transition-opacity duration-500 group-hover:via-[var(--color-antique-gold)]/60" />
       {children}
     </Component>
   );

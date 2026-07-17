@@ -1,91 +1,39 @@
-import type { Metadata } from "next";
+"use client";
 
-import { GlowCard } from "@/components/shared/GlowCard";
 import { SectionShell } from "@/components/shared/SectionShell";
-
-export const metadata: Metadata = {
-  title: "Jigyasa Engine | AkasGatha",
-  description:
-    "A Phase 2 preview of the future AkasGatha interactive question system.",
-};
+import { JigyasaMockForm } from "@/components/jigyasa/JigyasaMockForm";
+import { InteractiveSpaceModel } from "@/components/visual/InteractiveSpaceModel";
+import { useLanguage, translations } from "@/config/language";
+import { LanguageModeToggle } from "@/components/shared/LanguageModeToggle";
 
 export default function AskPage() {
+  const { language } = useLanguage();
+  const t = translations[language];
+
   return (
-    <main className="min-h-screen bg-slate-950 text-slate-100">
+    <main className="min-h-screen relative flex flex-col items-center overflow-hidden">
       <SectionShell
         eyebrow="Preview"
-        title="Jigyasa Engine"
-        description="A future interactive question system for structured cosmic explanations, with cultural story and scientific evidence kept visibly separate."
+        title={t.askTitle}
+        description={t.askSubtitle}
         headingLevel="h1"
+        className="w-full relative z-10"
       >
-        <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
-          <GlowCard as="section" className="p-6">
-            <form aria-describedby="phase-3-note" className="space-y-5">
-              <div>
-                <label htmlFor="question" className="text-sm font-semibold text-white">
-                  Question
-                </label>
-                <textarea
-                  id="question"
-                  name="question"
-                  disabled
-                  placeholder="Ask about an eclipse, moon phase, planet, or star story."
-                  rows={5}
-                  className="mt-2 w-full resize-none rounded-md border border-white/10 bg-slate-900/80 px-4 py-3 text-sm text-slate-200 outline-none placeholder:text-slate-500 disabled:cursor-not-allowed disabled:opacity-75"
-                />
-              </div>
-              <div className="grid gap-4 sm:grid-cols-2">
-                <div>
-                  <label htmlFor="mood" className="text-sm font-semibold text-white">
-                    Mood
-                  </label>
-                  <select
-                    id="mood"
-                    name="mood"
-                    disabled
-                    className="mt-2 min-h-11 w-full rounded-md border border-white/10 bg-slate-900/80 px-4 text-sm text-slate-300 disabled:cursor-not-allowed disabled:opacity-75"
-                    defaultValue=""
-                  >
-                    <option value="">Select a learning mood</option>
-                  </select>
-                </div>
-                <div>
-                  <label htmlFor="topic" className="text-sm font-semibold text-white">
-                    Topic
-                  </label>
-                  <select
-                    id="topic"
-                    name="topic"
-                    disabled
-                    className="mt-2 min-h-11 w-full rounded-md border border-white/10 bg-slate-900/80 px-4 text-sm text-slate-300 disabled:cursor-not-allowed disabled:opacity-75"
-                    defaultValue=""
-                  >
-                    <option value="">Select a cosmic topic</option>
-                  </select>
-                </div>
-              </div>
-              <button
-                type="button"
-                disabled
-                className="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-amber-200 px-5 text-sm font-semibold text-slate-950 opacity-60 disabled:cursor-not-allowed sm:w-auto"
-              >
-                Seek structured answer
-              </button>
-            </form>
-          </GlowCard>
+        <div className="mb-8 flex justify-start">
+          <LanguageModeToggle />
+        </div>
+        
+        <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
+          <JigyasaMockForm />
 
-          <GlowCard as="section" className="border-amber-200/20 bg-amber-200/10 p-6">
-            <p
-              id="phase-3-note"
-              className="text-lg font-semibold leading-7 text-amber-100"
-            >
-              Interactive structured responses will be added in Phase 3.
+          <div className="hidden lg:flex sticky top-24 flex-col items-center justify-center p-6 h-[400px]">
+            <div className="h-64 w-64 relative">
+              <InteractiveSpaceModel variant="question_orb" aria-hidden={true} />
+            </div>
+            <p className="mt-8 text-center text-sm font-medium text-[var(--color-ivory)]/50 uppercase tracking-widest">
+              Awaiting your query
             </p>
-            <p className="mt-4 text-sm leading-6 text-slate-300">
-              This preview shows the intended shape only. It does not submit
-              questions, call a backend, store user data, or contact an LLM.
-            </p>
-          </GlowCard>
+          </div>
         </div>
       </SectionShell>
     </main>
