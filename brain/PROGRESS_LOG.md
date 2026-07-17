@@ -109,7 +109,7 @@
 
 ### Commit
 
-- Phase 2 commit hash: pending until the Phase 2 Git commit is created.
+- Phase 2 commit hash: 61684ae
 
 ### Next Steps
 

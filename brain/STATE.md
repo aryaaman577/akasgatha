@@ -100,4 +100,4 @@ Deferred by the narrowed Phase 1 request: Shadcn UI, Framer Motion, Zod, React T
 - Jigyasa Engine remains a disabled preview form only; no backend, API route, LLM call, auth, database, 3D, audio, or user data storage added.
 - Validation passed: `npm.cmd run lint`, `npm.cmd run type-check`, and `npm.cmd run build`.
 - Note: direct `npm run lint` was blocked by PowerShell execution policy for `npm.ps1`, so the equivalent Windows shim `npm.cmd` was used for all validation scripts.
-- Phase 2 commit hash: pending until the Phase 2 Git commit is created.
+- Phase 2 commit hash: 61684ae
