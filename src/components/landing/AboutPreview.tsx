@@ -1,0 +1,291 @@
+import { useRef, useState } from 'react'
+import Link from 'next/link'
+import { useLanguage } from '@/config/language'
+import './AboutPreview.css'
+
+const copy = {
+  en: {
+    eyebrow: 'WHY AKASGATHA',
+    heading: 'Wonder begins the journey. Evidence guides it.',
+    support:
+      'AkasGatha uses cultural sky narratives to build curiosity, then presents modern scientific explanations through a separate evidence-aware lens.',
+    cta: 'Discover the approach',
+    modelLabel:
+      'Interactive celestial knowledge archive model showing curiosity becoming structured learning',
+    principles: [
+      {
+        title: 'Curiosity',
+        text: 'Curiosity first—begin with wonder.',
+      },
+      {
+        title: 'Separation',
+        text: 'Clear separation—story and science keep distinct roles.',
+      },
+      {
+        title: 'Clarity',
+        text: 'Evidence-aware—explanations include limits and uncertainty.',
+      },
+    ],
+  },
+  hi: {
+    eyebrow: 'आकाशगाथा क्यों',
+    heading: 'विस्मय यात्रा शुरू करता है। प्रमाण उसे दिशा देते हैं।',
+    support:
+      'आकाशगाथा सांस्कृतिक आकाश-कथाओं से जिज्ञासा जगाता है, फिर अलग प्रमाण-सचेत दृष्टि से आधुनिक वैज्ञानिक व्याख्या देता है।',
+    cta: 'दृष्टिकोण जानें',
+    modelLabel:
+      'जिज्ञासा को संरचित सीख में बदलता हुआ इंटरैक्टिव खगोलीय ज्ञान-अभिलेख मॉडल',
+    principles: [
+      {
+        title: 'जिज्ञासा',
+        text: 'पहले जिज्ञासा—आरंभ विस्मय से।',
+      },
+      {
+        title: 'पृथक्करण',
+        text: 'स्पष्ट अलगाव—कथा और विज्ञान की भूमिकाएँ अलग।',
+      },
+      {
+        title: 'स्पष्टता',
+        text: 'प्रमाण-सचेत—सीमाएँ और अनिश्चितता भी शामिल।',
+      },
+    ],
+  },
+  hinglish: {
+    eyebrow: 'AKASGATHA KYON',
+    heading: 'Wonder se safar shuru hota hai. Evidence raasta dikhata hai.',
+    support:
+      'AkasGatha sky stories se curiosity jagata hai, phir modern science ko alag evidence-aware lens se samjhata hai.',
+    cta: 'Approach dekhein',
+    modelLabel:
+      'Interactive celestial knowledge archive model jahan curiosity structured learning banti hai',
+    principles: [
+      {
+        title: 'Curiosity',
+        text: 'Curiosity pehle—wonder se start karo.',
+      },
+      {
+        title: 'Separation',
+        text: 'Clear separation—story aur science ke roles alag.',
+      },
+      {
+        title: 'Clarity',
+        text: 'Evidence-aware—limits aur uncertainty saath bataye jaate hain.',
+      },
+    ],
+  },
+  'hi-en': {
+    eyebrow: 'WHY AKASGATHA / क्यों',
+    heading: 'Wonder begins the journey. प्रमाण उसे दिशा देते हैं।',
+    support:
+      'Sky narratives जिज्ञासा जगाते हैं; science एक अलग evidence-aware lens से समझाई जाती है।',
+    cta: 'Discover the approach',
+    modelLabel:
+      'Interactive ज्ञान-अभिलेख model showing curiosity becoming structured learning',
+    principles: [
+      {
+        title: 'Curiosity / जिज्ञासा',
+        text: 'Begin with wonder—जिज्ञासा पहले।',
+      },
+      {
+        title: 'Separation / अलगाव',
+        text: 'Story and science—दोनों की भूमिका अलग।',
+      },
+      {
+        title: 'Clarity / स्पष्टता',
+        text: 'Evidence-aware, with limits and uncertainty.',
+      },
+    ],
+  },
+}
+
+function CelestialArchiveModel({ label }: { label: string }) {
+  const modelRef = useRef<HTMLDivElement>(null)
+  const startX = useRef(0)
+  const startY = useRef(0)
+  const baseRotation = useRef(0)
+  const dragging = useRef(false)
+  const intent = useRef<'none' | 'horizontal' | 'vertical'>('none')
+  const [rotation, setRotation] = useState(18)
+  const [tilt, setTilt] = useState({ x: 0, y: 0 })
+
+  const updateTransform = (nextRotation = rotation, nextTilt = tilt) => {
+    if (!modelRef.current) return
+    modelRef.current.style.setProperty('--drag-rotation', `${nextRotation}deg`)
+    modelRef.current.style.setProperty('--tilt-x', `${nextTilt.x}deg`)
+    modelRef.current.style.setProperty('--tilt-y', `${nextTilt.y}deg`)
+  }
+
+  const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect()
+
+    if (dragging.current) {
+      const deltaX = event.clientX - startX.current
+      const deltaY = event.clientY - startY.current
+
+      if (intent.current === 'none' && Math.hypot(deltaX, deltaY) > 8) {
+        intent.current = Math.abs(deltaX) > Math.abs(deltaY) * 1.25 ? 'horizontal' : 'vertical'
+      }
+
+      if (intent.current === 'horizontal') {
+        event.preventDefault()
+        const nextRotation = baseRotation.current + deltaX * 0.65
+        setRotation(nextRotation)
+        updateTransform(nextRotation, tilt)
+      }
+    }
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+    const x = ((event.clientX - rect.left) / rect.width - 0.5) * 2
+    const y = ((event.clientY - rect.top) / rect.height - 0.5) * 2
+    const nextTilt = { x: Math.max(-7, Math.min(7, -y * 7)), y: Math.max(-9, Math.min(9, x * 9)) }
+    setTilt(nextTilt)
+    updateTransform(rotation, nextTilt)
+  }
+
+  return (
+    <div className="model-shell" aria-label={label}>
+      <div
+        className="model-viewport"
+        onPointerDown={(event) => {
+          dragging.current = true
+          intent.current = 'none'
+          startX.current = event.clientX
+          startY.current = event.clientY
+          baseRotation.current = rotation
+          if (event.currentTarget.setPointerCapture) {
+            event.currentTarget.setPointerCapture(event.pointerId)
+          }
+        }}
+        onPointerMove={handlePointerMove}
+        onPointerUp={(event) => {
+          dragging.current = false
+          intent.current = 'none'
+          if (event.currentTarget.releasePointerCapture) {
+            try {
+              event.currentTarget.releasePointerCapture(event.pointerId)
+            } catch {}
+          }
+        }}
+        onPointerCancel={(event) => {
+          dragging.current = false
+          intent.current = 'none'
+          if (event.currentTarget.releasePointerCapture) {
+             try {
+               event.currentTarget.releasePointerCapture(event.pointerId)
+             } catch {}
+          }
+        }}
+        onPointerLeave={() => {
+          dragging.current = false
+          intent.current = 'none'
+          if (!modelRef.current?.matches(':focus-visible')) {
+            const nextTilt = { x: 0, y: 0 }
+            setTilt(nextTilt)
+            updateTransform(rotation, nextTilt)
+          }
+        }}
+      >
+        <div
+          ref={modelRef}
+          className="archive-model"
+          role="img"
+          aria-label={label}
+          tabIndex={0}
+        >
+        <div className="model-glow" />
+        <div className="measurement-ring ring-one" />
+        <div className="measurement-ring ring-two" />
+        <div className="measurement-ring ring-three" />
+        <div className="archive-core">
+          <div className="core-facet facet-a" />
+          <div className="core-facet facet-b" />
+          <div className="core-facet facet-c" />
+          <div className="core-light" />
+        </div>
+        <div className="celestial-lens">
+          <div className="lens-scan" />
+          <div className="lens-reflection reflection-a" />
+          <div className="lens-reflection reflection-b" />
+        </div>
+        <div className="evidence-orbit orbit-a">
+          <span className="evidence-node node-gold" />
+          <span className="evidence-node node-blue" />
+        </div>
+        <div className="evidence-orbit orbit-b">
+          <span className="evidence-node node-ivory" />
+          <span className="evidence-node node-faint" />
+        </div>
+        <div className="evidence-orbit orbit-c">
+          <span className="evidence-node node-blue" />
+          <span className="evidence-node node-gold" />
+        </div>
+        <div className="measure-tick tick-one" />
+        <div className="measure-tick tick-two" />
+        <div className="measure-tick tick-three" />
+        <div className="measure-tick tick-four" />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function PrincipleVisual({ type }: { type: 'curiosity' | 'separation' | 'clarity' }) {
+  return (
+    <span className={`principle-visual ${type}`} aria-hidden="true">
+      <span className="visual-layer visual-a" />
+      <span className="visual-layer visual-b" />
+      <span className="visual-layer visual-c" />
+    </span>
+  )
+}
+
+export function AboutPreview() {
+  const { language } = useLanguage()
+  // Fallback to 'en' if the specific language key is not in our local copy map
+  const text = copy[language] || copy['en']
+
+  return (
+    <div className="about-preview-wrapper" lang={language === 'hi' ? 'hi' : 'en'}>
+      <div className="previous-sky" aria-hidden="true">
+        <span />
+        <span />
+        <span />
+      </div>
+
+      <section className="mission-preview" aria-labelledby="mission-heading">
+        <div className="section-stars" aria-hidden="true" />
+        <div className="dawn-horizon" aria-hidden="true" />
+
+        <div className="mission-grid">
+          <div className="model-column">
+            <CelestialArchiveModel label={text.modelLabel} />
+          </div>
+
+          <div className="copy-column">
+            <p className="eyebrow">{text.eyebrow}</p>
+            <h1 id="mission-heading">{text.heading}</h1>
+            <p className="support-line">{text.support}</p>
+
+            <div className="principles" aria-label="Mission principles">
+              {text.principles.map((principle, index) => (
+                <article className="principle-card" key={principle.title}>
+                  <PrincipleVisual type={(['curiosity', 'separation', 'clarity'] as const)[index]} />
+                  <div>
+                    <h2>{principle.title}</h2>
+                    <p>{principle.text}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+
+            <Link className="mission-cta" href="/about" aria-label={text.cta}>
+              <span>{text.cta}</span>
+              <span className="cta-line" aria-hidden="true" />
+            </Link>
+          </div>
+        </div>
+      </section>
+    </div>
+  )
+}
