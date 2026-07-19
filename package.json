@@ -8,8 +8,12 @@
     "start": "next start",
     "lint": "eslint .",
     "type-check": "tsc --noEmit",
+    "test": "echo \"No tests yet\" && exit 0",
     "rag:validate": "tsx scripts/rag/validate-corpus.ts",
     "rag:chunk": "tsx scripts/rag/chunk-corpus.ts",
+    "rag:ingest": "tsx scripts/rag/ingest.ts",
+    "rag:inspect": "tsx scripts/rag/inspect.ts",
+    "rag:test": "tsx scripts/rag/test.ts",
     "rag:index": "tsx scripts/rag/index-corpus.ts",
     "rag:test-retrieval": "tsx scripts/rag/test-retrieval.ts"
   },

@@ -6,7 +6,6 @@
  */
 
 import { NextResponse } from "next/server";
-import { getServerEnv } from "@/lib/server/env";
 import { getProvider, isProviderMock } from "@/lib/server/ai/provider-registry";
 import type { HealthResponse } from "@/lib/server/jigyasa/schema";
 
@@ -15,7 +14,6 @@ export const dynamic = "force-dynamic";
 
 export async function GET() {
   try {
-    const env = getServerEnv();
     const provider = getProvider();
     
     let providerHealth = {
@@ -28,13 +26,41 @@ export async function GET() {
     if (provider.healthCheck) {
       try {
         providerHealth = await provider.healthCheck();
-      } catch (error) {
+      } catch {
         providerHealth = {
           configured: true,
           available: false,
           mock: isProviderMock(),
         };
       }
+    }
+
+    // Check RAG status (Phase 4B)
+    let ragStatus: HealthResponse["rag"] = undefined;
+    try {
+      const { loadManifest } = await import("@/lib/server/rag/local-index");
+      const manifest = await loadManifest();
+      
+      if (manifest) {
+        ragStatus = {
+          available: true as const,
+          documentCount: manifest.documentCount,
+          chunkCount: manifest.chunkCount,
+          schemaVersion: manifest.schemaVersion,
+          provider: manifest.provider,
+          model: manifest.model,
+        };
+      } else {
+        ragStatus = {
+          available: false as const,
+          message: "Index not built. Run: npm run rag:ingest",
+        };
+      }
+    } catch {
+      ragStatus = {
+        available: false as const,
+        message: "RAG system not initialized",
+      };
     }
 
     const response: HealthResponse = {
@@ -46,6 +72,7 @@ export async function GET() {
         configured: providerHealth.configured,
         mock: providerHealth.mock,
       },
+      rag: ragStatus,
     };
 
     return NextResponse.json(response, {

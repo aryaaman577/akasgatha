@@ -1,0 +1,13 @@
+{
+  "version": "1.0.0",
+  "schemaVersion": "1.0.0",
+  "provider": "local",
+  "model": "local-tfidf-v1",
+  "dimensions": 384,
+  "documentCount": 20,
+  "chunkCount": 20,
+  "corpusHash": "c7be00b9c6a30d397451e609e02458edc75e00cba417a5aea904c52fa338ab4b",
+  "indexHash": "3dd53a4c65c29868b09129e4a2f57cec65f5d1b7b5ed115412dd8b734e044724",
+  "createdAt": "2026-07-19T16:25:21.876Z",
+  "updatedAt": "2026-07-19T16:29:02.709Z"
+}

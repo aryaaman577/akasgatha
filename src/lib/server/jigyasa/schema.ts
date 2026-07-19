@@ -142,6 +142,20 @@ export const healthResponseSchema = z.object({
     configured: z.boolean(),
     mock: z.boolean(),
   }),
+  rag: z.union([
+    z.object({
+      available: z.literal(true),
+      documentCount: z.number(),
+      chunkCount: z.number(),
+      schemaVersion: z.string(),
+      provider: z.string(),
+      model: z.string(),
+    }),
+    z.object({
+      available: z.literal(false),
+      message: z.string(),
+    }),
+  ]).optional(),
 });
 
 export type HealthResponse = z.infer<typeof healthResponseSchema>;

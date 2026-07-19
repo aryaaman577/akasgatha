@@ -64,7 +64,7 @@ export class MockProvider implements JigyasaProvider {
 
     // Extract sources from RAG context
     const sources = hasRag
-      ? input.ragContext!.retrievedChunks.map((result, idx) => ({
+      ? input.ragContext!.retrievedChunks.map((result) => ({
           id: result.chunk.id,
           title: result.chunk.documentTitle,
           url: result.chunk.sourceUrl || undefined,
