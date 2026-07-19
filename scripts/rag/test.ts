@@ -10,16 +10,16 @@ import { retrieve } from "../../src/lib/server/rag/local-retrieval";
 import { loadManifest } from "../../src/lib/server/rag/local-index";
 
 const TEST_QUESTIONS = [
-  "Grahan kyon hota hai",
-  "Rahu Ketu ki katha kya hai",
-  "Rahu Ketu aur eclipse ka relation kya hai",
-  "Chand ki kala kyon badalti hai",
-  "Nakshatra aur constellation me kya antar hai",
-  "Black hole kya hota hai",
-  "Telescope kaise kaam karta hai",
-  "Din aur raat kyon hote hain",
-  "Seasons kyon badalte hain",
-  "Satellite orbit me kaise rehta hai",
+  { query: "Grahan kyon hota hai", expectedIntent: "science", expectedTopicIn: ["eclipse", "solar", "lunar"] },
+  { query: "Rahu Ketu ki katha kya hai", expectedIntent: "narrative", expectedTopicIn: ["rahu", "ketu"] },
+  { query: "Rahu Ketu aur eclipse ka relation kya hai", expectedIntent: "mixed", expectedTopicIn: ["rahu", "ketu", "eclipse"] },
+  { query: "Chand ki kala kyon badalti hai", expectedIntent: "science", expectedTopicIn: ["moon", "phase"] },
+  { query: "Nakshatra aur constellation me kya antar hai", expectedIntent: "mixed", expectedTopicIn: ["nakshatra", "constellation"] },
+  { query: "Black hole kya hota hai", expectedIntent: "science", expectedTopicIn: ["black", "hole"] },
+  { query: "Telescope kaise kaam karta hai", expectedIntent: "science", expectedTopicIn: ["telescope"] },
+  { query: "Din aur raat kyon hote hain", expectedIntent: "science", expectedTopicIn: ["rotation", "earth", "day", "night"] },
+  { query: "Seasons kyon badalte hain", expectedIntent: "science", expectedTopicIn: ["season"] },
+  { query: "Satellite orbit me kaise rehta hai", expectedIntent: "science", expectedTopicIn: ["satellite", "orbit"] },
 ];
 
 const PROMPT_INJECTION_TESTS = [
@@ -56,15 +56,54 @@ async function main() {
   console.log();
   
   for (let i = 0; i < TEST_QUESTIONS.length; i++) {
-    const query = TEST_QUESTIONS[i];
+    const test = TEST_QUESTIONS[i];
+    const query = test.query;
     console.log(`Test ${i + 1}/${TEST_QUESTIONS.length}: "${query}"`);
     
     try {
       const result = await retrieve(query, { topK: 10, minScore: 0.1 });
       
-      console.log(`  Intent: ${result.intent}`);
-      console.log(`  Results: ${result.totalResults} (S:${result.scienceChunks.length} N:${result.narrativeChunks.length} B:${result.boundaryChunks.length} G:${result.glossaryChunks.length})`);
-      console.log(`  Time: ${result.retrievalTimeMs}ms`);
+      console.log(`  Intent: ${result.intent} (expected: ${test.expectedIntent})`);
+      
+      // Assert correct intent
+      if (result.intent !== test.expectedIntent) {
+        console.log(`  ✗ FAIL: Intent mismatch (got ${result.intent}, expected ${test.expectedIntent})`);
+        failed++;
+        console.log();
+        continue;
+      }
+      
+      // Check if any results returned
+      if (result.totalResults === 0) {
+        console.log(`  ✗ FAIL: No results returned`);
+        failed++;
+        console.log();
+        continue;
+      }
+      
+      // Get top result
+      const allChunks = [
+        ...result.scienceChunks,
+        ...result.narrativeChunks,
+        ...result.boundaryChunks,
+        ...result.glossaryChunks,
+      ].sort((a, b) => b.score - a.score);
+      
+      const topResult = allChunks[0];
+      const topTitleLower = topResult.title.toLowerCase();
+      
+      console.log(`  Top result: "${topResult.title}" (${topResult.domain})`);
+      console.log(`  Score: ${(topResult.score * 100).toFixed(1)}%`);
+      console.log(`  Citation: ${topResult.id}`);
+      
+      // Assert top result contains expected topic
+      const topicMatch = test.expectedTopicIn.some(topic => topTitleLower.includes(topic.toLowerCase()));
+      if (!topicMatch) {
+        console.log(`  ✗ FAIL: Top result doesn't match expected topic (expected one of: ${test.expectedTopicIn.join(", ")})`);
+        failed++;
+        console.log();
+        continue;
+      }
       
       // Verify no vectors leaked
       const jsonStr = JSON.stringify(result);
@@ -73,13 +112,33 @@ async function main() {
       if (hasVectors) {
         console.log(`  ✗ FAIL: Vectors exposed in result`);
         failed++;
-      } else if (result.totalResults === 0) {
-        console.log(`  ✗ FAIL: No results returned`);
-        failed++;
-      } else {
-        console.log(`  ✓ PASS`);
-        passed++;
+        console.log();
+        continue;
       }
+      
+      // Verify citation ID is stable
+      if (!topResult.id.match(/^[a-z-]+-[a-z-]+-\d+$/)) {
+        console.log(`  ✗ FAIL: Citation ID format incorrect: ${topResult.id}`);
+        failed++;
+        console.log();
+        continue;
+      }
+      
+      // For mixed questions, assert both domains present
+      if (test.expectedIntent === "mixed") {
+        const hasSci = result.scienceChunks.length > 0;
+        const hasNarr = result.narrativeChunks.length > 0;
+        if (!hasSci || !hasNarr) {
+          console.log(`  ✗ FAIL: Mixed query should return both science and narrative (S:${result.scienceChunks.length} N:${result.narrativeChunks.length})`);
+          failed++;
+          console.log();
+          continue;
+        }
+      }
+      
+      console.log(`  Results: ${result.totalResults} (S:${result.scienceChunks.length} N:${result.narrativeChunks.length} B:${result.boundaryChunks.length} G:${result.glossaryChunks.length})`);
+      console.log(`  ✓ PASS`);
+      passed++;
     } catch (error) {
       console.log(`  ✗ FAIL: ${error instanceof Error ? error.message : "Unknown error"}`);
       failed++;

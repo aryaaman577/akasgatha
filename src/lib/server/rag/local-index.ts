@@ -10,6 +10,7 @@ import * as path from "path";
 import { createHash } from "crypto";
 import type { RagChunk } from "./types";
 import { generateLocalEmbedding, cosineSimilarity, LOCAL_EMBEDDING_CONFIG } from "./local-embeddings";
+import { getTopicBoost } from "./topic-aliases";
 
 /**
  * Index entry with embedding
@@ -277,20 +278,20 @@ export async function queryIndex(
       return true;
     })
     .map(entry => {
-      // Semantic similarity
+      // Semantic similarity (primary signal)
       const semanticScore = cosineSimilarity(queryEmbedding, entry.embedding);
       
       // Keyword boost
       const keywordBoost = calculateKeywordBoost(query, entry.chunk.content);
       
-      // Title/topic boost
-      const titleBoost = calculateTitleBoost(query, entry.chunk.documentTitle, entry.chunk.topic);
+      // Topic boost using aliases
+      const topicBoost = getTopicBoost(query, entry.chunk.documentTitle, entry.chunk.topic);
       
       // Metadata boost (science slightly preferred for factual queries)
       const metadataBoost = entry.chunk.domain === "science" ? 1.05 : 1.0;
       
-      // Hybrid score
-      const score = (semanticScore * 0.7 + keywordBoost * 0.2 + titleBoost * 0.1) * metadataBoost;
+      // Hybrid score with very high topic weight for exact matches
+      const score = (semanticScore * 0.4 + keywordBoost * 0.1 + topicBoost * 0.5) * metadataBoost;
       
       return { entry, score };
     })
@@ -325,28 +326,6 @@ function calculateKeywordBoost(query: string, content: string): number {
   }
   
   return queryWords.length > 0 ? matches / queryWords.length : 0;
-}
-
-/**
- * Calculate title/topic boost
- */
-function calculateTitleBoost(query: string, title: string, topic: string): number {
-  const queryLower = query.toLowerCase();
-  const titleLower = title.toLowerCase();
-  const topicLower = topic.toLowerCase();
-  
-  let score = 0;
-  
-  if (titleLower.includes(queryLower)) score += 0.5;
-  if (topicLower.includes(queryLower)) score += 0.3;
-  
-  const queryWords = queryLower.split(/\s+/);
-  for (const word of queryWords) {
-    if (titleLower.includes(word)) score += 0.1;
-    if (topicLower.includes(word)) score += 0.05;
-  }
-  
-  return Math.min(score, 1.0);
 }
 
 /**

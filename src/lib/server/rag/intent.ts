@@ -8,38 +8,39 @@
 export type QuestionIntent = "science" | "narrative" | "mixed" | "general";
 
 /**
- * Science keywords
+ * Strong narrative indicators (should trigger narrative classification)
+ */
+const STRONG_NARRATIVE_KEYWORDS = [
+  "katha", "kahani", "story", "tale", "myth", "purana", "puranic",
+  "mythology", "legend", "belief", "tradition", "ancient story",
+];
+
+/**
+ * Science keywords (physical causation and mechanisms)
  */
 const SCIENCE_KEYWORDS = [
-  "why", "how", "what", "explain", "reason", "cause", "scientific",
-  "eclipse", "moon", "sun", "planet", "orbit", "rotation", "seasons",
-  "telescope", "astronomy", "physics", "gravity", "light", "shadow",
-  "satellite", "constellation", "star", "space", "earth",
-  // Hindi/Hinglish
-  "kyon", "kaise", "kya", "vigyan", "vaigyanik", "grahan",
-  "chand", "suraj", "grah", "kaksha", "mausam", "durbin",
+  "why", "how", "explain", "reason", "cause", "work", "happen",
+  "eclipse", "orbit", "rotation", "phases", "telescope", "seasons",
+  "satellite", "physics", "gravity", "mechanism", "black hole",
+  // Hindi/Hinglish - physical questions
+  "kyon hota hai", "kaise kaam", "kaise hota", "kyon badalti",
+  "kyon hote", "kyon badalte", "kaise rehta", "kya hota hai",
 ];
 
 /**
- * Narrative keywords
+ * Narrative entities (characters and concepts from traditions)
  */
-const NARRATIVE_KEYWORDS = [
-  "story", "tale", "myth", "legend", "tradition", "cultural",
-  "rahu", "ketu", "nakshatra", "purana", "mythology",
-  "symbolic", "belief", "ancient", "vedic",
-  // Hindi/Hinglish
-  "katha", "kahani", "itihas", "puran", "parampara",
-  "dharmik", "sanskritik", "prachin",
+const NARRATIVE_ENTITIES = [
+  "rahu", "ketu", "nakshatra", "devta", "asur", "samudra manthan",
 ];
 
 /**
- * Mixed keywords (both science and narrative)
+ * Mixed keywords (comparing or relating both domains)
  */
 const MIXED_KEYWORDS = [
-  "relation", "connection", "difference", "compare", "similar",
-  "versus", "vs", "both", "and", "also",
-  // Hindi/Hinglish
-  "rishta", "sambandh", "antar", "farq", "tulna", "aur",
+  "relation", "connection", "difference", "compare", "antar",
+  "aur", "versus", "vs", "both", "sambandh", "rishta",
+  "farq", "tulna",
 ];
 
 /**
@@ -48,29 +49,47 @@ const MIXED_KEYWORDS = [
 export function classifyIntent(question: string): QuestionIntent {
   const lower = question.toLowerCase();
   
-  // Check for mixed intent first
-  const hasMixedKeywords = MIXED_KEYWORDS.some(kw => lower.includes(kw));
+  // Check for strong narrative indicators first
+  const hasStrongNarrative = STRONG_NARRATIVE_KEYWORDS.some(kw => lower.includes(kw));
   
+  // Check for narrative entities
+  const hasNarrativeEntities = NARRATIVE_ENTITIES.some(kw => lower.includes(kw));
+  
+  // Check for mixed/comparison keywords (but "aur" alone doesn't mean mixed)
+  // "Din aur raat" is just listing two things, not comparing domains
+  const hasMixedKeywords = MIXED_KEYWORDS.filter(kw => kw !== "aur").some(kw => lower.includes(kw));
+  
+  // Check for science mechanism keywords
   const hasScienceKeywords = SCIENCE_KEYWORDS.some(kw => lower.includes(kw));
-  const hasNarrativeKeywords = NARRATIVE_KEYWORDS.some(kw => lower.includes(kw));
   
-  // Both science and narrative keywords present
-  if (hasScienceKeywords && hasNarrativeKeywords) {
+  // Strong narrative classification
+  // "Rahu Ketu ki katha kya hai" -> narrative (has "katha")
+  if (hasStrongNarrative && !hasMixedKeywords) {
+    return "narrative";
+  }
+  
+  // Mixed classification
+  // "Rahu Ketu aur eclipse ka relation kya hai" -> mixed (has relation + both domains)
+  // "Nakshatra aur constellation me kya antar hai" -> mixed (has antar/difference)
+  if (hasMixedKeywords && (hasNarrativeEntities || hasStrongNarrative || hasScienceKeywords)) {
     return "mixed";
   }
   
-  // Mixed keywords with either science or narrative
-  if (hasMixedKeywords && (hasScienceKeywords || hasNarrativeKeywords)) {
+  // Narrative entities with mixed keywords
+  if (hasNarrativeEntities && hasMixedKeywords) {
     return "mixed";
   }
   
-  // Primarily science
-  if (hasScienceKeywords) {
+  // Pure science - physical mechanism questions
+  // "Chand ki kala kyon badalti hai" -> science (physical change, no narrative terms)
+  // "Din aur raat kyon hote hain" -> science (physical phenomenon)
+  // "Grahan kyon hota hai" -> science (physical event)
+  if (hasScienceKeywords && !hasStrongNarrative && !hasNarrativeEntities) {
     return "science";
   }
   
-  // Primarily narrative
-  if (hasNarrativeKeywords) {
+  // Narrative entities without science mechanism questions
+  if (hasNarrativeEntities && !hasScienceKeywords && !hasMixedKeywords) {
     return "narrative";
   }
   
