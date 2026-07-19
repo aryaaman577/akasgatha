@@ -1,115 +1,227 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { GlowCard } from "../shared/GlowCard";
 import { ResponseSkeleton } from "./ResponseSkeleton";
-import { MockResponsePanel } from "./MockResponsePanel";
+import { ResponsePanel } from "./ResponsePanel";
+import { ErrorPanel } from "./ErrorPanel";
+import { useLanguage, translations } from "@/config/language";
+import type { JigyasaSuccessResponse, JigyasaErrorResponse } from "@/lib/server/jigyasa/schema";
+
+type FormStatus = "idle" | "loading" | "success" | "error";
 
 export function JigyasaMockForm() {
-  const [question, setQuestion] = useState("Why do eclipses happen, and how are Rahu-Ketu stories connected culturally?");
+  const { language } = useLanguage();
+  const t = translations[language];
+
+  const [question, setQuestion] = useState("");
   const [topic, setTopic] = useState("eclipse");
   const [mood, setMood] = useState("curious");
   const [style, setStyle] = useState("detailed");
-  const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
+  const [status, setStatus] = useState<FormStatus>("idle");
+  const [response, setResponse] = useState<JigyasaSuccessResponse | null>(null);
+  const [error, setError] = useState<JigyasaErrorResponse | null>(null);
+  
+  const abortControllerRef = useRef<AbortController | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!question.trim()) return;
     
+    const questionText = question.trim() || t.homeJigyasaExample;
+    
+    // Cancel any existing request
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+
+    // Create new abort controller for this request
+    abortControllerRef.current = new AbortController();
+
     setStatus("loading");
-    
-    // Simulate network delay
-    setTimeout(() => {
-      setStatus("success");
-    }, 600);
+    setResponse(null);
+    setError(null);
+
+    try {
+      const res = await fetch("/api/jigyasa", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          question: questionText,
+          language,
+        }),
+        signal: abortControllerRef.current.signal,
+      });
+
+      const data = await res.json();
+
+      if (data.status === "ok") {
+        setResponse(data);
+        setStatus("success");
+      } else {
+        setError(data);
+        setStatus("error");
+      }
+    } catch (err) {
+      // Handle abort separately
+      if (err instanceof Error && err.name === "AbortError") {
+        setStatus("idle");
+        return;
+      }
+
+      // Network or other errors
+      setError({
+        requestId: "unknown",
+        status: "error",
+        error: {
+          code: "INTERNAL_ERROR",
+          message: err instanceof Error ? err.message : "An unexpected error occurred",
+          retryable: true,
+        },
+      });
+      setStatus("error");
+    }
+  };
+
+  const handleRetry = () => {
+    const form = document.querySelector("form");
+    if (form) {
+      form.dispatchEvent(new Event("submit", { cancelable: true, bubbles: true }));
+    }
+  };
+
+  const handleCancel = () => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      abortControllerRef.current = null;
+    }
+    setStatus("idle");
+  };
+
+  const inputClass =
+    "mt-2 w-full rounded-lg border border-[var(--space-stardust)]/10 px-4 py-3 text-fluid-body outline-none transition-colors focus:border-[var(--space-antique-gold)]/50 focus:ring-1 focus:ring-[var(--space-antique-gold)]/30";
+  const inputStyle = {
+    background: "rgba(7,9,18,0.80)",
+    color: "var(--space-moonlight)",
   };
 
   return (
     <div className="w-full">
-      <GlowCard as="section" className="p-6">
-        <form onSubmit={handleSubmit} className="space-y-6">
+      <GlowCard as="section" atmosphere="violet" clipContent>
+        <form onSubmit={handleSubmit} className="space-y-5">
+          {/* Question */}
           <div>
-            <label htmlFor="question" className="text-sm font-medium tracking-wide text-[var(--color-ivory)]">
-              Your Question
+            <label
+              htmlFor="question"
+              className="text-fluid-label font-medium tracking-wide"
+              style={{ color: "var(--space-moonlight)" }}
+            >
+              {t.askLabelQuestion}
             </label>
             <textarea
               id="question"
               name="question"
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
-              placeholder="Ask about an eclipse, moon phase, planet, or star story..."
-              rows={4}
-              className="mt-2 w-full resize-none rounded-md border border-[var(--color-ivory)]/10 bg-[var(--color-obsidian)]/80 px-4 py-3 text-sm text-[var(--color-ivory)] outline-none placeholder:text-[var(--color-ivory)]/40 focus:border-[var(--color-antique-gold)]/50 focus:ring-1 focus:ring-[var(--color-antique-gold)]/50 transition-colors"
+              placeholder={t.askPlaceholder}
+              rows={3}
+              disabled={status === "loading"}
+              className={`${inputClass} resize-none placeholder:opacity-40 disabled:opacity-50 disabled:cursor-not-allowed`}
+              style={inputStyle}
             />
           </div>
 
+          {/* Selectors */}
           <div className="grid gap-4 sm:grid-cols-3">
             <div>
-              <label htmlFor="topic" className="text-sm font-medium text-[var(--color-ivory)]/80">
-                Topic
+              <label htmlFor="topic" className="text-fluid-button font-medium" style={{ color: "var(--space-stardust)", opacity: 0.8 }}>
+                {t.askLabelTopic}
               </label>
               <select
                 id="topic"
                 name="topic"
                 value={topic}
                 onChange={(e) => setTopic(e.target.value)}
-                className="mt-2 min-h-[44px] w-full rounded-md border border-[var(--color-ivory)]/10 bg-[var(--color-obsidian)]/80 px-4 text-sm text-[var(--color-ivory)] outline-none focus:border-[var(--color-antique-gold)]/50 transition-colors"
+                disabled={status === "loading"}
+                className={`${inputClass} min-h-[44px] disabled:opacity-50 disabled:cursor-not-allowed`}
+                style={inputStyle}
               >
-                <option value="eclipse">Eclipses & Rahu-Ketu</option>
-                <option value="planets">Planets & Grah</option>
-                <option value="stars">Nakshatra & Stars</option>
+                <option value="eclipse">{t.topicOptEclipse}</option>
+                <option value="planets">{t.topicOptPlanets}</option>
+                <option value="stars">{t.topicOptStars}</option>
               </select>
             </div>
             <div>
-              <label htmlFor="mood" className="text-sm font-medium text-[var(--color-ivory)]/80">
-                Mood
+              <label htmlFor="mood" className="text-fluid-button font-medium" style={{ color: "var(--space-stardust)", opacity: 0.8 }}>
+                {t.askLabelMood}
               </label>
               <select
                 id="mood"
                 name="mood"
                 value={mood}
                 onChange={(e) => setMood(e.target.value)}
-                className="mt-2 min-h-[44px] w-full rounded-md border border-[var(--color-ivory)]/10 bg-[var(--color-obsidian)]/80 px-4 text-sm text-[var(--color-ivory)] outline-none focus:border-[var(--color-antique-gold)]/50 transition-colors"
+                disabled={status === "loading"}
+                className={`${inputClass} min-h-[44px] disabled:opacity-50 disabled:cursor-not-allowed`}
+                style={inputStyle}
               >
-                <option value="curious">Curious</option>
-                <option value="analytical">Analytical</option>
-                <option value="storyteller">Storyteller</option>
+                <option value="curious">{t.moodOptCurious}</option>
+                <option value="analytical">{t.moodOptAnalytical}</option>
+                <option value="storyteller">{t.moodOptStory}</option>
               </select>
             </div>
             <div>
-              <label htmlFor="style" className="text-sm font-medium text-[var(--color-ivory)]/80">
-                Response Style
+              <label htmlFor="style" className="text-fluid-button font-medium" style={{ color: "var(--space-stardust)", opacity: 0.8 }}>
+                {t.askLabelStyle}
               </label>
               <select
                 id="style"
                 name="style"
                 value={style}
                 onChange={(e) => setStyle(e.target.value)}
-                className="mt-2 min-h-[44px] w-full rounded-md border border-[var(--color-ivory)]/10 bg-[var(--color-obsidian)]/80 px-4 text-sm text-[var(--color-ivory)] outline-none focus:border-[var(--color-antique-gold)]/50 transition-colors"
+                disabled={status === "loading"}
+                className={`${inputClass} min-h-[44px] disabled:opacity-50 disabled:cursor-not-allowed`}
+                style={inputStyle}
               >
-                <option value="detailed">Detailed Matrix</option>
-                <option value="summary">Quick Summary</option>
+                <option value="detailed">{t.styleOptDetailed}</option>
+                <option value="summary">{t.styleOptSummary}</option>
               </select>
             </div>
           </div>
 
-          <div className="flex items-center justify-between flex-wrap gap-4 pt-2">
-            <button
-              type="submit"
-              disabled={status === "loading"}
-              className="inline-flex min-h-[44px] items-center justify-center rounded-md bg-[var(--color-ivory)] px-6 text-sm font-semibold text-[var(--color-obsidian)] outline-none transition-all hover:bg-[var(--color-antique-gold)] focus-visible:ring-2 focus-visible:ring-[var(--color-antique-gold)] disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {status === "loading" ? "Analyzing..." : "Seek structured answer"}
-            </button>
-            <p className="text-xs text-[var(--color-antique-gold)] max-w-xs text-right">
-              This is a mock structured response preview. Real AI responses will be added in a later backend phase.
-            </p>
+          {/* Submit / Cancel */}
+          <div className="flex flex-wrap items-center justify-between gap-4 pt-1">
+            {status === "loading" ? (
+              <button
+                type="button"
+                onClick={handleCancel}
+                className="inline-flex min-h-[44px] items-center justify-center rounded-full px-7 text-fluid-button font-semibold outline-none transition-all duration-200 hover:opacity-90 focus-visible:ring-2 focus-visible:ring-[var(--space-antique-gold)]"
+                style={{
+                  background: "rgba(211,47,47,0.8)",
+                  color: "var(--space-moonlight)",
+                }}
+              >
+                Cancel Request
+              </button>
+            ) : (
+              <button
+                type="submit"
+                className="inline-flex min-h-[44px] items-center justify-center rounded-full px-7 text-fluid-button font-semibold outline-none transition-all duration-200 hover:opacity-90 focus-visible:ring-2 focus-visible:ring-[var(--space-antique-gold)]"
+                style={{
+                  background: "var(--space-moonlight)",
+                  color: "var(--space-obsidian)",
+                }}
+              >
+                {t.askButton}
+              </button>
+            )}
           </div>
         </form>
       </GlowCard>
 
       {status === "loading" && <ResponseSkeleton />}
-      {status === "success" && <MockResponsePanel />}
+      {status === "success" && response && <ResponsePanel response={response} />}
+      {status === "error" && error && <ErrorPanel error={error} onRetry={handleRetry} />}
     </div>
   );
 }

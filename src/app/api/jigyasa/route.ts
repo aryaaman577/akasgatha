@@ -1,0 +1,257 @@
+/**
+ * Jigyasa API Route
+ * 
+ * Main endpoint for Jigyasa question processing.
+ * Validates requests, enforces rate limits, and returns structured answers.
+ */
+
+import { NextRequest, NextResponse } from "next/server";
+import { ZodError } from "zod";
+import { getServerEnv } from "@/lib/server/env";
+import { 
+  jigyasaRequestSchema, 
+  validateHistoryConstraints,
+  type JigyasaSuccessResponse,
+  type JigyasaErrorResponse,
+} from "@/lib/server/jigyasa/schema";
+import { generateRequestId } from "@/lib/server/utils/request-id";
+import { logger, truncateForLog } from "@/lib/server/utils/logger";
+import { createTimeoutController, isAbortError } from "@/lib/server/utils/timeout";
+import { getRateLimiter } from "@/lib/server/rate-limit/in-memory-limiter";
+import { getProvider, isProviderMock } from "@/lib/server/ai/provider-registry";
+
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
+export async function POST(request: NextRequest) {
+  const requestId = generateRequestId();
+  const startTime = Date.now();
+  
+  try {
+    const env = getServerEnv();
+
+    // Validate content type
+    const contentType = request.headers.get("content-type");
+    if (!contentType?.includes("application/json")) {
+      return createErrorResponse(requestId, "UNSUPPORTED_CONTENT_TYPE", "Content-Type must be application/json", false);
+    }
+
+    // Parse and validate request body
+    let body: unknown;
+    try {
+      body = await request.json();
+    } catch (error) {
+      return createErrorResponse(requestId, "INVALID_REQUEST", "Invalid JSON in request body", false);
+    }
+
+    const validationResult = jigyasaRequestSchema.safeParse(body);
+    if (!validationResult.success) {
+      const errorMessage = validationResult.error.issues.map(i => `${i.path.join(".")}: ${i.message}`).join(", ");
+      return createErrorResponse(requestId, "INVALID_REQUEST", errorMessage, false);
+    }
+
+    const input = validationResult.data;
+
+    // Validate question length
+    if (input.question.length > env.JIGYASA_MAX_INPUT_CHARS) {
+      return createErrorResponse(
+        requestId,
+        "INVALID_REQUEST",
+        `Question exceeds maximum length of ${env.JIGYASA_MAX_INPUT_CHARS} characters`,
+        false
+      );
+    }
+
+    // Validate history constraints
+    if (input.history) {
+      const historyValidation = validateHistoryConstraints(
+        input.history,
+        env.JIGYASA_MAX_HISTORY_MESSAGES,
+        env.JIGYASA_MAX_HISTORY_CHARS
+      );
+      
+      if (!historyValidation.valid) {
+        return createErrorResponse(requestId, "INVALID_REQUEST", historyValidation.reason!, false);
+      }
+    }
+
+    // Rate limiting
+    const rateLimiter = getRateLimiter();
+    const rateLimitKey = getRateLimitKey(request);
+    const rateLimitResult = await rateLimiter.check({
+      key: rateLimitKey,
+      limit: env.JIGYASA_RATE_LIMIT_REQUESTS,
+      windowSeconds: env.JIGYASA_RATE_LIMIT_WINDOW_SECONDS,
+    });
+
+    if (!rateLimitResult.allowed) {
+      logger.warn("Rate limit exceeded", {
+        requestId,
+        route: "/api/jigyasa",
+        rateLimitResult: "exceeded",
+      });
+
+      return NextResponse.json(
+        createErrorResponse(requestId, "RATE_LIMITED", "Rate limit exceeded. Please try again later.", true).body,
+        {
+          status: 429,
+          headers: {
+            "X-RateLimit-Limit": env.JIGYASA_RATE_LIMIT_REQUESTS.toString(),
+            "X-RateLimit-Remaining": rateLimitResult.remaining.toString(),
+            "X-RateLimit-Reset": rateLimitResult.resetAt.toString(),
+          },
+        }
+      );
+    }
+
+    // Log request (safe metadata only)
+    logger.info("Jigyasa request received", {
+      requestId,
+      route: "/api/jigyasa",
+      method: "POST",
+      language: input.language,
+      inputChars: input.question.length,
+      historyMessages: input.history?.length ?? 0,
+      ...(env.JIGYASA_LOG_QUESTION_CONTENT && {
+        questionPreview: truncateForLog(input.question, 100),
+      }),
+    });
+
+    // Create timeout controller
+    const { controller, cleanup } = createTimeoutController(env.JIGYASA_REQUEST_TIMEOUT_MS);
+
+    try {
+      // Get provider and generate answer
+      const provider = getProvider();
+      const result = await provider.generate({
+        question: input.question,
+        language: input.language,
+        history: input.history,
+        requestId,
+        signal: controller.signal,
+      });
+
+      const durationMs = Date.now() - startTime;
+
+      logger.info("Jigyasa request completed", {
+        requestId,
+        status: 200,
+        provider: provider.name,
+        mock: isProviderMock(),
+        durationMs,
+      });
+
+      const response: JigyasaSuccessResponse = {
+        requestId,
+        status: "ok",
+        answer: result.answer,
+        meta: {
+          provider: provider.name,
+          mock: isProviderMock(),
+          durationMs,
+        },
+      };
+
+      return NextResponse.json(response, {
+        status: 200,
+        headers: {
+          "X-Request-Id": requestId,
+          "X-RateLimit-Remaining": rateLimitResult.remaining.toString(),
+        },
+      });
+    } finally {
+      cleanup();
+    }
+  } catch (error) {
+    const durationMs = Date.now() - startTime;
+
+    // Handle abort/timeout errors
+    if (isAbortError(error)) {
+      logger.warn("Request aborted or timed out", {
+        requestId,
+        errorType: error instanceof Error ? error.name : "unknown",
+        durationMs,
+      });
+
+      const code = error instanceof Error && error.name === "TimeoutError"
+        ? "PROVIDER_TIMEOUT"
+        : "REQUEST_ABORTED";
+
+      return createErrorResponse(
+        requestId,
+        code,
+        error instanceof Error ? error.message : "Request was aborted",
+        code === "PROVIDER_TIMEOUT"
+      );
+    }
+
+    // Log unexpected errors (without sensitive details)
+    logger.error("Jigyasa request failed", {
+      requestId,
+      errorCode: "INTERNAL_ERROR",
+      errorMessage: error instanceof Error ? error.message : "Unknown error",
+      durationMs,
+    });
+
+    return createErrorResponse(
+      requestId,
+      "INTERNAL_ERROR",
+      "An unexpected error occurred. Please try again.",
+      true
+    );
+  }
+}
+
+/**
+ * Create standardized error response
+ */
+function createErrorResponse(
+  requestId: string,
+  code: JigyasaErrorResponse["error"]["code"],
+  message: string,
+  retryable: boolean
+): NextResponse<JigyasaErrorResponse> {
+  const response: JigyasaErrorResponse = {
+    requestId,
+    status: "error",
+    error: {
+      code,
+      message,
+      retryable,
+    },
+  };
+
+  const statusCode = code === "RATE_LIMITED" ? 429 
+    : code === "INVALID_REQUEST" || code === "UNSUPPORTED_CONTENT_TYPE" ? 400
+    : code === "PROVIDER_NOT_CONFIGURED" ? 503
+    : 500;
+
+  return NextResponse.json(response, {
+    status: statusCode,
+    headers: {
+      "X-Request-Id": requestId,
+    },
+  });
+}
+
+/**
+ * Generate rate limit key from request metadata
+ * Uses IP address when available, falls back to generic key
+ */
+function getRateLimitKey(request: NextRequest): string {
+  // Try to get IP from various headers
+  const forwarded = request.headers.get("x-forwarded-for");
+  const realIp = request.headers.get("x-real-ip");
+  
+  if (forwarded) {
+    const ips = forwarded.split(",").map(ip => ip.trim());
+    return `jigyasa:${ips[0]}`;
+  }
+  
+  if (realIp) {
+    return `jigyasa:${realIp}`;
+  }
+
+  // Fallback to generic key (less effective but prevents complete failure)
+  return "jigyasa:anonymous";
+}
