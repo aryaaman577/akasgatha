@@ -5,7 +5,7 @@ domain: science
 topic: stars
 language: en
 sourceName: International Astronomical Union
-sourceUrl: https://www.iau.org/public/themes/constellations/
+sourceUrl: https://www.iau.org/
 sourceType: official
 reviewedAt: "2024-01-15"
 licenseNote: Public domain concept, paraphrased educational content

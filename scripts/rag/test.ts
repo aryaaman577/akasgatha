@@ -93,7 +93,7 @@ async function main() {
       const topTitleLower = topResult.title.toLowerCase();
       
       console.log(`  Top result: "${topResult.title}" (${topResult.domain})`);
-      console.log(`  Score: ${(topResult.score * 100).toFixed(1)}%`);
+      console.log(`  Raw Score: ${topResult.score.toFixed(3)}`);
       console.log(`  Citation: ${topResult.id}`);
       
       // Assert top result contains expected topic

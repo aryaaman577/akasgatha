@@ -50,7 +50,7 @@ async function main() {
     console.log(`SCIENCE CHUNKS (${result.scienceChunks.length}):`);
     for (const chunk of result.scienceChunks) {
       console.log(`  [${chunk.rank}] ${chunk.title}`);
-      console.log(`      Score: ${(chunk.score * 100).toFixed(1)}%`);
+      console.log(`      Raw Score: ${chunk.score.toFixed(3)}`);
       console.log(`      Citation: ${chunk.id}`);
       console.log(`      Source: ${chunk.sourceName}`);
       console.log(`      Preview: ${chunk.content.substring(0, 100)}...`);
@@ -63,7 +63,7 @@ async function main() {
     console.log(`NARRATIVE CHUNKS (${result.narrativeChunks.length}):`);
     for (const chunk of result.narrativeChunks) {
       console.log(`  [${chunk.rank}] ${chunk.title}`);
-      console.log(`      Score: ${(chunk.score * 100).toFixed(1)}%`);
+      console.log(`      Raw Score: ${chunk.score.toFixed(3)}`);
       console.log(`      Citation: ${chunk.id}`);
       console.log(`      Source: ${chunk.sourceName}`);
       console.log(`      Preview: ${chunk.content.substring(0, 100)}...`);
@@ -76,7 +76,7 @@ async function main() {
     console.log(`BOUNDARY CHUNKS (${result.boundaryChunks.length}):`);
     for (const chunk of result.boundaryChunks) {
       console.log(`  [${chunk.rank}] ${chunk.title}`);
-      console.log(`      Score: ${(chunk.score * 100).toFixed(1)}%`);
+      console.log(`      Raw Score: ${chunk.score.toFixed(3)}`);
       console.log(`      Citation: ${chunk.id}`);
       console.log();
     }
@@ -87,7 +87,7 @@ async function main() {
     console.log(`GLOSSARY CHUNKS (${result.glossaryChunks.length}):`);
     for (const chunk of result.glossaryChunks) {
       console.log(`  [${chunk.rank}] ${chunk.title}`);
-      console.log(`      Score: ${(chunk.score * 100).toFixed(1)}%`);
+      console.log(`      Raw Score: ${chunk.score.toFixed(3)}`);
       console.log(`      Citation: ${chunk.id}`);
       console.log();
     }

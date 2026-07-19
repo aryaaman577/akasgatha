@@ -10,7 +10,7 @@
     "corpusHash": "c7be00b9c6a30d397451e609e02458edc75e00cba417a5aea904c52fa338ab4b",
     "indexHash": "3dd53a4c65c29868b09129e4a2f57cec65f5d1b7b5ed115412dd8b734e044724",
     "createdAt": "2026-07-19T16:25:21.876Z",
-    "updatedAt": "2026-07-19T17:24:09.094Z"
+    "updatedAt": "2026-07-19T18:44:19.044Z"
   },
   "entries": [
     {
@@ -4944,7 +4944,7 @@
         "topic": "stars",
         "language": "en",
         "sourceName": "International Astronomical Union",
-        "sourceUrl": "https://www.iau.org/public/themes/constellations/",
+        "sourceUrl": "https://www.iau.org/",
         "sourceType": "official",
         "content": "# Constellations - Scientific Overview\n\nConstellations are officially defined regions of the celestial sphere. The International Astronomical Union recognizes 88 constellations covering the entire sky.\n\n## Purpose and Definition\n\nConstellations serve as a coordinate system for locating celestial objects. Each constellation is a precisely defined area, not just a pattern of stars.\n\n## Perspective Effect\n\nStars in a constellation are not physically close to each other. They appear grouped from Earth's perspective but may be vastly different distances away. Some stars might be dozens of light-years apart in three-dimensional space.\n\n## Cultural Variations\n\nDifferent cultures identified different patterns in the same stars. The modern 88 constellations represent a standardized system adopted for astronomical purposes, primarily based on Greco-Roman traditions with additions from other cultures.\n\n## Observable Constellations\n\nWhich constellations are visible depends on your latitude and the time of year. The zodiac constellations appear along the ecliptic, the Sun's apparent path through the sky.\n\n## Not Fixed Forever\n\nDue to Earth's axial precession and stellar proper motion, constellation patterns slowly change over thousands of years. The patterns we see today differ from what ancient observers saw.",
         "chunkIndex": 0,
