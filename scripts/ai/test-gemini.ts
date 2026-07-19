@@ -6,6 +6,11 @@
  * Phase 5
  */
 
+import { loadEnvConfig } from "@next/env";
+
+// Load environment files (.env.local, .env, etc.)
+loadEnvConfig(process.cwd());
+
 import { getServerEnv } from "../../src/lib/server/env";
 import { GeminiProvider } from "../../src/lib/server/ai/gemini-provider";
 import { retrieveContext } from "../../src/lib/server/rag/retrieval";
