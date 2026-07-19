@@ -6,6 +6,7 @@
 
 import type { JigyasaProvider } from "./types";
 import { MockProvider } from "./mock-provider";
+import { GeminiProvider } from "./gemini-provider";
 import { getServerEnv, validateProviderConfig } from "../env";
 
 let providerInstance: JigyasaProvider | null = null;
@@ -24,15 +25,13 @@ export function getProvider(): JigyasaProvider {
       break;
 
     case "gemini":
-      // Phase 4B: Implement Gemini provider
-      throw new Error(
-        "Gemini provider not yet implemented. Available in Phase 4B. Use AI_PROVIDER=mock for development."
-      );
+      providerInstance = new GeminiProvider();
+      break;
 
     case "openrouter":
-      // Phase 4B: Implement OpenRouter provider
+      // Phase 5+: Implement OpenRouter provider
       throw new Error(
-        "OpenRouter provider not yet implemented. Available in Phase 4B. Use AI_PROVIDER=mock for development."
+        "OpenRouter provider not yet implemented. Use AI_PROVIDER=gemini or AI_PROVIDER=mock."
       );
 
     default:

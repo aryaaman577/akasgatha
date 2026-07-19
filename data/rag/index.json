@@ -10,7 +10,7 @@
     "corpusHash": "c7be00b9c6a30d397451e609e02458edc75e00cba417a5aea904c52fa338ab4b",
     "indexHash": "3dd53a4c65c29868b09129e4a2f57cec65f5d1b7b5ed115412dd8b734e044724",
     "createdAt": "2026-07-19T16:25:21.876Z",
-    "updatedAt": "2026-07-19T18:44:19.044Z"
+    "updatedAt": "2026-07-19T19:38:53.070Z"
   },
   "entries": [
     {
@@ -404,6 +404,7 @@
       ],
       "chunk": {
         "id": "citation-source-policy-chunk-0",
+        "citationId": "citation-source-policy-chunk-0",
         "documentId": "citation-source-policy",
         "documentTitle": "Citation and Source Policy",
         "domain": "boundary",
@@ -816,6 +817,7 @@
       ],
       "chunk": {
         "id": "evidence-policy-chunk-0",
+        "citationId": "evidence-policy-chunk-0",
         "documentId": "evidence-policy",
         "documentTitle": "Evidence and Verification Policy",
         "domain": "boundary",
@@ -1228,6 +1230,7 @@
       ],
       "chunk": {
         "id": "katha-vigyan-separation-chunk-0",
+        "citationId": "katha-vigyan-separation-chunk-0",
         "documentId": "katha-vigyan-separation",
         "documentTitle": "Katha and Vigyan Separation Policy",
         "domain": "boundary",
@@ -1641,6 +1644,7 @@
       ],
       "chunk": {
         "id": "no-supernatural-proof-policy-chunk-0",
+        "citationId": "no-supernatural-proof-policy-chunk-0",
         "documentId": "no-supernatural-proof-policy",
         "documentTitle": "No Supernatural Proof Claims Policy",
         "domain": "boundary",
@@ -2054,6 +2058,7 @@
       ],
       "chunk": {
         "id": "uncertainty-communication-chunk-0",
+        "citationId": "uncertainty-communication-chunk-0",
         "documentId": "uncertainty-communication",
         "documentTitle": "Communicating Scientific Uncertainty",
         "domain": "boundary",
@@ -2466,6 +2471,7 @@
       ],
       "chunk": {
         "id": "glossary-basic-terms-chunk-0",
+        "citationId": "glossary-basic-terms-chunk-0",
         "documentId": "glossary-basic-terms",
         "documentTitle": "Basic Astronomy Terms",
         "domain": "glossary",
@@ -2877,6 +2883,7 @@
       ],
       "chunk": {
         "id": "cosmic-symbolism-overview-chunk-0",
+        "citationId": "cosmic-symbolism-overview-chunk-0",
         "documentId": "cosmic-symbolism-overview",
         "documentTitle": "Cosmic Symbolism in Traditional Narratives",
         "domain": "narrative",
@@ -3289,6 +3296,7 @@
       ],
       "chunk": {
         "id": "nakshatra-cultural-framework-chunk-0",
+        "citationId": "nakshatra-cultural-framework-chunk-0",
         "documentId": "nakshatra-cultural-framework",
         "documentTitle": "Nakshatra Cultural Framework",
         "domain": "narrative",
@@ -3701,6 +3709,7 @@
       ],
       "chunk": {
         "id": "rahu-ketu-eclipse-story-chunk-0",
+        "citationId": "rahu-ketu-eclipse-story-chunk-0",
         "documentId": "rahu-ketu-eclipse-story",
         "documentTitle": "Rahu-Ketu Eclipse Narrative",
         "domain": "narrative",
@@ -4114,6 +4123,7 @@
       ],
       "chunk": {
         "id": "rahu-ketu-nodes-connection-chunk-0",
+        "citationId": "rahu-ketu-nodes-connection-chunk-0",
         "documentId": "rahu-ketu-nodes-connection",
         "documentTitle": "Rahu-Ketu and Lunar Nodes Connection",
         "domain": "narrative",
@@ -4526,6 +4536,7 @@
       ],
       "chunk": {
         "id": "black-hole-basics-chunk-0",
+        "citationId": "black-hole-basics-chunk-0",
         "documentId": "black-hole-basics",
         "documentTitle": "Black Holes - Basic Explanation",
         "domain": "science",
@@ -4938,6 +4949,7 @@
       ],
       "chunk": {
         "id": "constellations-overview-chunk-0",
+        "citationId": "constellations-overview-chunk-0",
         "documentId": "constellations-overview",
         "documentTitle": "Constellations - Scientific Overview",
         "domain": "science",
@@ -5350,6 +5362,7 @@
       ],
       "chunk": {
         "id": "earth-rotation-day-night-chunk-0",
+        "citationId": "earth-rotation-day-night-chunk-0",
         "documentId": "earth-rotation-day-night",
         "documentTitle": "Earth Rotation and Day-Night Cycle",
         "domain": "science",
@@ -5763,6 +5776,7 @@
       ],
       "chunk": {
         "id": "lunar-eclipse-basics-chunk-0",
+        "citationId": "lunar-eclipse-basics-chunk-0",
         "documentId": "lunar-eclipse-basics",
         "documentTitle": "Lunar Eclipse - Basic Explanation",
         "domain": "science",
@@ -6175,6 +6189,7 @@
       ],
       "chunk": {
         "id": "moon-phases-explanation-chunk-0",
+        "citationId": "moon-phases-explanation-chunk-0",
         "documentId": "moon-phases-explanation",
         "documentTitle": "Moon Phases - Scientific Explanation",
         "domain": "science",
@@ -6587,6 +6602,7 @@
       ],
       "chunk": {
         "id": "planetary-motion-basics-chunk-0",
+        "citationId": "planetary-motion-basics-chunk-0",
         "documentId": "planetary-motion-basics",
         "documentTitle": "Planetary Motion - Basic Principles",
         "domain": "science",
@@ -6999,6 +7015,7 @@
       ],
       "chunk": {
         "id": "satellite-orbit-basics-chunk-0",
+        "citationId": "satellite-orbit-basics-chunk-0",
         "documentId": "satellite-orbit-basics",
         "documentTitle": "Satellite Orbits - Basic Principles",
         "domain": "science",
@@ -7411,6 +7428,7 @@
       ],
       "chunk": {
         "id": "seasons-explanation-chunk-0",
+        "citationId": "seasons-explanation-chunk-0",
         "documentId": "seasons-explanation",
         "documentTitle": "Seasons - Scientific Explanation",
         "domain": "science",
@@ -7823,6 +7841,7 @@
       ],
       "chunk": {
         "id": "solar-eclipse-basics-chunk-0",
+        "citationId": "solar-eclipse-basics-chunk-0",
         "documentId": "solar-eclipse-basics",
         "documentTitle": "Solar Eclipse - Basic Explanation",
         "domain": "science",
@@ -8235,6 +8254,7 @@
       ],
       "chunk": {
         "id": "telescope-basics-chunk-0",
+        "citationId": "telescope-basics-chunk-0",
         "documentId": "telescope-basics",
         "documentTitle": "Telescopes - How They Work",
         "domain": "science",

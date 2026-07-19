@@ -176,15 +176,11 @@ export async function POST(request: NextRequest) {
         answer: result.answer,
         meta: {
           provider: provider.name,
+          model: result.meta.model || provider.name,
           mock: isProviderMock(),
+          ragUsed: ragContext !== null,
+          retrievedChunkCount: ragContext?.totalResults || 0,
           durationMs,
-          ...(ragContext && {
-            rag: {
-              enabled: true,
-              resultsCount: ragContext.totalResults,
-              domains: ragContext.metadata.domains,
-            },
-          }),
         },
       };
 
@@ -219,6 +215,102 @@ export async function POST(request: NextRequest) {
         error instanceof Error ? error.message : "Request was aborted",
         code === "PROVIDER_TIMEOUT"
       );
+    }
+
+    // Handle known error codes from providers
+    if (error instanceof Error) {
+      const errorMessage = error.message;
+
+      // Parse error code from message
+      if (errorMessage.startsWith("INSUFFICIENT_KNOWLEDGE:")) {
+        return createErrorResponse(
+          requestId,
+          "INSUFFICIENT_KNOWLEDGE",
+          errorMessage.replace("INSUFFICIENT_KNOWLEDGE: ", ""),
+          false
+        );
+      }
+
+      if (errorMessage.startsWith("OUT_OF_SCOPE:")) {
+        return createErrorResponse(
+          requestId,
+          "OUT_OF_SCOPE",
+          errorMessage.replace("OUT_OF_SCOPE: ", ""),
+          false
+        );
+      }
+
+      if (errorMessage.startsWith("PROVIDER_AUTH_FAILED:")) {
+        return createErrorResponse(
+          requestId,
+          "PROVIDER_AUTH_FAILED",
+          errorMessage.replace("PROVIDER_AUTH_FAILED: ", ""),
+          false
+        );
+      }
+
+      if (errorMessage.startsWith("PROVIDER_RATE_LIMITED:")) {
+        return createErrorResponse(
+          requestId,
+          "PROVIDER_RATE_LIMITED",
+          errorMessage.replace("PROVIDER_RATE_LIMITED: ", ""),
+          true
+        );
+      }
+
+      if (errorMessage.startsWith("PROVIDER_SAFETY_BLOCK:")) {
+        return createErrorResponse(
+          requestId,
+          "PROVIDER_SAFETY_BLOCK",
+          errorMessage.replace("PROVIDER_SAFETY_BLOCK: ", ""),
+          false
+        );
+      }
+
+      if (errorMessage.startsWith("PROVIDER_INVALID_OUTPUT:")) {
+        return createErrorResponse(
+          requestId,
+          "PROVIDER_INVALID_OUTPUT",
+          errorMessage.replace("PROVIDER_INVALID_OUTPUT: ", ""),
+          true
+        );
+      }
+
+      if (errorMessage.startsWith("CITATION_VALIDATION_FAILED:")) {
+        return createErrorResponse(
+          requestId,
+          "CITATION_VALIDATION_FAILED",
+          errorMessage.replace("CITATION_VALIDATION_FAILED: ", ""),
+          true
+        );
+      }
+
+      if (errorMessage.startsWith("PROVIDER_TIMEOUT:")) {
+        return createErrorResponse(
+          requestId,
+          "PROVIDER_TIMEOUT",
+          errorMessage.replace("PROVIDER_TIMEOUT: ", ""),
+          true
+        );
+      }
+
+      if (errorMessage.startsWith("PROVIDER_UNAVAILABLE:")) {
+        return createErrorResponse(
+          requestId,
+          "PROVIDER_UNAVAILABLE",
+          errorMessage.replace("PROVIDER_UNAVAILABLE: ", ""),
+          true
+        );
+      }
+
+      if (errorMessage.startsWith("REQUEST_ABORTED:")) {
+        return createErrorResponse(
+          requestId,
+          "REQUEST_ABORTED",
+          errorMessage.replace("REQUEST_ABORTED: ", ""),
+          false
+        );
+      }
     }
 
     // Log unexpected errors (without sensitive details)

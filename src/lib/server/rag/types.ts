@@ -101,6 +101,9 @@ export interface RagChunk {
   // Unique identifier for this chunk
   id: string;
   
+  // Citation identifier for references (generated from id)
+  citationId: string;
+  
   // Parent document metadata
   documentId: string;
   documentTitle: string;

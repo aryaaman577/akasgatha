@@ -72,8 +72,10 @@ export function chunkDocument(
   // Helper to create a chunk
   const createChunk = (content: string, index: number, total: number): RagChunk => {
     const tokenCount = countTokens(content);
+    const chunkId = `${document.metadata.id}-chunk-${index}`;
     return {
-      id: `${document.metadata.id}-chunk-${index}`,
+      id: chunkId,
+      citationId: chunkId, // Citation ID is same as chunk ID for now
       documentId: document.metadata.id,
       documentTitle: document.metadata.title,
       domain: document.metadata.domain,

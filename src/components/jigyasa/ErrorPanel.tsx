@@ -12,10 +12,17 @@ interface ErrorPanelProps {
 const ERROR_TITLES: Record<JigyasaErrorResponse["error"]["code"], string> = {
   INVALID_REQUEST: "Invalid Request",
   UNSUPPORTED_CONTENT_TYPE: "Unsupported Content Type",
+  OUT_OF_SCOPE: "Out of Scope",
+  INSUFFICIENT_KNOWLEDGE: "Insufficient Knowledge",
   RATE_LIMITED: "Rate Limit Exceeded",
   PROVIDER_NOT_CONFIGURED: "Provider Not Configured",
+  PROVIDER_AUTH_FAILED: "Authentication Failed",
+  PROVIDER_RATE_LIMITED: "Provider Rate Limited",
   PROVIDER_TIMEOUT: "Request Timeout",
   PROVIDER_UNAVAILABLE: "Provider Unavailable",
+  PROVIDER_SAFETY_BLOCK: "Content Safety Block",
+  PROVIDER_INVALID_OUTPUT: "Invalid Response",
+  CITATION_VALIDATION_FAILED: "Citation Validation Failed",
   REQUEST_ABORTED: "Request Cancelled",
   INTERNAL_ERROR: "Internal Error",
 };

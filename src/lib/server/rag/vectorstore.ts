@@ -165,6 +165,7 @@ export async function queryVectorStore(
 
     const chunk: RagChunk = {
       id: match.id,
+      citationId: match.id, // Citation ID is same as chunk ID
       documentId: metadata.documentId,
       documentTitle: metadata.documentTitle,
       domain: metadata.domain as RagChunk["domain"],

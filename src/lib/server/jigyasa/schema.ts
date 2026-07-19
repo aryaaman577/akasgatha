@@ -99,7 +99,10 @@ export const jigyasaSuccessResponseSchema = z.object({
   }),
   meta: z.object({
     provider: z.string(),
+    model: z.string(),
     mock: z.boolean(),
+    ragUsed: z.boolean(),
+    retrievedChunkCount: z.number(),
     durationMs: z.number(),
   }),
 });
@@ -113,10 +116,17 @@ export const jigyasaErrorResponseSchema = z.object({
     code: z.enum([
       "INVALID_REQUEST",
       "UNSUPPORTED_CONTENT_TYPE",
+      "OUT_OF_SCOPE",
+      "INSUFFICIENT_KNOWLEDGE",
       "RATE_LIMITED",
       "PROVIDER_NOT_CONFIGURED",
+      "PROVIDER_AUTH_FAILED",
+      "PROVIDER_RATE_LIMITED",
       "PROVIDER_TIMEOUT",
       "PROVIDER_UNAVAILABLE",
+      "PROVIDER_SAFETY_BLOCK",
+      "PROVIDER_INVALID_OUTPUT",
+      "CITATION_VALIDATION_FAILED",
       "REQUEST_ABORTED",
       "INTERNAL_ERROR",
     ]),

@@ -40,6 +40,8 @@ export interface ProviderOutput {
   answer: ProviderAnswer;
   meta: {
     durationMs: number;
+    model?: string;
+    tokensUsed?: number;
   };
 }
 
