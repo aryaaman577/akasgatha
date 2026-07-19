@@ -181,3 +181,42 @@ export async function validateCorpus(corpusDir: string): Promise<ValidationResul
     stats,
   };
 }
+
+/**
+ * Load corpus documents in RagDocument format (for chunking)
+ * Phase 4B-2
+ */
+export async function loadCorpusDocuments(
+  corpusDir: string
+): Promise<import("./types").RagDocument[]> {
+  const validation = await validateCorpus(corpusDir);
+
+  if (!validation.valid) {
+    throw new Error(`Corpus validation failed with ${validation.errors.length} errors`);
+  }
+
+  return validation.documents.map((doc) => ({
+    metadata: {
+      id: doc.frontmatter.id,
+      title: doc.frontmatter.title,
+      domain: doc.frontmatter.domain,
+      topic: doc.frontmatter.topic,
+      language: doc.frontmatter.language,
+      sourceName: doc.frontmatter.sourceName,
+      sourceUrl: doc.frontmatter.sourceUrl,
+      sourceType: doc.frontmatter.sourceType,
+      reviewedAt: doc.frontmatter.reviewedAt,
+      licenseNote: doc.frontmatter.licenseNote,
+      author: doc.frontmatter.author,
+      publishedAt: doc.frontmatter.publishedAt,
+      version: doc.frontmatter.version,
+      tags: doc.frontmatter.tags,
+      relatedTopics: doc.frontmatter.relatedTopics,
+      culturalRegion: doc.frontmatter.culturalRegion,
+      notes: doc.frontmatter.notes,
+    },
+    content: doc.content,
+    filepath: doc.filePath,
+  }));
+}
+

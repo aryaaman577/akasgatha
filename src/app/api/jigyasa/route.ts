@@ -6,7 +6,6 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
-import { ZodError } from "zod";
 import { getServerEnv } from "@/lib/server/env";
 import { 
   jigyasaRequestSchema, 
@@ -40,7 +39,7 @@ export async function POST(request: NextRequest) {
     let body: unknown;
     try {
       body = await request.json();
-    } catch (error) {
+    } catch {
       return createErrorResponse(requestId, "INVALID_REQUEST", "Invalid JSON in request body", false);
     }
 
@@ -123,12 +122,41 @@ export async function POST(request: NextRequest) {
     try {
       // Get provider and generate answer
       const provider = getProvider();
+      
+      // RAG retrieval (Phase 4B-4)
+      let ragContext = null;
+      if (process.env.OPENAI_API_KEY && process.env.PINECONE_API_KEY) {
+        try {
+          const { retrieveContext } = await import("@/lib/server/rag/retrieval");
+          ragContext = await retrieveContext(input.question, {
+            topK: 5,
+            minScore: 0.5,
+            languageFilter: input.language === "hi" ? "hi" : "en",
+          });
+          
+          logger.info("RAG retrieval completed", {
+            requestId,
+            resultsCount: ragContext.totalResults,
+            domains: ragContext.metadata.domains,
+            avgScore: ragContext.metadata.avgScore,
+            retrievalTime: ragContext.retrievalTime,
+          });
+        } catch (ragError) {
+          // Log RAG errors but don't fail the request
+          logger.warn("RAG retrieval failed", {
+            requestId,
+            error: ragError instanceof Error ? ragError.message : "Unknown error",
+          });
+        }
+      }
+      
       const result = await provider.generate({
         question: input.question,
         language: input.language,
         history: input.history,
         requestId,
         signal: controller.signal,
+        ragContext, // Pass RAG context to provider
       });
 
       const durationMs = Date.now() - startTime;
@@ -138,6 +166,7 @@ export async function POST(request: NextRequest) {
         status: 200,
         provider: provider.name,
         mock: isProviderMock(),
+        ragEnabled: ragContext !== null,
         durationMs,
       });
 
@@ -149,6 +178,13 @@ export async function POST(request: NextRequest) {
           provider: provider.name,
           mock: isProviderMock(),
           durationMs,
+          ...(ragContext && {
+            rag: {
+              enabled: true,
+              resultsCount: ragContext.totalResults,
+              domains: ragContext.metadata.domains,
+            },
+          }),
         },
       };
 

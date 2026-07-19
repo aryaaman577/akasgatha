@@ -8,17 +8,23 @@
     "start": "next start",
     "lint": "eslint .",
     "type-check": "tsc --noEmit",
-    "rag:validate": "tsx scripts/rag/validate-corpus.ts"
+    "rag:validate": "tsx scripts/rag/validate-corpus.ts",
+    "rag:chunk": "tsx scripts/rag/chunk-corpus.ts",
+    "rag:index": "tsx scripts/rag/index-corpus.ts",
+    "rag:test-retrieval": "tsx scripts/rag/test-retrieval.ts"
   },
   "dependencies": {
     "@fontsource/cinzel-decorative": "^5.2.8",
     "@fontsource/manrope": "^5.2.8",
+    "@pinecone-database/pinecone": "^8.0.0",
     "@types/three": "^0.185.1",
     "gray-matter": "^4.0.3",
     "next": "^16.2.10",
+    "openai": "^6.48.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
-    "three": "^0.185.1"
+    "three": "^0.185.1",
+    "tiktoken": "^1.0.22"
   },
   "devDependencies": {
     "@types/node": "^26.1.0",

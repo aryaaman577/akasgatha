@@ -4,6 +4,8 @@
  * Defines the interface for AI provider implementations.
  */
 
+import type { RagContext } from "../rag/types";
+
 export interface ProviderInput {
   question: string;
   language: "en" | "hi" | "hinglish";
@@ -13,6 +15,7 @@ export interface ProviderInput {
   }>;
   requestId: string;
   signal: AbortSignal;
+  ragContext?: RagContext | null; // Phase 4B-4: Optional RAG context
 }
 
 export interface ProviderAnswer {

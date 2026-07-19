@@ -56,29 +56,69 @@ export class MockProvider implements JigyasaProvider {
       ? "" 
       : ` (Response in ${input.language === "hi" ? "Hindi" : "Hinglish"} would be provided by production AI)`;
 
+    // Phase 4B: Include RAG context if available
+    const hasRag = input.ragContext && input.ragContext.retrievedChunks.length > 0;
+    const ragNote = hasRag 
+      ? ` RAG retrieved ${input.ragContext!.totalResults} relevant sources.`
+      : "";
+
+    // Extract sources from RAG context
+    const sources = hasRag
+      ? input.ragContext!.retrievedChunks.map((result, idx) => ({
+          id: result.chunk.id,
+          title: result.chunk.documentTitle,
+          url: result.chunk.sourceUrl || undefined,
+        }))
+      : [];
+
     return {
-      shortAnswer: `Phase 4A Development Response${languageNote}`,
+      shortAnswer: `Phase 4B Development Response${languageNote}${ragNote}`,
       
-      katha: `The Jigyasa backend connection is working successfully. This is a Phase 4A development response demonstrating the API structure. Cultural narratives and story-based explanations will be provided by the production AI system with grounded knowledge retrieval in the next phases.`,
+      katha: hasRag && input.ragContext!.metadata.domains.includes("narrative")
+        ? `Cultural narratives retrieved from corpus: ${input.ragContext!.retrievedChunks
+            .filter(r => r.chunk.domain === "narrative")
+            .map(r => r.chunk.documentTitle)
+            .join(", ")}. Full narrative synthesis will be provided by production AI.`
+        : `The Jigyasa backend connection is working successfully. This is a development response demonstrating RAG integration. Cultural narratives will be synthesized by production AI using retrieved context.`,
       
-      vigyan: `Scientific explanations require access to the knowledge corpus and evidence-based retrieval system. The backend API is now ready to accept questions, validate requests, handle rate limiting, and return structured responses. Production AI integration with Gemini or OpenRouter will be added in Phase 4B.`,
+      vigyan: hasRag && input.ragContext!.metadata.domains.includes("science")
+        ? `Scientific explanations retrieved from corpus: ${input.ragContext!.retrievedChunks
+            .filter(r => r.chunk.domain === "science")
+            .map(r => r.chunk.documentTitle)
+            .join(", ")}. Full scientific synthesis will be provided by production AI.`
+        : `Scientific explanations require production AI integration. The backend API is ready with RAG retrieval, validation, rate limiting, and structured responses.`,
       
-      pramaan: [
-        "Phase 4A backend foundation established",
-        "Request validation working",
-        "Provider abstraction in place",
-        "Mock responses clearly labeled",
-      ],
+      pramaan: hasRag
+        ? [
+            `RAG retrieval: ${input.ragContext!.totalResults} sources`,
+            `Domains: ${input.ragContext!.metadata.domains.join(", ")}`,
+            `Avg relevance: ${(input.ragContext!.metadata.avgScore * 100).toFixed(1)}%`,
+            `Retrieval time: ${input.ragContext!.retrievalTime}ms`,
+          ]
+        : [
+            "Phase 4B RAG system ready",
+            "Request validation working",
+            "Provider abstraction in place",
+            "Mock responses clearly labeled",
+          ],
       
-      uncertainty: `This is a Phase 4A development mock response. Real answers with retrieved sources, evidence boundaries, and uncertainty analysis will be provided after RAG and production AI integration.`,
+      uncertainty: hasRag
+        ? `This is a Phase 4B development mock response using ${input.ragContext!.totalResults} retrieved sources. Production AI will synthesize coherent answers with proper uncertainty bounds.`
+        : `This is a development mock response. Real answers with retrieved sources, evidence boundaries, and uncertainty analysis require production AI integration.`,
       
-      sources: [], // Mock provider does not fabricate citations
+      sources,
       
-      followUps: [
-        "How will the knowledge corpus be structured?",
-        "What retrieval strategy will be used?",
-        "How will evidence quality be verified?",
-      ],
+      followUps: hasRag
+        ? [
+            "Can you explain this in more detail?",
+            "What are the cultural perspectives on this?",
+            "What does modern science say?",
+          ]
+        : [
+            "How will the knowledge corpus be structured?",
+            "What retrieval strategy will be used?",
+            "How will evidence quality be verified?",
+          ],
       
       visual: undefined, // Visual scenes will be added when answer-specific 3D is implemented
     };
