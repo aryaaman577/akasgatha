@@ -154,18 +154,15 @@ function AnimatedEclipseScene({ mode }: { mode: EclipseMode }) {
   });
 
   // Position calculations based on mode
-  let sunPos: [number, number, number] = [-8, 0, 0];
   let earthPos: [number, number, number] = [0, 0, 0];
   let moonPos: [number, number, number] = [2, 0, 0];
 
   if (mode === "solar") {
     // Solar eclipse: Sun - Moon - Earth
-    sunPos = [-6, 0, 0];
     moonPos = [-2, 0, 0];
     earthPos = [2, 0, 0];
   } else if (mode === "lunar") {
     // Lunar eclipse: Sun - Earth - Moon
-    sunPos = [-6, 0, 0];
     earthPos = [0, 0, 0];
     moonPos = [4, 0, 0];
   }
@@ -243,17 +240,32 @@ function EclipseLabels({ mode }: { mode: EclipseMode }) {
 
 // Main component
 export function EclipseDrishyaYantra({ mode = "solar", className = "" }: EclipseDrishyaYantraProps) {
-  const [reducedMotion, setReducedMotion] = useState(false);
-  const [isClient, setIsClient] = useState(false);
+  const [clientState, setClientState] = useState<{ isClient: boolean; reducedMotion: boolean }>({
+    isClient: false,
+    reducedMotion: false,
+  });
 
   useEffect(() => {
-    setIsClient(true);
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReducedMotion(mq.matches);
-    const handler = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
-    mq.addEventListener("change", handler);
-    return () => mq.removeEventListener("change", handler);
+    // Initialize client-side only features
+    if (typeof window !== "undefined") {
+      const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+      
+      // Single state update for client-side initialization (SSR pattern)
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setClientState({
+        isClient: true,
+        reducedMotion: mq.matches,
+      });
+
+      const handler = (e: MediaQueryListEvent) => {
+        setClientState((prev) => ({ ...prev, reducedMotion: e.matches }));
+      };
+      mq.addEventListener("change", handler);
+      return () => mq.removeEventListener("change", handler);
+    }
   }, []);
+
+  const { isClient, reducedMotion } = clientState;
 
   if (!isClient) {
     return (
@@ -302,6 +314,7 @@ export function EclipseDrishyaYantra({ mode = "solar", className = "" }: Eclipse
 
 // Eclipse mode detection helper
 export function detectEclipseQuestion(question: string): EclipseMode | null {
+  if (!question) return null;
   const q = question.toLowerCase();
   
   // Solar eclipse keywords
