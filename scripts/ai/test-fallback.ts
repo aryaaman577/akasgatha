@@ -11,6 +11,11 @@
  * Usage: npm run ai:test-fallback
  */
 
+import { loadEnvConfig } from "@next/env";
+
+// Load environment files (.env.local, .env, etc.)
+loadEnvConfig(process.cwd());
+
 import { getProviderRouter } from "../../src/lib/server/ai/jigyasa-provider-router";
 import { retrieveLocalContext } from "../../src/lib/server/rag/local-retrieval";
 import { getServerEnv } from "../../src/lib/server/env";

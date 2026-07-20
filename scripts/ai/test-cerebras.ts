@@ -11,6 +11,11 @@
  * Usage: npm run ai:test-cerebras
  */
 
+import { loadEnvConfig } from "@next/env";
+
+// Load environment files (.env.local, .env, etc.)
+loadEnvConfig(process.cwd());
+
 import { CerebrasProvider } from "../../src/lib/server/ai/cerebras-provider";
 import { retrieveLocalContext } from "../../src/lib/server/rag/local-retrieval";
 import { getServerEnv } from "../../src/lib/server/env";
