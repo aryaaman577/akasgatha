@@ -146,18 +146,75 @@ export async function POST(request: NextRequest) {
         });
       }
       
-      // Use provider router for automatic fallback support
-      const { getProviderWithFallback } = await import("@/lib/server/ai/provider-registry");
-      const router = getProviderWithFallback();
+      // Handle provider preference
+      let result;
       
-      const result = await router.generate({
-        question: input.question,
-        language: input.language,
-        history: input.history,
-        requestId,
-        signal: controller.signal,
-        ragContext, // Pass SAME RAG context to all providers
-      });
+      if (input.providerPreference === "groq") {
+        // Direct Groq provider call - no fallback
+        logger.info("Using direct Groq provider (user preference)", {
+          requestId,
+          providerPreference: input.providerPreference,
+        });
+        
+        const { GroqProvider } = await import("@/lib/server/ai/groq-provider");
+        
+        try {
+          const groqProvider = new GroqProvider();
+          const groqResult = await groqProvider.generate({
+            question: input.question,
+            language: input.language,
+            history: input.history,
+            requestId,
+            signal: controller.signal,
+            ragContext,
+          });
+          
+          result = {
+            ...groqResult,
+            meta: {
+              ...groqResult.meta,
+              provider: "groq",
+              fallbackUsed: false,
+              providerAttempts: 1,
+              primaryProvider: "groq",
+              fallbackProvider: undefined,
+            },
+          };
+        } catch (error) {
+          // For direct provider calls, throw errors immediately (no fallback)
+          logger.error("Direct Groq provider failed", {
+            requestId,
+            error: error instanceof Error ? error.message : String(error),
+          });
+          throw error;
+        }
+      } else if (input.providerPreference === "cerebras") {
+        // Cerebras disabled due to billing
+        return createErrorResponse(
+          requestId,
+          "PROVIDER_NOT_CONFIGURED",
+          "Cerebras provider is currently unavailable. Please use Auto or Groq.",
+          false
+        );
+      } else {
+        // Auto mode - use provider router with fallback support
+        logger.info("Using automatic provider routing", {
+          requestId,
+          providerPreference: input.providerPreference || "auto",
+        });
+        
+        const { getProviderWithFallback } = await import("@/lib/server/ai/provider-registry");
+        const router = getProviderWithFallback();
+        
+        result = await router.generate({
+          question: input.question,
+          language: input.language,
+          history: input.history,
+          requestId,
+          signal: controller.signal,
+          ragContext, // Pass SAME RAG context to all providers
+        });
+      }
 
       const durationMs = Date.now() - startTime;
 

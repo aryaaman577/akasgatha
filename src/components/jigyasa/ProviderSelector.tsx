@@ -76,6 +76,14 @@ export function ProviderSelector({ value, onChange, disabled }: ProviderSelector
         Choose AI
       </label>
       
+      {/* Status Indicator */}
+      {isGroqAvailable && !isOpen && (
+        <div className="mb-2 text-xs flex items-center gap-2" style={{ color: "var(--space-cyan-dim)", opacity: 0.7 }}>
+          <span className="inline-block w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+          <span>Groq Ready</span>
+        </div>
+      )}
+      
       <button
         type="button"
         onClick={() => !disabled && setIsOpen(!isOpen)}
@@ -113,33 +121,34 @@ export function ProviderSelector({ value, onChange, disabled }: ProviderSelector
             <span className="ml-2 text-xs opacity-70">Recommended</span>
           </button>
 
-          <button
-            type="button"
-            onClick={() => isGroqAvailable && handleSelect("groq")}
-            disabled={!isGroqAvailable}
-            className="w-full px-4 py-3 text-left text-fluid-button font-medium transition-all duration-200 hover:bg-[rgba(95,166,184,0.12)] focus:outline-none focus:bg-[rgba(95,166,184,0.12)] disabled:opacity-50 disabled:cursor-not-allowed"
-            style={{
-              color: value === "groq" ? "var(--space-cyan-dim)" : isGroqAvailable ? "var(--space-moonlight)" : "var(--space-stardust)",
-              background: value === "groq" ? "rgba(95,166,184,0.08)" : "transparent",
-            }}
-          >
-            Groq
-            {!isGroqAvailable && <span className="ml-2 text-xs opacity-50">Not configured</span>}
-          </button>
+          {isGroqAvailable && (
+            <button
+              type="button"
+              onClick={() => handleSelect("groq")}
+              className="w-full px-4 py-3 text-left text-fluid-button font-medium transition-all duration-200 hover:bg-[rgba(95,166,184,0.12)] focus:outline-none focus:bg-[rgba(95,166,184,0.12)]"
+              style={{
+                color: value === "groq" ? "var(--space-cyan-dim)" : "var(--space-moonlight)",
+                background: value === "groq" ? "rgba(95,166,184,0.08)" : "transparent",
+              }}
+            >
+              Groq
+            </button>
+          )}
 
-          <button
-            type="button"
-            onClick={() => isCerebrasAvailable && handleSelect("cerebras")}
-            disabled={!isCerebrasAvailable}
-            className="w-full px-4 py-3 text-left text-fluid-button font-medium transition-all duration-200 hover:bg-[rgba(180,120,210,0.12)] focus:outline-none focus:bg-[rgba(180,120,210,0.12)] disabled:opacity-50 disabled:cursor-not-allowed"
-            style={{
-              color: value === "cerebras" ? "var(--space-pulsar)" : !isCerebrasAvailable ? "var(--space-stardust)" : "var(--space-moonlight)",
-              background: value === "cerebras" ? "rgba(180,120,210,0.08)" : "transparent",
-            }}
-          >
-            Cerebras
-            <span className="ml-2 text-xs opacity-50">Setup required</span>
-          </button>
+          {/* Cerebras hidden when not available */}
+          {isCerebrasAvailable && (
+            <button
+              type="button"
+              onClick={() => handleSelect("cerebras")}
+              className="w-full px-4 py-3 text-left text-fluid-button font-medium transition-all duration-200 hover:bg-[rgba(180,120,210,0.12)] focus:outline-none focus:bg-[rgba(180,120,210,0.12)]"
+              style={{
+                color: value === "cerebras" ? "var(--space-pulsar)" : "var(--space-moonlight)",
+                background: value === "cerebras" ? "rgba(180,120,210,0.08)" : "transparent",
+              }}
+            >
+              Cerebras
+            </button>
+          )}
         </div>
       )}
     </div>
