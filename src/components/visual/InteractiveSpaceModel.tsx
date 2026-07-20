@@ -7,6 +7,7 @@ import React, {
   useCallback,
   useMemo,
 } from "react";
+import dynamic from "next/dynamic";
 
 /* ============================================================
    TYPES
@@ -270,40 +271,14 @@ function StarMap() {
   );
 }
 
+// Dynamic import for WebGL model
+const AkashGranthModel = dynamic(
+  () => import("./AkashGranthModel").then(mod => ({ default: mod.AkashGranthModel })),
+  { ssr: false }
+);
+
 function KnowledgeLibrary() {
-  return (
-    <div className="relative flex h-full w-full items-center justify-center" style={{ transformStyle: "preserve-3d" }}>
-      {/* Archive glow */}
-      <div className="absolute h-40 w-40 rounded-full"
-        style={{ background: "radial-gradient(circle, rgba(189,165,106,0.12) 0%, transparent 70%)", filter: "blur(8px)" }} />
-      {/* Orbiting knowledge rings */}
-      <div className="absolute h-44 w-44 rounded-full"
-        style={{ border: "1px solid rgba(189,165,106,0.35)", transform: `rotateX(68deg) rotateZ(calc(var(--idle) * 0.3))` }} />
-      <div className="absolute h-32 w-32 rounded-full"
-        style={{ border: "1px solid rgba(85,124,214,0.4)", transform: `rotateX(55deg) rotateZ(calc(var(--idle) * -0.4))` }} />
-      {/* Archive slabs — stacked floating rectangles */}
-      {[0, 1, 2].map((i) => (
-        <div key={i} className="absolute rounded"
-          style={{
-            width: `${48 - i * 8}px`,
-            height: `${6 - i}px`,
-            background: i === 0
-              ? "linear-gradient(90deg, rgba(189,165,106,0.7), rgba(241,240,232,0.5))"
-              : i === 1
-              ? "linear-gradient(90deg, rgba(85,124,214,0.5), rgba(95,166,184,0.4))"
-              : "linear-gradient(90deg, rgba(41,29,85,0.6), rgba(119,89,217,0.4))",
-            transform: `translateY(${(i - 1) * 14}px) translateZ(${(2 - i) * 10}px)`,
-            boxShadow: i === 0 ? "0 0 10px rgba(189,165,106,0.3)" : "none",
-          }} />
-      ))}
-      {/* Glyph lines */}
-      <svg viewBox="0 0 60 60" className="absolute h-16 w-16 opacity-30">
-        <line x1="10" y1="20" x2="50" y2="20" stroke="rgba(189,165,106,0.8)" strokeWidth="1" />
-        <line x1="10" y1="30" x2="40" y2="30" stroke="rgba(189,165,106,0.6)" strokeWidth="1" />
-        <line x1="10" y1="40" x2="45" y2="40" stroke="rgba(189,165,106,0.7)" strokeWidth="1" />
-      </svg>
-    </div>
-  );
+  return <AkashGranthModel />;
 }
 
 function QuestionOrb() {
