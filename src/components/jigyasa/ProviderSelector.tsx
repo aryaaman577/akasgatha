@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 
-type ProviderOption = "auto" | "groq" | "cerebras";
+type ProviderOption = "auto" | "groq";
 
 interface ProviderSelectorProps {
   value: ProviderOption;
@@ -135,20 +135,7 @@ export function ProviderSelector({ value, onChange, disabled }: ProviderSelector
             </button>
           )}
 
-          {/* Cerebras hidden when not available */}
-          {isCerebrasAvailable && (
-            <button
-              type="button"
-              onClick={() => handleSelect("cerebras")}
-              className="w-full px-4 py-3 text-left text-fluid-button font-medium transition-all duration-200 hover:bg-[rgba(180,120,210,0.12)] focus:outline-none focus:bg-[rgba(180,120,210,0.12)]"
-              style={{
-                color: value === "cerebras" ? "var(--space-pulsar)" : "var(--space-moonlight)",
-                background: value === "cerebras" ? "rgba(180,120,210,0.08)" : "transparent",
-              }}
-            >
-              Cerebras
-            </button>
-          )}
+          {/* Cerebras hidden - not available */}
         </div>
       )}
     </div>

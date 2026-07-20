@@ -188,14 +188,6 @@ export async function POST(request: NextRequest) {
           });
           throw error;
         }
-      } else if (input.providerPreference === "cerebras") {
-        // Cerebras disabled due to billing
-        return createErrorResponse(
-          requestId,
-          "PROVIDER_NOT_CONFIGURED",
-          "Cerebras provider is currently unavailable. Please use Auto or Groq.",
-          false
-        );
       } else {
         // Auto mode - use provider router with fallback support
         logger.info("Using automatic provider routing", {

@@ -36,8 +36,9 @@ export const jigyasaRequestSchema = z.object({
     .optional(),
   
   // Phase 5 UX: AI provider preference (optional, backward-compatible)
+  // Only Groq is currently active
   providerPreference: z
-    .enum(["auto", "groq", "cerebras"])
+    .enum(["auto", "groq"])
     .default("auto")
     .optional(),
   
