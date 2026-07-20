@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 type ProviderOption = "auto" | "groq" | "cerebras";
 
@@ -17,6 +17,8 @@ interface ProviderCapabilities {
 
 export function ProviderSelector({ value, onChange, disabled }: ProviderSelectorProps) {
   const [capabilities, setCapabilities] = useState<ProviderCapabilities | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Fetch capabilities once on mount
@@ -33,11 +35,39 @@ export function ProviderSelector({ value, onChange, disabled }: ProviderSelector
       });
   }, []);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
+
   const isGroqAvailable = capabilities?.providers.includes("groq") ?? false;
   const isCerebrasAvailable = capabilities?.providers.includes("cerebras") ?? false;
 
+  const getDisplayLabel = () => {
+    if (value === "auto") return "Auto (Recommended)";
+    if (value === "groq") return "Groq";
+    if (value === "cerebras") return "Cerebras";
+    return "Auto";
+  };
+
+  const handleSelect = (option: ProviderOption) => {
+    onChange(option);
+    setIsOpen(false);
+  };
+
   return (
-    <div>
+    <div ref={dropdownRef} className="relative">
       <label
         htmlFor="provider-select"
         className="block text-fluid-button font-medium mb-2"
@@ -45,72 +75,73 @@ export function ProviderSelector({ value, onChange, disabled }: ProviderSelector
       >
         Choose AI
       </label>
-      <div className="flex gap-2 flex-wrap sm:flex-nowrap">
-        <button
-          type="button"
-          onClick={() => onChange("auto")}
-          disabled={disabled}
-          className={`flex-1 min-h-[44px] px-4 py-2 rounded-lg text-fluid-button font-medium transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-[var(--space-antique-gold)] disabled:opacity-50 disabled:cursor-not-allowed ${
-            value === "auto"
-              ? "border-2"
-              : "border"
-          }`}
+      
+      <button
+        type="button"
+        onClick={() => !disabled && setIsOpen(!isOpen)}
+        disabled={disabled}
+        className="w-full min-h-[44px] px-4 py-2 rounded-lg text-fluid-button font-medium transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-[var(--space-antique-gold)] disabled:opacity-50 disabled:cursor-not-allowed border flex items-center justify-between"
+        style={{
+          borderColor: isOpen ? "var(--space-antique-gold)" : "rgba(189,165,106,0.2)",
+          background: "rgba(7,9,18,0.6)",
+          color: "var(--space-moonlight)",
+        }}
+      >
+        <span>{getDisplayLabel()}</span>
+        <span style={{ transform: isOpen ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.2s" }}>▼</span>
+      </button>
+
+      {isOpen && !disabled && (
+        <div
+          className="absolute z-50 w-full mt-2 rounded-lg border overflow-hidden shadow-lg"
           style={{
-            borderColor: value === "auto" ? "var(--space-antique-gold)" : "rgba(189,165,106,0.2)",
-            background: value === "auto" ? "rgba(189,165,106,0.12)" : "rgba(7,9,18,0.6)",
-            color: value === "auto" ? "var(--space-antique-gold)" : "var(--space-moonlight)",
+            background: "rgba(7,9,18,0.95)",
+            borderColor: "rgba(189,165,106,0.3)",
+            backdropFilter: "blur(10px)",
           }}
-          aria-pressed={value === "auto"}
         >
-          Auto
-          {value === "auto" && (
+          <button
+            type="button"
+            onClick={() => handleSelect("auto")}
+            className="w-full px-4 py-3 text-left text-fluid-button font-medium transition-all duration-200 hover:bg-[rgba(189,165,106,0.12)] focus:outline-none focus:bg-[rgba(189,165,106,0.12)]"
+            style={{
+              color: value === "auto" ? "var(--space-antique-gold)" : "var(--space-moonlight)",
+              background: value === "auto" ? "rgba(189,165,106,0.08)" : "transparent",
+            }}
+          >
+            Auto
             <span className="ml-2 text-xs opacity-70">Recommended</span>
-          )}
-        </button>
+          </button>
 
-        <button
-          type="button"
-          onClick={() => onChange("groq")}
-          disabled={disabled || !isGroqAvailable}
-          className={`flex-1 min-h-[44px] px-4 py-2 rounded-lg text-fluid-button font-medium transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-[var(--space-antique-gold)] disabled:opacity-50 disabled:cursor-not-allowed ${
-            value === "groq"
-              ? "border-2"
-              : "border"
-          }`}
-          style={{
-            borderColor: value === "groq" ? "var(--space-cyan-dim)" : "rgba(95,166,184,0.2)",
-            background: value === "groq" ? "rgba(95,166,184,0.12)" : "rgba(7,9,18,0.6)",
-            color: value === "groq" ? "var(--space-cyan-dim)" : isGroqAvailable ? "var(--space-moonlight)" : "var(--space-stardust)",
-          }}
-          aria-pressed={value === "groq"}
-          title={!isGroqAvailable ? "Not configured" : ""}
-        >
-          Groq
-        </button>
+          <button
+            type="button"
+            onClick={() => isGroqAvailable && handleSelect("groq")}
+            disabled={!isGroqAvailable}
+            className="w-full px-4 py-3 text-left text-fluid-button font-medium transition-all duration-200 hover:bg-[rgba(95,166,184,0.12)] focus:outline-none focus:bg-[rgba(95,166,184,0.12)] disabled:opacity-50 disabled:cursor-not-allowed"
+            style={{
+              color: value === "groq" ? "var(--space-cyan-dim)" : isGroqAvailable ? "var(--space-moonlight)" : "var(--space-stardust)",
+              background: value === "groq" ? "rgba(95,166,184,0.08)" : "transparent",
+            }}
+          >
+            Groq
+            {!isGroqAvailable && <span className="ml-2 text-xs opacity-50">Not configured</span>}
+          </button>
 
-        <button
-          type="button"
-          onClick={() => onChange("cerebras")}
-          disabled={disabled || !isCerebrasAvailable}
-          className={`flex-1 min-h-[44px] px-4 py-2 rounded-lg text-fluid-button font-medium transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-[var(--space-antique-gold)] disabled:opacity-50 disabled:cursor-not-allowed ${
-            value === "cerebras"
-              ? "border-2"
-              : "border"
-          }`}
-          style={{
-            borderColor: value === "cerebras" ? "var(--space-pulsar)" : "rgba(180,120,210,0.2)",
-            background: value === "cerebras" ? "rgba(180,120,210,0.12)" : "rgba(7,9,18,0.6)",
-            color: value === "cerebras" ? "var(--space-pulsar)" : !isCerebrasAvailable ? "var(--space-stardust)" : "var(--space-moonlight)",
-          }}
-          aria-pressed={value === "cerebras"}
-          title={!isCerebrasAvailable ? "Available after setup" : ""}
-        >
-          Cerebras
-          {!isCerebrasAvailable && (
-            <span className="ml-2 text-xs opacity-50">Setup</span>
-          )}
-        </button>
-      </div>
+          <button
+            type="button"
+            onClick={() => isCerebrasAvailable && handleSelect("cerebras")}
+            disabled={!isCerebrasAvailable}
+            className="w-full px-4 py-3 text-left text-fluid-button font-medium transition-all duration-200 hover:bg-[rgba(180,120,210,0.12)] focus:outline-none focus:bg-[rgba(180,120,210,0.12)] disabled:opacity-50 disabled:cursor-not-allowed"
+            style={{
+              color: value === "cerebras" ? "var(--space-pulsar)" : !isCerebrasAvailable ? "var(--space-stardust)" : "var(--space-moonlight)",
+              background: value === "cerebras" ? "rgba(180,120,210,0.08)" : "transparent",
+            }}
+          >
+            Cerebras
+            <span className="ml-2 text-xs opacity-50">Setup required</span>
+          </button>
+        </div>
+      )}
     </div>
   );
 }

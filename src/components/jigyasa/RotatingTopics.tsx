@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { getRandomTopics, type SpaceTopic } from "@/config/space-topics";
 import { useLanguage } from "@/config/language";
 import "./RotatingTopics.css";
@@ -24,6 +24,8 @@ export function RotatingTopics({
   const [topics, setTopics] = useState<SpaceTopic[]>(() => getRandomTopics(5));
   const [isHovered, setIsHovered] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   // Respect prefers-reduced-motion
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(() => {
@@ -43,6 +45,22 @@ export function RotatingTopics({
     mediaQuery.addEventListener("change", handler);
     return () => mediaQuery.removeEventListener("change", handler);
   }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
 
   // Rotate topics
   const rotateTopic = useCallback(() => {
@@ -86,8 +104,20 @@ export function RotatingTopics({
     }
   };
 
+  const getSelectedTopicTitle = (): string => {
+    if (!selectedTopicId) return "Explore Topics";
+    const topic = topics.find(t => t.id === selectedTopicId);
+    return topic ? getTopicTitle(topic) : "Explore Topics";
+  };
+
+  const handleTopicSelect = (topic: SpaceTopic) => {
+    onTopicSelect(topic);
+    setIsOpen(false);
+  };
+
   return (
     <div
+      ref={dropdownRef}
       className="rotating-topics"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -95,7 +125,17 @@ export function RotatingTopics({
       onBlur={() => setIsFocused(false)}
     >
       <div className="rotating-topics__header">
-        <span className="rotating-topics__label">Explore Topics:</span>
+        <button
+          type="button"
+          className="rotating-topics__dropdown-button"
+          onClick={() => !disabled && setIsOpen(!isOpen)}
+          disabled={disabled}
+          aria-label="Select topic"
+        >
+          <span>{getSelectedTopicTitle()}</span>
+          <span style={{ transform: isOpen ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.2s", marginLeft: "0.5rem" }}>▼</span>
+        </button>
+        
         <button
           type="button"
           className="rotating-topics__refresh"
@@ -103,25 +143,26 @@ export function RotatingTopics({
           disabled={disabled}
           aria-label="Show new topics"
         >
-          Show New Topics
+          ↻
         </button>
       </div>
 
-      <div className="rotating-topics__list">
-        {topics.map((topic) => (
-          <button
-            key={topic.id}
-            type="button"
-            className={`rotating-topics__item ${
-              selectedTopicId === topic.id ? "rotating-topics__item--selected" : ""
-            }`}
-            onClick={() => onTopicSelect(topic)}
-            disabled={disabled}
-          >
-            {getTopicTitle(topic)}
-          </button>
-        ))}
-      </div>
+      {isOpen && !disabled && (
+        <div className="rotating-topics__dropdown">
+          {topics.map((topic) => (
+            <button
+              key={topic.id}
+              type="button"
+              className={`rotating-topics__dropdown-item ${
+                selectedTopicId === topic.id ? "rotating-topics__dropdown-item--selected" : ""
+              }`}
+              onClick={() => handleTopicSelect(topic)}
+            >
+              {getTopicTitle(topic)}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
