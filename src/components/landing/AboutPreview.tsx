@@ -1,4 +1,3 @@
-import { useRef, useState } from 'react'
 import Link from 'next/link'
 import { useLanguage } from '@/config/language'
 import './AboutPreview.css'
@@ -98,138 +97,6 @@ const copy = {
   },
 }
 
-function CelestialArchiveModel({ label }: { label: string }) {
-  const modelRef = useRef<HTMLDivElement>(null)
-  const startX = useRef(0)
-  const startY = useRef(0)
-  const baseRotation = useRef(0)
-  const dragging = useRef(false)
-  const intent = useRef<'none' | 'horizontal' | 'vertical'>('none')
-  const [rotation, setRotation] = useState(18)
-  const [tilt, setTilt] = useState({ x: 0, y: 0 })
-
-  const updateTransform = (nextRotation = rotation, nextTilt = tilt) => {
-    if (!modelRef.current) return
-    modelRef.current.style.setProperty('--drag-rotation', `${nextRotation}deg`)
-    modelRef.current.style.setProperty('--tilt-x', `${nextTilt.x}deg`)
-    modelRef.current.style.setProperty('--tilt-y', `${nextTilt.y}deg`)
-  }
-
-  const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
-    const rect = event.currentTarget.getBoundingClientRect()
-
-    if (dragging.current) {
-      const deltaX = event.clientX - startX.current
-      const deltaY = event.clientY - startY.current
-
-      if (intent.current === 'none' && Math.hypot(deltaX, deltaY) > 8) {
-        intent.current = Math.abs(deltaX) > Math.abs(deltaY) * 1.25 ? 'horizontal' : 'vertical'
-      }
-
-      if (intent.current === 'horizontal') {
-        event.preventDefault()
-        const nextRotation = baseRotation.current + deltaX * 0.65
-        setRotation(nextRotation)
-        updateTransform(nextRotation, tilt)
-      }
-    }
-
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-
-    const x = ((event.clientX - rect.left) / rect.width - 0.5) * 2
-    const y = ((event.clientY - rect.top) / rect.height - 0.5) * 2
-    const nextTilt = { x: Math.max(-7, Math.min(7, -y * 7)), y: Math.max(-9, Math.min(9, x * 9)) }
-    setTilt(nextTilt)
-    updateTransform(rotation, nextTilt)
-  }
-
-  return (
-    <div className="model-shell" aria-label={label}>
-      <div
-        className="model-viewport"
-        onPointerDown={(event) => {
-          dragging.current = true
-          intent.current = 'none'
-          startX.current = event.clientX
-          startY.current = event.clientY
-          baseRotation.current = rotation
-          if (event.currentTarget.setPointerCapture) {
-            event.currentTarget.setPointerCapture(event.pointerId)
-          }
-        }}
-        onPointerMove={handlePointerMove}
-        onPointerUp={(event) => {
-          dragging.current = false
-          intent.current = 'none'
-          if (event.currentTarget.releasePointerCapture) {
-            try {
-              event.currentTarget.releasePointerCapture(event.pointerId)
-            } catch {}
-          }
-        }}
-        onPointerCancel={(event) => {
-          dragging.current = false
-          intent.current = 'none'
-          if (event.currentTarget.releasePointerCapture) {
-             try {
-               event.currentTarget.releasePointerCapture(event.pointerId)
-             } catch {}
-          }
-        }}
-        onPointerLeave={() => {
-          dragging.current = false
-          intent.current = 'none'
-          if (!modelRef.current?.matches(':focus-visible')) {
-            const nextTilt = { x: 0, y: 0 }
-            setTilt(nextTilt)
-            updateTransform(rotation, nextTilt)
-          }
-        }}
-      >
-        <div
-          ref={modelRef}
-          className="archive-model"
-          role="img"
-          aria-label={label}
-          tabIndex={0}
-        >
-        <div className="model-glow" />
-        <div className="measurement-ring ring-one" />
-        <div className="measurement-ring ring-two" />
-        <div className="measurement-ring ring-three" />
-        <div className="archive-core">
-          <div className="core-facet facet-a" />
-          <div className="core-facet facet-b" />
-          <div className="core-facet facet-c" />
-          <div className="core-light" />
-        </div>
-        <div className="celestial-lens">
-          <div className="lens-scan" />
-          <div className="lens-reflection reflection-a" />
-          <div className="lens-reflection reflection-b" />
-        </div>
-        <div className="evidence-orbit orbit-a">
-          <span className="evidence-node node-gold" />
-          <span className="evidence-node node-blue" />
-        </div>
-        <div className="evidence-orbit orbit-b">
-          <span className="evidence-node node-ivory" />
-          <span className="evidence-node node-faint" />
-        </div>
-        <div className="evidence-orbit orbit-c">
-          <span className="evidence-node node-blue" />
-          <span className="evidence-node node-gold" />
-        </div>
-        <div className="measure-tick tick-one" />
-        <div className="measure-tick tick-two" />
-        <div className="measure-tick tick-three" />
-        <div className="measure-tick tick-four" />
-        </div>
-      </div>
-    </div>
-  )
-}
-
 function PrincipleVisual({ type }: { type: 'curiosity' | 'separation' | 'clarity' }) {
   return (
     <span className={`principle-visual ${type}`} aria-hidden="true">
@@ -246,23 +113,19 @@ export function AboutPreview() {
   const text = copy[language] || copy['en']
 
   return (
-    <div className="about-preview-wrapper" lang={language === 'hi' ? 'hi' : 'en'}>
+    <div className="about-preview-wrapper about-preview-wrapper--fullwidth" lang={language === 'hi' ? 'hi' : 'en'}>
       <div className="previous-sky" aria-hidden="true">
         <span />
         <span />
         <span />
       </div>
 
-      <section className="mission-preview" aria-labelledby="mission-heading">
+      <section className="mission-preview mission-preview--fullwidth" aria-labelledby="mission-heading">
         <div className="section-stars" aria-hidden="true" />
         <div className="dawn-horizon" aria-hidden="true" />
 
-        <div className="mission-grid">
-          <div className="model-column">
-            <CelestialArchiveModel label={text.modelLabel} />
-          </div>
-
-          <div className="copy-column">
+        <div className="mission-content">
+          <div className="copy-column copy-column--centered">
             <p className="eyebrow">{text.eyebrow}</p>
             <h1 id="mission-heading">{text.heading}</h1>
             <p className="support-line">{text.support}</p>
