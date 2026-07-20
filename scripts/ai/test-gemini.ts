@@ -84,6 +84,9 @@ async function testGemini() {
     console.log(`Test ${i + 1}/${TEST_QUESTIONS.length}: ${test.description}`);
     console.log(`Question: "${test.question}"`);
 
+    // Create abort controller for this test
+    const abortController = new AbortController();
+
     try {
       // Retrieve RAG context using local index
       const ragContext = await retrieveLocalContext(test.question, {
@@ -100,7 +103,7 @@ async function testGemini() {
         language: test.language,
         history: [],
         requestId: `test-${Date.now()}`,
-        signal: new AbortController().signal,
+        signal: abortController.signal,
         ragContext,
       });
 
@@ -180,6 +183,9 @@ async function testGemini() {
     } catch (error) {
       console.log(`✗ FAIL: ${error instanceof Error ? error.message : String(error)}\n`);
       failCount++;
+    } finally {
+      // Clean up abort controller
+      abortController.abort();
     }
   }
 
@@ -194,15 +200,25 @@ async function testGemini() {
 
   if (failCount === 0) {
     console.log("✓ ALL TESTS PASSED");
+    process.exitCode = 0;
   } else {
     console.log("✗ SOME TESTS FAILED");
-    process.exit(1);
+    process.exitCode = 1;
   }
 }
 
-// Run tests
-testGemini().catch(error => {
-  console.error("\n❌ TEST RUNNER ERROR:");
-  console.error(error);
-  process.exit(1);
-});
+// Run tests with graceful exit
+testGemini()
+  .then(() => {
+    // Allow cleanup before exit
+    setTimeout(() => {
+      process.exit(process.exitCode || 0);
+    }, 100);
+  })
+  .catch(error => {
+    console.error("\n❌ TEST RUNNER ERROR:");
+    console.error(error);
+    setTimeout(() => {
+      process.exit(1);
+    }, 100);
+  });

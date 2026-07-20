@@ -47,21 +47,23 @@ export default function GranthPage() {
                 key={topic.index}
                 as="div"
                 atmosphere="gold"
-                className="group flex min-h-[320px] flex-col overflow-visible"
+                className="group flex min-h-[320px] flex-col overflow-visible items-center text-center"
               >
                 {/* Model */}
-                <div className="relative mx-auto mb-4 h-32 w-32 overflow-hidden">
-                  <InteractiveSpaceModel
-                    variant={topic.sceneType}
-                    size="full"
-                    interactionMode="tilt"
-                    aria-hidden={true}
-                  />
+                <div className="relative mx-auto mb-4 flex items-center justify-center" style={{ height: "140px", width: "140px" }}>
+                  <div style={{ transform: "scale(0.85)", width: "100%", height: "100%" }}>
+                    <InteractiveSpaceModel
+                      variant={topic.sceneType}
+                      size="full"
+                      interactionMode="tilt"
+                      aria-hidden={true}
+                    />
+                  </div>
                 </div>
 
                 {/* Scene type micro-label */}
                 <div
-                  className="mb-4 inline-flex w-fit rounded-md px-3 py-1 text-fluid-button font-semibold uppercase tracking-widest"
+                  className="mb-4 inline-flex rounded-md px-3 py-1 text-fluid-button font-semibold uppercase tracking-widest"
                   style={{
                     background: "rgba(95,166,184,0.08)",
                     border: "1px solid rgba(95,166,184,0.20)",
@@ -81,7 +83,7 @@ export default function GranthPage() {
 
                 {/* Description */}
                 <p
-                  className="mt-4 text-fluid-body max-w-optimal text-balance-pretty"
+                  className="mt-4 text-fluid-body text-balance-pretty"
                   style={{ color: "var(--space-stardust)", opacity: 0.75 }}
                 >
                   {t[descKey]}
@@ -89,7 +91,7 @@ export default function GranthPage() {
 
                 {/* Learning angle */}
                 <p
-                  className="mt-4 flex-1 text-fluid-body max-w-optimal text-balance-pretty"
+                  className="mt-4 flex-1 text-fluid-body text-balance-pretty"
                   style={{ color: "var(--space-moonlight)", opacity: 0.6 }}
                 >
                   {t[angleKey]}
@@ -98,7 +100,7 @@ export default function GranthPage() {
                 {/* CTA */}
                 <Link
                   href="/ask"
-                  className="mt-6 inline-flex w-fit items-center rounded-full border px-5 py-2 text-fluid-button font-medium tracking-wide outline-none transition-all duration-200 hover:border-[rgba(189,165,106,0.5)] hover:bg-[rgba(189,165,106,0.08)] focus-visible:ring-2 focus-visible:ring-[var(--space-antique-gold)]"
+                  className="mt-6 inline-flex items-center rounded-full border px-5 py-2 text-fluid-button font-medium tracking-wide outline-none transition-all duration-200 hover:border-[rgba(189,165,106,0.5)] hover:bg-[rgba(189,165,106,0.08)] focus-visible:ring-2 focus-visible:ring-[var(--space-antique-gold)]"
                   style={{
                     borderColor: "rgba(189,165,106,0.30)",
                     color: "var(--space-moonlight)",
