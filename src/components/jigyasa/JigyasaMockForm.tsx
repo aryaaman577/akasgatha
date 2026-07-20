@@ -5,19 +5,22 @@ import { GlowCard } from "../shared/GlowCard";
 import { ResponseSkeleton } from "./ResponseSkeleton";
 import { ResponsePanel } from "./ResponsePanel";
 import { ErrorPanel } from "./ErrorPanel";
+import { ProviderSelector } from "./ProviderSelector";
+import { ResponseStyleSelector } from "./ResponseStyleSelector";
 import { useLanguage, translations } from "@/config/language";
 import type { JigyasaSuccessResponse, JigyasaErrorResponse } from "@/lib/server/jigyasa/schema";
 
 type FormStatus = "idle" | "loading" | "success" | "error";
+type ProviderOption = "auto" | "groq" | "cerebras";
+type ResponseStyleOption = "balanced" | "quick" | "structured" | "deep" | "katha-vigyan";
 
 export function JigyasaMockForm() {
   const { language } = useLanguage();
   const t = translations[language];
 
   const [question, setQuestion] = useState("");
-  const [topic, setTopic] = useState("eclipse");
-  const [mood, setMood] = useState("curious");
-  const [style, setStyle] = useState("detailed");
+  const [providerPreference, setProviderPreference] = useState<ProviderOption>("auto");
+  const [responseStyle, setResponseStyle] = useState<ResponseStyleOption>("balanced");
   const [status, setStatus] = useState<FormStatus>("idle");
   const [response, setResponse] = useState<JigyasaSuccessResponse | null>(null);
   const [error, setError] = useState<JigyasaErrorResponse | null>(null);
@@ -50,6 +53,8 @@ export function JigyasaMockForm() {
         body: JSON.stringify({
           question: questionText,
           language,
+          providerPreference,
+          responseStyle,
         }),
         signal: abortControllerRef.current.signal,
       });
@@ -110,6 +115,20 @@ export function JigyasaMockForm() {
     <div className="w-full">
       <GlowCard as="section" atmosphere="violet" clipContent>
         <form onSubmit={handleSubmit} className="space-y-5">
+          {/* Controls Row */}
+          <div className="grid gap-4 sm:grid-cols-2">
+            <ProviderSelector
+              value={providerPreference}
+              onChange={setProviderPreference}
+              disabled={status === "loading"}
+            />
+            <ResponseStyleSelector
+              value={responseStyle}
+              onChange={setResponseStyle}
+              disabled={status === "loading"}
+            />
+          </div>
+
           {/* Question */}
           <div>
             <label
@@ -132,63 +151,6 @@ export function JigyasaMockForm() {
             />
           </div>
 
-          {/* Selectors */}
-          <div className="grid gap-4 sm:grid-cols-3">
-            <div>
-              <label htmlFor="topic" className="text-fluid-button font-medium" style={{ color: "var(--space-stardust)", opacity: 0.8 }}>
-                {t.askLabelTopic}
-              </label>
-              <select
-                id="topic"
-                name="topic"
-                value={topic}
-                onChange={(e) => setTopic(e.target.value)}
-                disabled={status === "loading"}
-                className={`${inputClass} min-h-[44px] disabled:opacity-50 disabled:cursor-not-allowed`}
-                style={inputStyle}
-              >
-                <option value="eclipse">{t.topicOptEclipse}</option>
-                <option value="planets">{t.topicOptPlanets}</option>
-                <option value="stars">{t.topicOptStars}</option>
-              </select>
-            </div>
-            <div>
-              <label htmlFor="mood" className="text-fluid-button font-medium" style={{ color: "var(--space-stardust)", opacity: 0.8 }}>
-                {t.askLabelMood}
-              </label>
-              <select
-                id="mood"
-                name="mood"
-                value={mood}
-                onChange={(e) => setMood(e.target.value)}
-                disabled={status === "loading"}
-                className={`${inputClass} min-h-[44px] disabled:opacity-50 disabled:cursor-not-allowed`}
-                style={inputStyle}
-              >
-                <option value="curious">{t.moodOptCurious}</option>
-                <option value="analytical">{t.moodOptAnalytical}</option>
-                <option value="storyteller">{t.moodOptStory}</option>
-              </select>
-            </div>
-            <div>
-              <label htmlFor="style" className="text-fluid-button font-medium" style={{ color: "var(--space-stardust)", opacity: 0.8 }}>
-                {t.askLabelStyle}
-              </label>
-              <select
-                id="style"
-                name="style"
-                value={style}
-                onChange={(e) => setStyle(e.target.value)}
-                disabled={status === "loading"}
-                className={`${inputClass} min-h-[44px] disabled:opacity-50 disabled:cursor-not-allowed`}
-                style={inputStyle}
-              >
-                <option value="detailed">{t.styleOptDetailed}</option>
-                <option value="summary">{t.styleOptSummary}</option>
-              </select>
-            </div>
-          </div>
-
           {/* Submit / Cancel */}
           <div className="flex flex-wrap items-center justify-between gap-4 pt-1">
             {status === "loading" ? (
@@ -201,7 +163,7 @@ export function JigyasaMockForm() {
                   color: "var(--space-moonlight)",
                 }}
               >
-                Cancel Request
+                Cancel
               </button>
             ) : (
               <button
@@ -212,8 +174,13 @@ export function JigyasaMockForm() {
                   color: "var(--space-obsidian)",
                 }}
               >
-                {t.askButton}
+                Ask Jigyasa
               </button>
+            )}
+            {status === "loading" && (
+              <span className="text-fluid-button" style={{ color: "var(--space-stardust)", opacity: 0.7 }}>
+                Exploring
+              </span>
             )}
           </div>
         </form>

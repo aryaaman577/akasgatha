@@ -15,6 +15,8 @@ export const dynamic = "force-dynamic";
 export async function GET() {
   try {
     const provider = getProvider();
+    const { getServerEnv } = await import("@/lib/server/env");
+    const env = getServerEnv();
     
     let providerHealth = {
       configured: true,
@@ -34,6 +36,20 @@ export async function GET() {
         };
       }
     }
+
+    // Determine available providers (Phase 5 UX)
+    const availableProviders: ("groq" | "cerebras")[] = [];
+    
+    // Check Groq
+    if (env.GROQ_API_KEY && env.GROQ_MODEL) {
+      availableProviders.push("groq");
+    }
+    
+    // Check Cerebras (when implemented)
+    // Note: Cerebras will be added when its provider is implemented
+    // For now, it's not included in available providers
+    
+    const fallbackEnabled = env.AI_FALLBACK_PROVIDER !== "none";
 
     // Check RAG status (Phase 4B)
     let ragStatus: HealthResponse["rag"] = undefined;
@@ -71,6 +87,10 @@ export async function GET() {
         name: provider.name,
         configured: providerHealth.configured,
         mock: providerHealth.mock,
+      },
+      capabilities: {
+        providers: availableProviders,
+        fallbackEnabled,
       },
       rag: ragStatus,
     };

@@ -34,6 +34,18 @@ export const jigyasaRequestSchema = z.object({
       })
     )
     .optional(),
+  
+  // Phase 5 UX: AI provider preference (optional, backward-compatible)
+  providerPreference: z
+    .enum(["auto", "groq", "cerebras"])
+    .default("auto")
+    .optional(),
+  
+  // Phase 5 UX: Response style preference (optional, backward-compatible)
+  responseStyle: z
+    .enum(["balanced", "quick", "structured", "deep", "katha-vigyan"])
+    .default("balanced")
+    .optional(),
 })
 .strict(); // Reject unknown fields
 
@@ -152,6 +164,11 @@ export const healthResponseSchema = z.object({
     configured: z.boolean(),
     mock: z.boolean(),
   }),
+  // Phase 5 UX: Available provider capabilities
+  capabilities: z.object({
+    providers: z.array(z.enum(["groq", "cerebras"])),
+    fallbackEnabled: z.boolean(),
+  }).optional(),
   rag: z.union([
     z.object({
       available: z.literal(true),
