@@ -1,0 +1,668 @@
+:root {
+      color-scheme: dark;
+      --void-0: #02040d;
+      --void-1: #061126;
+      --void-2: #0b1834;
+      --midnight: #071226;
+      --ink: #060812;
+      --text: #f5f0df;
+      --muted: rgba(226, 222, 204, 0.72);
+      --soft: rgba(255, 255, 255, 0.12);
+      --line: rgba(255, 232, 170, 0.24);
+      --line-strong: rgba(255, 232, 170, 0.42);
+      --glass: rgba(7, 12, 28, 0.58);
+      --glass-2: rgba(13, 20, 42, 0.72);
+      --shadow: rgba(0, 0, 0, 0.48);
+      --focus: #ffd977;
+      --radius-xl: 34px;
+      --radius-lg: 26px;
+      --radius-md: 18px;
+      --ease: cubic-bezier(.2,.8,.2,1);
+      --section-pad-x: clamp(16px, 4vw, 72px);
+      --section-pad-y: clamp(56px, 8vw, 116px);
+      --card-min-h: clamp(342px, 34vw, 470px);
+      --card-pad: 24px;
+      --font-display: "Cinzel", "Cormorant Garamond", "Noto Serif Devanagari", Georgia, serif;
+      --font-body: "Inter", "Noto Sans Devanagari", "Noto Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-width: 320px;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      /* background handled by global CosmicBackdrop */
+      color: var(--text);
+      font-family: var(--font-body);
+    }
+
+    .akas-dwar-section {
+      position: relative;
+      width: 100%;
+      min-width: 0;
+      overflow-x: clip;
+      overflow-y: visible;
+      padding: var(--section-pad-y) var(--section-pad-x);
+      isolation: isolate;
+      background: transparent;
+    }
+
+    .akas-dwar-section::before,
+    .akas-dwar-section::after {
+      content: "";
+      position: fixed;
+      inset: auto;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .akas-dwar-section::before {
+      width: min(1180px, 92vw);
+      height: min(1180px, 92vw);
+      left: 50%;
+      top: -18%;
+      transform: translateX(-50%);
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 50% 50%, rgba(255, 239, 190, 0.08) 0 1px, transparent 2px 100%),
+        conic-gradient(from 210deg, transparent, rgba(255, 225, 142, 0.10), transparent, rgba(140, 180, 220, 0.08), transparent);
+      filter: blur(0.2px);
+      opacity: 0.8;
+      mask-image: radial-gradient(circle, black 0 58%, transparent 73%);
+    }
+
+    .akas-dwar-section::after {
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 20% 12%, rgba(255, 238, 196, 0.52) 0 1px, transparent 1.2px),
+        radial-gradient(circle at 64% 8%, rgba(191, 219, 255, 0.42) 0 1px, transparent 1.3px),
+        radial-gradient(circle at 82% 28%, rgba(255, 232, 165, 0.36) 0 1px, transparent 1.4px),
+        radial-gradient(circle at 16% 72%, rgba(170, 211, 255, 0.46) 0 1px, transparent 1.2px),
+        radial-gradient(circle at 44% 62%, rgba(255, 245, 218, 0.38) 0 1px, transparent 1.1px),
+        radial-gradient(circle at 92% 78%, rgba(199, 225, 255, 0.40) 0 1px, transparent 1.3px);
+      background-size: 420px 360px, 560px 420px, 680px 520px, 520px 480px, 640px 560px, 720px 620px;
+      opacity: 0.34;
+    }
+
+    .akas-dwar-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: clip;
+      border-radius: inherit;
+    }
+
+    .akas-nebula-band {
+      position: absolute;
+      width: 120vw;
+      height: 34vh;
+      min-height: 260px;
+      left: -10vw;
+      top: 22%;
+      transform: rotate(-10deg);
+      background:
+        radial-gradient(ellipse at 18% 52%, rgba(70, 118, 174, 0.16), transparent 44%),
+        radial-gradient(ellipse at 48% 42%, rgba(118, 91, 154, 0.12), transparent 48%),
+        radial-gradient(ellipse at 76% 55%, rgba(255, 224, 151, 0.08), transparent 46%);
+      filter: blur(22px);
+      opacity: 0.9;
+    }
+
+    .akas-archive-lines {
+      position: absolute;
+      inset: 8% 4% 4%;
+      opacity: 0.28;
+      background:
+        linear-gradient(90deg, transparent 0 47%, rgba(255, 222, 145, 0.22) 47.4% 47.6%, transparent 48% 100%),
+        linear-gradient(90deg, transparent 0 68%, rgba(210, 230, 255, 0.14) 68.4% 68.6%, transparent 69% 100%),
+        radial-gradient(ellipse at 50% 58%, transparent 0 52%, rgba(255, 226, 151, 0.18) 52.4% 52.8%, transparent 53.4% 100%);
+      background-size: 100% 100%, 100% 100%, 100% 100%;
+      mask-image: linear-gradient(180deg, transparent, black 16%, black 80%, transparent);
+    }
+
+    .akas-celestial-path {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: min(1120px, 94vw);
+      height: min(620px, 58vw);
+      transform: translate(-50%, -50%);
+      opacity: 0.48;
+      pointer-events: none;
+    }
+
+    .akas-celestial-path svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+
+    .akas-celestial-path .path-line {
+      fill: none;
+      stroke: rgba(255, 226, 150, 0.42);
+      stroke-width: 1.2;
+      stroke-linecap: round;
+      stroke-dasharray: 4 18;
+      animation: akasPathDrift 24s linear infinite;
+    }
+
+    .akas-celestial-path .path-glow {
+      fill: none;
+      stroke: rgba(128, 190, 255, 0.20);
+      stroke-width: 7;
+      stroke-linecap: round;
+      filter: blur(6px);
+    }
+
+    @keyframes akasPathDrift {
+      to { stroke-dashoffset: -176; }
+    }
+
+    .akas-dwar-inner {
+      position: relative;
+      z-index: 1;
+      width: min(1280px, 100%);
+      margin: 0 auto;
+      min-width: 0;
+    }
+
+    .akas-heading-wrap {
+      max-width: 860px;
+      margin: 0 auto clamp(26px, 5vw, 54px);
+      text-align: center;
+      position: relative;
+    }
+
+    .akas-heading {
+      margin: 0;
+      font-family: var(--font-display);
+      font-weight: 700;
+      letter-spacing: 0.045em;
+      line-height: 0.94;
+      font-size: clamp(1.6rem, 3vw, 2.8rem);
+      color: #fff4d6;
+      text-wrap: balance;
+      text-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.12),
+        0 0 34px rgba(255, 221, 139, 0.14),
+        0 18px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .akas-heading::after {
+      content: "";
+      display: block;
+      width: min(420px, 70vw);
+      height: 1px;
+      margin: clamp(18px, 2.4vw, 28px) auto 0;
+      background: linear-gradient(90deg, transparent, rgba(255, 224, 151, 0.62), rgba(188, 220, 255, 0.28), transparent);
+      box-shadow: 0 0 18px rgba(255, 224, 151, 0.18);
+    }
+
+    .akas-support {
+      margin: clamp(16px, 2vw, 24px) 0 0;
+      font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+      line-height: 1.65;
+      color: var(--muted);
+      letter-spacing: 0.015em;
+      text-wrap: balance;
+    }
+
+    .akas-dwar-grid {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      grid-auto-rows: minmax(var(--card-min-h), auto);
+      gap: 24px;
+      align-items: stretch;
+      min-width: 0;
+    }
+
+    .akas-dwar-card {
+      position: relative;
+      display: grid;
+      grid-template-rows: minmax(210px, 1fr) auto;
+      min-width: 0;
+      min-height: var(--card-min-h);
+      overflow: clip;
+      border: 1px solid rgba(255, 229, 162, 0.18);
+      border-radius: var(--radius-lg);
+      background:
+        linear-gradient(145deg, rgba(255, 234, 175, 0.075), transparent 28%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.055), transparent 32%),
+        radial-gradient(circle at var(--mx, 50%) var(--my, 38%), var(--card-aura, rgba(116, 164, 224, 0.16)), transparent 46%),
+        rgba(5, 9, 22, 0.72);
+      box-shadow:
+        0 24px 70px rgba(0, 0, 0, 0.38),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.035);
+      transform-style: preserve-3d;
+      transition:
+        transform 620ms var(--ease),
+        border-color 420ms var(--ease),
+        box-shadow 420ms var(--ease),
+        background 420ms var(--ease);
+      contain: layout paint;
+    }
+
+    .akas-dwar-card::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      z-index: 3;
+      pointer-events: none;
+      border-radius: inherit;
+      background:
+        linear-gradient(120deg,
+          transparent 0 18%,
+          rgba(255, 232, 160, 0.0) 22%,
+          rgba(255, 232, 160, 0.56) 31%,
+          transparent 38% 62%,
+          rgba(199, 225, 255, 0.24) 68%,
+          transparent 76% 100%);
+      background-size: 220% 220%;
+      background-position: 160% 0%;
+      opacity: 0;
+      transition: opacity 420ms var(--ease), background-position 900ms var(--ease);
+      mask-image: linear-gradient(black, transparent 72%);
+    }
+
+    .akas-dwar-card::after {
+      content: "";
+      position: absolute;
+      inset: 1px;
+      z-index: 0;
+      pointer-events: none;
+      border-radius: calc(var(--radius-lg) - 1px);
+      background:
+        radial-gradient(circle at var(--mx, 50%) var(--my, 26%), rgba(255, 255, 255, 0.08), transparent 16%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 40%);
+      opacity: 0.72;
+    }
+
+    .akas-dwar-card:hover,
+    .akas-dwar-card:focus-within,
+    .akas-dwar-card.is-active {
+      transform:
+        translateY(-8px)
+        rotateX(var(--tilt-y, 0deg))
+        rotateY(var(--tilt-x, 0deg))
+        translateZ(0);
+      border-color: rgba(255, 229, 162, 0.42);
+      box-shadow:
+        0 34px 92px rgba(0, 0, 0, 0.50),
+        0 0 0 1px rgba(255, 229, 162, 0.10),
+        0 0 44px var(--card-glow, rgba(116, 164, 224, 0.12)),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    }
+
+    .akas-dwar-card:hover::before,
+    .akas-dwar-card:focus-within::before,
+    .akas-dwar-card.is-active::before {
+      opacity: 0.62;
+      background-position: 0% 0%;
+    }
+
+    .akas-dwar-card:focus-within {
+      outline: 2px solid var(--focus);
+      outline-offset: 5px;
+    }
+
+    .akas-dwar-card:nth-child(1) { grid-column: span 5; }
+    .akas-dwar-card:nth-child(2) { grid-column: span 3; }
+    .akas-dwar-card:nth-child(3) { grid-column: span 4; }
+    .akas-dwar-card:nth-child(4) { grid-column: span 3; }
+    .akas-dwar-card:nth-child(5) { grid-column: span 3; }
+    .akas-dwar-card:nth-child(6) { grid-column: span 6; }
+    .akas-dwar-card:nth-child(7) { grid-column: span 6; }
+    .akas-dwar-card:nth-child(8) { grid-column: span 6; }
+
+    .akas-model-shell {
+      position: relative;
+      min-height: clamp(220px, 22vw, 310px);
+      margin: 0;
+      padding: clamp(14px, 1.8vw, 22px);
+      overflow: visible;
+      transform: translateZ(44px);
+      touch-action: pan-y;
+      cursor: grab;
+      user-select: none;
+    }
+
+    .akas-model-shell:active {
+      cursor: grabbing;
+    }
+
+    .akas-model-shell:focus-visible {
+      outline: 2px solid var(--focus);
+      outline-offset: 5px;
+      border-radius: var(--radius-lg);
+    }
+
+    .akas-model {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      min-height: inherit;
+      overflow: visible;
+      transform-style: preserve-3d;
+      perspective: 900px;
+    }
+
+    .akas-model svg,
+    .akas-model canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: inherit;
+      overflow: visible;
+      filter: drop-shadow(0 28px 34px rgba(0, 0, 0, 0.34));
+    }
+
+    .akas-model-label {
+      position: absolute;
+      left: 16px;
+      top: 16px;
+      z-index: 5;
+      padding: 4px 12px;
+      border: 1px solid rgba(255, 230, 160, 0.18);
+      border-radius: 999px;
+      background: rgba(3, 6, 15, 0.36);
+      color: rgba(255, 245, 220, 0.72);
+      font-size: 0.875rem;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      backdrop-filter: blur(10px);
+      pointer-events: none;
+    }
+
+    .akas-copy {
+      position: relative;
+      z-index: 4;
+      padding: 0 var(--card-pad) var(--card-pad);
+      transform: translateZ(58px);
+    }
+
+    .akas-link {
+      display: block;
+      color: inherit;
+      text-decoration: none;
+      min-height: 78px;
+    }
+
+    .akas-title {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: clamp(1.1rem, 1.6vw, 1.4rem);
+      line-height: 1.25;
+      letter-spacing: 0.025em;
+      color: #fff4d6;
+      text-wrap: balance;
+      text-shadow: 0 10px 24px rgba(0, 0, 0, 0.42);
+    }
+
+    .akas-desc {
+      margin: 8px 0 0;
+      color: rgba(234, 231, 214, 0.74);
+      font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+      line-height: 1.65;
+      letter-spacing: 0.005em;
+      text-wrap: balance;
+    }
+
+    .akas-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 16px;
+      color: rgba(255, 232, 160, 0.56);
+      font-size: 0.875rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .akas-link-line {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .akas-link-line::after {
+      content: "";
+      width: 42px;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(255, 226, 150, 0.55), transparent);
+      transition: width 300ms var(--ease);
+    }
+
+    .akas-dwar-card:hover .akas-link-line::after,
+    .akas-dwar-card:focus-within .akas-link-line::after {
+      width: 64px;
+    }
+
+    .akas-reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition:
+        opacity 780ms var(--ease),
+        transform 780ms var(--ease);
+    }
+
+    .akas-reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .akas-dwar-card:nth-child(1) { --card-aura: rgba(203, 162, 96, 0.15); --card-glow: rgba(203, 162, 96, 0.18); }
+    .akas-dwar-card:nth-child(2) { --card-aura: rgba(146, 72, 174, 0.14); --card-glow: rgba(146, 72, 174, 0.16); }
+    .akas-dwar-card:nth-child(3) { --card-aura: rgba(52, 170, 220, 0.13); --card-glow: rgba(52, 170, 220, 0.14); }
+    .akas-dwar-card:nth-child(4) { --card-aura: rgba(120, 205, 230, 0.10); --card-glow: rgba(211, 178, 105, 0.12); }
+    .akas-dwar-card:nth-child(5) { --card-aura: rgba(125, 210, 255, 0.12); --card-glow: rgba(125, 210, 255, 0.14); }
+    .akas-dwar-card:nth-child(6) { --card-aura: rgba(55, 166, 230, 0.14); --card-glow: rgba(55, 166, 230, 0.16); }
+    .akas-dwar-card:nth-child(7) { --card-aura: rgba(171, 91, 210, 0.13); --card-glow: rgba(171, 91, 210, 0.15); }
+    .akas-dwar-card:nth-child(8) { --card-aura: rgba(137, 103, 214, 0.13); --card-glow: rgba(137, 103, 214, 0.15); }
+
+    .akash-model-svg {
+      contain: strict;
+    }
+
+    .akash-particle {
+      animation: particleFloat var(--dur, 8s) ease-in-out infinite alternate;
+      transform-origin: center;
+    }
+
+    @keyframes particleFloat {
+      from { transform: translate3d(-2px, 2px, 0); opacity: 0.55; }
+      to { transform: translate3d(4px, -5px, 0); opacity: 1; }
+    }
+
+    .akash-spin {
+      transform-origin: center;
+      animation: spin var(--spin, 18s) linear infinite;
+    }
+
+    .akash-spin-rev {
+      transform-origin: center;
+      animation: spin var(--spin, 22s) linear infinite reverse;
+    }
+
+    .akash-pulse {
+      animation: pulse var(--pulse, 3.8s) ease-in-out infinite;
+      transform-origin: center;
+    }
+
+    .akash-sweep {
+      transform-origin: center;
+      animation: sweep var(--sweep, 7s) ease-in-out infinite;
+    }
+
+    .akash-orbit {
+      transform-origin: center;
+      animation: spin var(--orbit, 18s) linear infinite;
+    }
+
+    .akash-orbit-rev {
+      transform-origin: center;
+      animation: spin var(--orbit, 24s) linear infinite reverse;
+    }
+
+    .akash-flicker {
+      animation: flicker var(--flicker, 4s) ease-in-out infinite;
+    }
+
+    .akash-drift {
+      animation: drift var(--drift, 9s) ease-in-out infinite alternate;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.58; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.045); }
+    }
+
+    @keyframes sweep {
+      0%, 100% { transform: rotate(-34deg) scaleX(0.34); opacity: 0.18; }
+      50% { transform: rotate(146deg) scaleX(1); opacity: 0.68; }
+    }
+
+    @keyframes flicker {
+      0%, 100% { opacity: 0.55; }
+      18% { opacity: 0.9; }
+      31% { opacity: 0.46; }
+      54% { opacity: 0.86; }
+      74% { opacity: 0.62; }
+    }
+
+    @keyframes drift {
+      from { transform: translate3d(-3px, 1px, 0); }
+      to { transform: translate3d(5px, -4px, 0); }
+    }
+
+    @media (max-width: 1120px) {
+      .akas-dwar-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .akas-dwar-card:nth-child(1),
+      .akas-dwar-card:nth-child(2),
+      .akas-dwar-card:nth-child(3),
+      .akas-dwar-card:nth-child(4),
+      .akas-dwar-card:nth-child(5),
+      .akas-dwar-card:nth-child(6),
+      .akas-dwar-card:nth-child(7),
+      .akas-dwar-card:nth-child(8) {
+        grid-column: span 1;
+      }
+    }
+
+    @media (max-width: 760px) {
+      :root {
+        --card-min-h: 350px;
+        --section-pad-x: clamp(14px, 5vw, 24px);
+        --section-pad-y: clamp(46px, 12vw, 76px);
+        --card-pad: 16px;
+      }
+
+      body {
+        overflow-x: clip;
+      }
+
+      .akas-dwar-section {
+        overflow: clip;
+      }
+
+      .akas-dwar-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 16px;
+      }
+
+      .akas-dwar-card,
+      .akas-dwar-card:nth-child(1),
+      .akas-dwar-card:nth-child(2),
+      .akas-dwar-card:nth-child(3),
+      .akas-dwar-card:nth-child(4),
+      .akas-dwar-card:nth-child(5),
+      .akas-dwar-card:nth-child(6),
+      .akas-dwar-card:nth-child(7),
+      .akas-dwar-card:nth-child(8) {
+        grid-column: auto;
+        min-height: var(--card-min-h);
+      }
+
+      .akas-model-shell {
+        min-height: 238px;
+        padding: 12px;
+      }
+
+      .akas-heading {
+        font-size: clamp(1.6rem, 14vw, 2.8rem);
+      }
+
+      .akas-celestial-path {
+        width: 118vw;
+        height: 560px;
+        top: 50%;
+      }
+
+      .akas-nebula-band {
+        top: 18%;
+        height: 250px;
+      }
+
+      .akas-card-footer {
+        font-size: 0.875rem;
+      }
+    }
+
+    @media (max-width: 430px) {
+      :root {
+        --card-min-h: 338px;
+      }
+
+      .akas-dwar-card {
+        border-radius: 22px;
+      }
+
+      .akas-model-shell {
+        min-height: 222px;
+      }
+
+      .akas-title {
+        font-size: 1.28rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.001ms !important;
+      }
+
+      .akas-reveal {
+        opacity: 1;
+        transform: none;
+      }
+
+      .akas-dwar-card:hover,
+      .akas-dwar-card:focus-within,
+      .akas-dwar-card.is-active {
+        transform: none;
+      }
+    }

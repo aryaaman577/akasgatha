@@ -1,0 +1,16 @@
+
+
+.aboutCard {
+  display: grid;
+  align-content: start;
+  min-width: 0;
+  gap: 12px;
+}
+
+.aboutModule {
+  display: grid;
+  align-items: start;
+  min-width: 0;
+  gap: 12px;
+  padding: 16px;
+}

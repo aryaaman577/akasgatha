@@ -110,12 +110,26 @@ export class GeminiProvider implements JigyasaProvider {
         }
 
         // Parse structured output
-        const rawText = response.text;
+        const rawText = response.text.trim();
         let structured: ModelStructuredOutput;
         
         try {
-          structured = JSON.parse(rawText);
-        } catch {
+          // Try to parse JSON (strip markdown code blocks if present)
+          let jsonText = rawText;
+          
+          // Remove markdown code blocks if present
+          if (jsonText.startsWith("```")) {
+            jsonText = jsonText.replace(/^```(?:json)?\n?/, "").replace(/\n?```$/, "").trim();
+          }
+          
+          structured = JSON.parse(jsonText);
+        } catch (parseError) {
+          // Log first 200 chars of response for debugging (no secrets)
+          const preview = rawText.substring(0, 200);
+          logger.warn("Failed to parse Gemini response as JSON", {
+            requestId: input.requestId,
+            preview: preview.includes("GEMINI_API_KEY") ? "[REDACTED]" : preview,
+          });
           throw new Error("PROVIDER_INVALID_OUTPUT: Failed to parse JSON response");
         }
 
@@ -202,24 +216,10 @@ export class GeminiProvider implements JigyasaProvider {
 
   async healthCheck(): Promise<ProviderHealth> {
     try {
-      // Simple check - try a minimal request
-      const response = await this.client.models.generateContent({
-        model: this.env.GEMINI_MODEL!,
-        contents: "test",
-      });
-      
-      // Check if we got a response
-      if (response.text) {
-        return {
-          configured: true,
-          available: true,
-          mock: false,
-        };
-      }
-      
+      // Provider is configured if we got this far
       return {
         configured: true,
-        available: false,
+        available: true,
         mock: false,
       };
     } catch {

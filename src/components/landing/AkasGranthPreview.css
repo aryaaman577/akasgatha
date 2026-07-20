@@ -1,0 +1,952 @@
+/* ============================================================
+   AKAS GRANTH PREVIEW SECTION
+   ============================================================ */
+
+.akg-archive-preview {
+  position: relative;
+  isolation: isolate;
+  min-height: 100vh;
+  padding: clamp(4.5rem, 8vw, 8rem) clamp(1rem, 4vw, 4.5rem);
+  background: transparent;
+}
+
+.akg-cosmic-clip {
+  position: absolute;
+  inset: 0;
+  z-index: -5;
+  overflow-x: hidden;
+  overflow-y: visible;
+  pointer-events: none;
+}
+
+.akg-cosmic-clip::before,
+.akg-cosmic-clip::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(10px);
+}
+
+.akg-cosmic-clip::before {
+  width: min(92vw, 1040px);
+  aspect-ratio: 1;
+  left: 50%;
+  top: 50%;
+  translate: -50% -48%;
+  background:
+    radial-gradient(circle at 45% 42%, rgba(32, 149, 194, .21), transparent 20%),
+    radial-gradient(circle at 61% 53%, rgba(21, 84, 160, .28), transparent 43%),
+    radial-gradient(circle, rgba(5, 34, 70, .42), transparent 69%);
+  animation: akg-nebulaBreathe 12s ease-in-out infinite alternate;
+}
+
+.akg-cosmic-clip::after {
+  width: 55vw;
+  height: 24vw;
+  left: -7vw;
+  top: 18%;
+  rotate: -18deg;
+  background: linear-gradient(90deg, transparent, rgba(19, 114, 143, .13), transparent);
+  filter: blur(42px);
+}
+
+#akg-starfield {
+  position: absolute;
+  inset: 0;
+  z-index: -4;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.akg-archive-shell {
+  width: min(1280px, 100%);
+  margin: 0 auto;
+  position: relative;
+}
+
+.akg-section-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 2rem;
+  align-items: end;
+  max-width: 1080px;
+  margin: 0 auto clamp(2.5rem, 5vw, 4.5rem);
+}
+
+.akg-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 16px;
+  color: #f3d28b;
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: .24em;
+}
+
+.akg-eyebrow::before {
+  content: "";
+  width: 2.5rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #d8ae62);
+  box-shadow: 0 0 10px rgba(216, 174, 98, .6);
+}
+
+.akg-archive-preview h1 {
+  max-width: 780px;
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.6rem, 3vw, 2.8rem);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -.045em;
+  text-wrap: balance;
+  text-shadow: 0 0 36px rgba(114, 189, 232, .08);
+}
+
+.akg-archive-preview .support {
+  max-width: 65ch;
+  margin: 16px 0 0;
+  color: #b9c8d4;
+  font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+
+.akg-experience {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(250px, .86fr) minmax(390px, 1.35fr) minmax(250px, .86fr);
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "planet archive eclipse"
+    "action archive stars";
+  gap: clamp(1.5rem, 3vw, 3.3rem);
+  align-items: center;
+  min-height: 680px;
+}
+
+.akg-celestial-connections {
+  position: absolute;
+  inset: 6% 7%;
+  z-index: -1;
+  width: 86%;
+  height: 88%;
+  overflow: visible;
+  pointer-events: none;
+  opacity: .55;
+}
+
+.akg-celestial-connections path {
+  fill: none;
+  stroke: url(#connectionGradient);
+  stroke-width: .55;
+  stroke-dasharray: 3 7;
+  animation: akg-pathFlow 20s linear infinite;
+}
+
+.akg-celestial-connections circle {
+  fill: #d8ae62;
+  filter: drop-shadow(0 0 5px #d8ae62);
+}
+
+.akg-archive-column {
+  grid-area: archive;
+  position: relative;
+  min-width: 0;
+  align-self: stretch;
+  display: grid;
+  place-items: center;
+}
+
+.akg-archive-halo {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: clamp(300px, 38vw, 570px);
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(255, 226, 157, .18) 0 3%, transparent 15%),
+    radial-gradient(circle, rgba(21, 138, 178, .22), transparent 48%),
+    repeating-radial-gradient(circle, transparent 0 27%, rgba(216, 174, 98, .08) 27.2% 27.5%, transparent 27.8% 39%);
+  filter: blur(.2px);
+  animation: akg-haloPulse 7s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.akg-archive-stage {
+  position: relative;
+  width: clamp(310px, 40vw, 570px);
+  height: clamp(450px, 55vw, 650px);
+  perspective: 1050px;
+  touch-action: pan-y;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  outline: none;
+}
+
+.akg-archive-stage:active {
+  cursor: grabbing;
+}
+
+.akg-archive-stage:focus-visible::after {
+  content: "";
+  position: absolute;
+  inset: 4%;
+  border: 1px solid #f3d28b;
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px rgba(216, 174, 98, .12), inset 0 0 35px rgba(216, 174, 98, .1);
+  pointer-events: none;
+}
+
+.akg-archive-tilt {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transform: rotateX(var(--archive-tilt-x, -5deg)) rotateY(calc(var(--archive-tilt-y, 0deg) + var(--archive-drag-y, 0deg)));
+  transition: transform .16s ease-out;
+}
+
+.akg-archive-model {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: clamp(205px, 24vw, 310px);
+  height: clamp(285px, 34vw, 420px);
+  translate: -50% -50%;
+  transform-style: preserve-3d;
+  animation: akg-archiveFloat 6.5s ease-in-out infinite;
+}
+
+.akg-archive-core {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 24%;
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  border: 1px solid rgba(255, 223, 148, .65);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 40% 34%, #fff 0 3%, #fff0bf 9%, #e8b74f 24%, #1ba3c0 45%, rgba(5, 30, 53, .22) 68%);
+  box-shadow:
+    0 0 18px #fff0b5,
+    0 0 58px rgba(228, 175, 74, .72),
+    0 0 115px rgba(21, 132, 180, .58);
+  transform: translateZ(62px);
+  animation: akg-corePulse 3.8s ease-in-out infinite;
+}
+
+.akg-archive-core::before,
+.akg-archive-core::after {
+  content: "";
+  position: absolute;
+  inset: -34%;
+  border: 1px solid rgba(216, 174, 98, .48);
+  border-radius: 50%;
+  animation: akg-spin 13s linear infinite;
+}
+
+.akg-archive-core::after {
+  inset: -65%;
+  border-color: rgba(94, 198, 219, .28);
+  border-style: dashed;
+  animation-direction: reverse;
+  animation-duration: 19s;
+}
+
+.akg-slab {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 69%;
+  height: 76%;
+  translate: -50% -50%;
+  border: 1px solid rgba(184, 215, 229, .24);
+  border-radius: 45% 5% 43% 5% / 8% 4% 8% 4%;
+  background:
+    linear-gradient(100deg, rgba(255, 255, 255, .06), transparent 29%),
+    linear-gradient(90deg, rgba(8, 36, 61, .72), rgba(16, 64, 86, .18) 56%, rgba(228, 188, 107, .08));
+  box-shadow:
+    inset 0 0 22px rgba(99, 196, 218, .08),
+    0 0 16px rgba(22, 102, 146, .16);
+  backdrop-filter: blur(2px);
+  transform-style: preserve-3d;
+  transform: translate3d(var(--shift), 0, var(--z)) rotateY(var(--ry)) rotateZ(var(--rz));
+}
+
+.akg-slab::before {
+  content: "";
+  position: absolute;
+  inset: 7% 8%;
+  border-top: 1px solid rgba(230, 191, 111, .26);
+  border-bottom: 1px solid rgba(71, 184, 210, .18);
+  background: repeating-linear-gradient(
+    180deg,
+    transparent 0 16px,
+    rgba(145, 222, 229, .11) 16.5px 17.5px,
+    transparent 18px 30px
+  );
+  mask-image: linear-gradient(90deg, #000, transparent 72%);
+  -webkit-mask-image: linear-gradient(90deg, #000, transparent 72%);
+}
+
+.akg-slab::after {
+  content: "";
+  position: absolute;
+  left: 8%;
+  bottom: 7%;
+  width: 28%;
+  height: 1px;
+  background: #d8ae62;
+  box-shadow: 0 0 10px rgba(216, 174, 98, .8);
+}
+
+.akg-slab.s1 { --z: -65px; --ry: -18deg; --rz: -4deg; --shift: -25px; opacity: .42; }
+.akg-slab.s2 { --z: -38px; --ry: -10deg; --rz: -2deg; --shift: -15px; opacity: .58; }
+.akg-slab.s3 { --z: -12px; --ry: -5deg; --rz: -1deg; --shift: -7px; opacity: .76; }
+.akg-slab.s4 { --z: 18px; --ry: 4deg; --rz: 1deg; --shift: 5px; opacity: .9; }
+.akg-slab.s5 { --z: 48px; --ry: 11deg; --rz: 2deg; --shift: 15px; }
+.akg-slab.s6 { --z: 78px; --ry: 19deg; --rz: 4deg; --shift: 27px; opacity: .78; }
+
+.akg-binding-ring {
+  position: absolute;
+  left: 3%;
+  width: 30%;
+  aspect-ratio: 1.65;
+  border: 2px solid rgba(232, 192, 106, .74);
+  border-right-color: rgba(255, 235, 186, .18);
+  border-radius: 50%;
+  transform: rotateY(68deg) translateZ(85px);
+  box-shadow: -4px 0 10px rgba(216, 174, 98, .5);
+}
+
+.akg-binding-ring.r1 { top: 17%; }
+.akg-binding-ring.r2 { top: 44%; }
+.akg-binding-ring.r3 { top: 70%; }
+
+.akg-glyph {
+  position: absolute;
+  height: 1px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, transparent, #9ce6e4, #f3d28b, transparent);
+  box-shadow: 0 0 8px rgba(131, 226, 226, .5);
+  transform: translateZ(104px);
+  opacity: .76;
+}
+
+.akg-glyph.g1 { width: 35%; left: 34%; top: 31%; rotate: -8deg; }
+.akg-glyph.g2 { width: 24%; left: 39%; top: 39%; rotate: 6deg; }
+.akg-glyph.g3 { width: 43%; left: 29%; top: 64%; rotate: -3deg; }
+.akg-glyph.g4 { width: 20%; left: 48%; top: 72%; rotate: 11deg; }
+
+.akg-fragment {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 15px;
+  height: 28px;
+  margin: -14px 0 0 -7px;
+  border: 1px solid rgba(153, 223, 227, .48);
+  background: linear-gradient(145deg, rgba(117, 221, 224, .18), rgba(233, 191, 104, .2));
+  box-shadow: 0 0 12px rgba(61, 174, 196, .3);
+  transform-origin: 50% 50%;
+  animation: akg-fragmentOrbit var(--speed, 12s) linear infinite;
+}
+
+.akg-fragment.f1 { --radius: 158px; --speed: 15s; }
+.akg-fragment.f2 { --radius: 195px; --speed: 21s; animation-delay: -7s; scale: .72; }
+.akg-fragment.f3 { --radius: 132px; --speed: 11s; animation-delay: -4s; scale: .54; }
+.akg-fragment.f4 { --radius: 225px; --speed: 25s; animation-delay: -13s; scale: .65; }
+
+.akg-archive-caption {
+  position: absolute;
+  left: 50%;
+  bottom: 4%;
+  translate: -50% 0;
+  width: max-content;
+  max-width: 90%;
+  color: #91a5b8;
+  font-size: .67rem;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-align: center;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+.akg-topic {
+  position: relative;
+  z-index: 2;
+  min-width: 0;
+  padding: clamp(1.1rem, 2vw, 1.55rem);
+  border: 1px solid rgba(170, 204, 226, .15);
+  border-radius: 1.35rem;
+  background:
+    linear-gradient(145deg, rgba(13, 31, 49, .82), rgba(4, 12, 22, .7));
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, .28),
+    inset 0 1px rgba(255, 255, 255, .04);
+  backdrop-filter: blur(13px);
+  -webkit-backdrop-filter: blur(13px);
+  transform: translateZ(0);
+  transition: border-color .35s ease, box-shadow .35s ease, transform .35s ease;
+}
+
+.akg-topic::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(125deg, transparent 20%, rgba(216, 174, 98, .7), transparent 68%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity .35s ease;
+  pointer-events: none;
+}
+
+.akg-topic:hover,
+.akg-topic:focus-within {
+  border-color: rgba(216, 174, 98, .35);
+  box-shadow:
+    0 26px 75px rgba(0, 0, 0, .42),
+    0 0 40px rgba(216, 174, 98, .08),
+    inset 0 1px rgba(255, 255, 255, .06);
+  transform: translateY(-5px);
+}
+
+.akg-topic:hover::before,
+.akg-topic:focus-within::before {
+  opacity: 1;
+}
+
+.akg-topic--planet { grid-area: planet; }
+.akg-topic--eclipse { grid-area: eclipse; }
+.akg-topic--stars { grid-area: stars; }
+
+.akg-scene-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  color: #8fb3c8;
+  font-size: 0.875rem;
+  font-weight: 750;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+.akg-scene-label::before {
+  content: "";
+  width: .34rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #d8ae62;
+  box-shadow: 0 0 8px #d8ae62;
+}
+
+.akg-mini-scene {
+  position: relative;
+  display: grid;
+  place-items: center;
+  height: 145px;
+  margin: -.2rem 0 .8rem;
+  perspective: 650px;
+  pointer-events: none;
+}
+
+.akg-topic h2 {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  color: #fff5d9;
+  font-size: clamp(1.1rem, 1.6vw, 1.4rem);
+  font-weight: 400;
+  line-height: 1.25;
+}
+
+.akg-topic p {
+  min-height: 3.1em;
+  margin: 12px 0 16px;
+  color: #9eb1c1;
+  font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+  line-height: 1.65;
+  text-wrap: pretty;
+  max-width: 65ch;
+}
+
+.akg-topic-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .7rem 1rem;
+}
+
+.akg-topic-link,
+.akg-ask-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #f3d28b;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.akg-topic-link::after {
+  content: "↗";
+  transition: transform .25s ease;
+}
+
+.akg-topic-link:hover::after {
+  transform: translate(2px, -2px);
+}
+
+.akg-ask-link {
+  color: #92baca;
+  font-weight: 600;
+}
+
+.akg-topic-link:focus-visible,
+.akg-ask-link:focus-visible,
+.akg-primary-cta:focus-visible {
+  outline: 2px solid #f3d28b;
+  outline-offset: 5px;
+  border-radius: .25rem;
+}
+
+.akg-planet-system {
+  position: relative;
+  width: 126px;
+  height: 126px;
+  transform-style: preserve-3d;
+  animation: akg-miniFloat 5s ease-in-out infinite;
+}
+
+.akg-planet {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 72px;
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 31% 26%, rgba(176, 248, 255, .92), transparent 7%),
+    radial-gradient(ellipse at 69% 37%, rgba(20, 150, 189, .55), transparent 22%),
+    repeating-linear-gradient(15deg, transparent 0 10px, rgba(24, 190, 200, .18) 11px 15px),
+    radial-gradient(circle at 35% 30%, #1d86bd, #084479 54%, #02152c 78%);
+  box-shadow:
+    inset -16px -12px 24px rgba(0, 0, 0, .55),
+    0 0 12px #35bdd0,
+    0 0 34px rgba(40, 158, 203, .55);
+  animation: akg-planetTurn 8s linear infinite;
+}
+
+.akg-planet-ring {
+  position: absolute;
+  inset: 19px;
+  border: 1px solid rgba(230, 188, 96, .85);
+  border-radius: 50%;
+  transform: rotateX(70deg) rotateZ(-15deg);
+  box-shadow: 0 0 10px rgba(216, 174, 98, .3);
+}
+
+.akg-planet-moon {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 11px;
+  aspect-ratio: 1;
+  margin: -5px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff, #a4b1bd 45%, #273747);
+  box-shadow: 0 0 7px #d7e7ee;
+  animation: akg-moonOrbit 5.5s linear infinite;
+}
+
+.akg-planet-dust,
+.akg-planet-dust::before,
+.akg-planet-dust::after {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: #dcecff;
+  box-shadow: 22px -14px #77d9e4, -27px 24px #e4bd70, 44px 26px #dcecff, -42px -20px #8fc7e6;
+}
+
+.akg-planet-dust {
+  left: 50%;
+  top: 50%;
+}
+
+.akg-planet-dust::before,
+.akg-planet-dust::after {
+  content: "";
+  left: 0;
+  top: 0;
+  rotate: 54deg;
+}
+
+.akg-planet-dust::after {
+  rotate: 112deg;
+  scale: .65;
+}
+
+.akg-eclipse-system {
+  position: relative;
+  width: 190px;
+  height: 112px;
+  transform: rotateX(8deg);
+}
+
+.akg-alignment-line {
+  position: absolute;
+  left: 10px;
+  right: 8px;
+  top: 55px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255, 221, 145, .12), #d7e3ed, rgba(215, 227, 237, .12));
+  box-shadow: 0 0 7px rgba(206, 224, 237, .45);
+}
+
+.akg-sun {
+  position: absolute;
+  left: 4px;
+  top: 28px;
+  width: 55px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fffbe5 0 13%, #ffe589 31%, #e9a633 66%, rgba(233, 166, 51, .12) 70%);
+  box-shadow: 0 0 12px #fff1a2, 0 0 30px rgba(240, 179, 58, .85), 0 0 48px rgba(240, 179, 58, .4);
+  animation: akg-coronaPulse 2.6s ease-in-out infinite;
+}
+
+.akg-eclipse-earth {
+  position: absolute;
+  left: 112px;
+  top: 40px;
+  width: 31px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(ellipse at 38% 38%, #3ab3a8 0 12%, transparent 13%),
+    radial-gradient(circle at 34% 30%, #52b8dd, #0b497e 54%, #03182b 78%);
+  box-shadow: inset -8px -5px 10px rgba(0,0,0,.65), 0 0 10px rgba(71, 178, 219, .65);
+}
+
+.akg-eclipse-shadow {
+  position: absolute;
+  left: 139px;
+  top: 48px;
+  width: 44px;
+  height: 14px;
+  background: linear-gradient(90deg, rgba(0, 4, 12, .8), transparent);
+  clip-path: polygon(0 31%, 100% 0, 100% 100%, 0 69%);
+  filter: blur(1px);
+}
+
+.akg-eclipse-moon {
+  position: absolute;
+  left: 164px;
+  top: 49px;
+  width: 14px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 28%, #eff5f5, #81909e 54%, #26313b);
+  box-shadow: 0 0 6px rgba(218, 233, 240, .58);
+  animation: akg-eclipseMoon 8s ease-in-out infinite;
+}
+
+.akg-moon-orbit {
+  position: absolute;
+  left: 104px;
+  top: 24px;
+  width: 80px;
+  height: 64px;
+  border: 1px solid rgba(207, 223, 235, .35);
+  border-radius: 50%;
+  transform: rotateX(68deg) rotateZ(-7deg);
+}
+
+.akg-constellation {
+  width: 185px;
+  height: 130px;
+  overflow: visible;
+  filter: drop-shadow(0 0 8px rgba(70, 149, 218, .28));
+  animation: akg-constellationDrift 7s ease-in-out infinite;
+}
+
+.akg-constellation .path {
+  fill: none;
+  stroke: rgba(122, 190, 224, .42);
+  stroke-width: .8;
+  stroke-dasharray: 3 3;
+}
+
+.akg-constellation .path.gold {
+  stroke: rgba(224, 182, 98, .72);
+}
+
+.akg-constellation circle {
+  fill: #ccecff;
+  filter: drop-shadow(0 0 4px #62b8e4);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: akg-starPulse 3.5s ease-in-out infinite;
+}
+
+.akg-constellation circle.gold {
+  fill: #f7d78e;
+  filter: drop-shadow(0 0 6px #d8ae62);
+  animation-delay: -1.4s;
+}
+
+.akg-constellation .far {
+  opacity: .4;
+  transform: scale(.6);
+}
+
+.akg-action-panel {
+  grid-area: action;
+  align-self: center;
+  padding: 1rem .25rem 1rem .4rem;
+}
+
+.akg-action-kicker {
+  margin: 0 0 16px;
+  color: #91a9b9;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+
+.akg-primary-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 12px 24px;
+  border: 1px solid rgba(243, 210, 139, .58);
+  border-radius: 999px;
+  color: #fff3ce;
+  background:
+    linear-gradient(120deg, rgba(216, 174, 98, .16), rgba(14, 54, 74, .5));
+  box-shadow: 0 0 28px rgba(216, 174, 98, .1), inset 0 1px rgba(255,255,255,.08);
+  font-size: 0.875rem;
+  font-weight: 750;
+  letter-spacing: .02em;
+  text-decoration: none;
+  transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
+}
+
+.akg-primary-cta::after {
+  content: "→";
+  font-size: 1.15rem;
+  transition: transform .25s ease;
+}
+
+.akg-primary-cta:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(120deg, rgba(216, 174, 98, .24), rgba(14, 73, 95, .55));
+  box-shadow: 0 10px 35px rgba(0, 0, 0, .35), 0 0 35px rgba(216, 174, 98, .14);
+}
+
+.akg-primary-cta:hover::after {
+  transform: translateX(4px);
+}
+
+@keyframes akg-nebulaBreathe {
+  to { transform: scale(1.08) rotate(3deg); opacity: .82; }
+}
+
+@keyframes akg-haloPulse {
+  50% { transform: scale(1.045); opacity: .78; }
+}
+
+@keyframes akg-archiveFloat {
+  0%, 100% { transform: translateY(-6px) rotateZ(-.6deg); }
+  50% { transform: translateY(8px) rotateZ(.6deg); }
+}
+
+@keyframes akg-corePulse {
+  50% {
+    transform: translateZ(68px) scale(1.08);
+    filter: brightness(1.14);
+  }
+}
+
+@keyframes akg-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes akg-fragmentOrbit {
+  from { transform: rotate(0deg) translateX(var(--radius)) rotateY(55deg) rotate(0deg); }
+  to { transform: rotate(360deg) translateX(var(--radius)) rotateY(55deg) rotate(-360deg); }
+}
+
+@keyframes akg-pathFlow {
+  to { stroke-dashoffset: -100; }
+}
+
+@keyframes akg-miniFloat {
+  50% { transform: translateY(-5px) rotateY(8deg); }
+}
+
+@keyframes akg-planetTurn {
+  50% { filter: hue-rotate(8deg) brightness(1.08); }
+}
+
+@keyframes akg-moonOrbit {
+  from { transform: rotate(0deg) translateX(51px) scale(.72); z-index: 0; }
+  50% { transform: rotate(180deg) translateX(51px) scale(1.05); z-index: 3; }
+  to { transform: rotate(360deg) translateX(51px) scale(.72); z-index: 0; }
+}
+
+@keyframes akg-coronaPulse {
+  50% { transform: scale(1.05); filter: brightness(1.12); }
+}
+
+@keyframes akg-eclipseMoon {
+  0%, 100% { transform: translate(-5px, -4px); }
+  50% { transform: translate(4px, 4px); }
+}
+
+@keyframes akg-constellationDrift {
+  50% { transform: translate3d(3px, -5px, 0) rotate(.8deg); }
+}
+
+@keyframes akg-starPulse {
+  50% { transform: scale(1.45); opacity: .72; }
+}
+
+@media (max-width: 980px) {
+  .akg-experience {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "archive archive"
+      "planet eclipse"
+      "stars action";
+    min-height: 0;
+  }
+
+  .akg-archive-column {
+    min-height: 630px;
+  }
+
+  .akg-archive-stage {
+    width: clamp(330px, 66vw, 570px);
+    height: clamp(500px, 76vw, 630px);
+  }
+
+  .akg-celestial-connections {
+    display: none;
+  }
+}
+
+@media (max-width: 680px) {
+  .akg-archive-preview {
+    padding-inline: 1rem;
+  }
+
+  .akg-section-header {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    align-items: start;
+  }
+
+  .akg-archive-preview h1 {
+    font-size: clamp(2.6rem, 13vw, 4.6rem);
+  }
+
+  .akg-archive-preview .support {
+    font-size: .96rem;
+  }
+
+  .akg-experience {
+    display: flex;
+    flex-direction: column;
+    gap: 1.3rem;
+  }
+
+  .akg-archive-column {
+    order: 0;
+    width: 100%;
+    min-height: clamp(470px, 138vw, 580px);
+  }
+
+  .akg-archive-stage {
+    width: clamp(300px, 96vw, 430px);
+    height: clamp(460px, 130vw, 570px);
+  }
+
+  .akg-archive-model {
+    width: clamp(205px, 61vw, 270px);
+    height: clamp(295px, 86vw, 375px);
+  }
+
+  .akg-archive-halo {
+    width: min(104vw, 490px);
+  }
+
+  .akg-fragment.f2 { --radius: 155px; }
+  .akg-fragment.f4 { --radius: 176px; }
+
+  .akg-topic,
+  .akg-action-panel {
+    width: 100%;
+  }
+
+  .akg-topic--planet { order: 1; }
+  .akg-topic--eclipse { order: 2; }
+  .akg-topic--stars { order: 3; }
+  .akg-action-panel {
+    order: 4;
+    padding: 1.25rem .25rem 0;
+    text-align: center;
+  }
+
+  .akg-topic p {
+    min-height: 0;
+  }
+
+  .akg-primary-cta {
+    width: min(100%, 22rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .akg-archive-tilt {
+    transform: rotateX(-4deg) rotateY(0deg) !important;
+  }
+  
+  .akg-cosmic-clip::before,
+  .akg-celestial-connections path,
+  .akg-archive-halo,
+  .akg-archive-model,
+  .akg-archive-core,
+  .akg-archive-core::before,
+  .akg-archive-core::after,
+  .akg-fragment,
+  .akg-planet-system,
+  .akg-planet,
+  .akg-planet-moon,
+  .akg-sun,
+  .akg-eclipse-moon,
+  .akg-constellation,
+  .akg-constellation circle {
+    animation: none !important;
+  }
+}

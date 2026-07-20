@@ -7,6 +7,7 @@
 import type { JigyasaProvider } from "./types";
 import { MockProvider } from "./mock-provider";
 import { GeminiProvider } from "./gemini-provider";
+import { GroqProvider } from "./groq-provider";
 import { getServerEnv, validateProviderConfig } from "../env";
 
 let providerInstance: JigyasaProvider | null = null;
@@ -28,10 +29,14 @@ export function getProvider(): JigyasaProvider {
       providerInstance = new GeminiProvider();
       break;
 
+    case "groq":
+      providerInstance = new GroqProvider();
+      break;
+
     case "openrouter":
       // Phase 5+: Implement OpenRouter provider
       throw new Error(
-        "OpenRouter provider not yet implemented. Use AI_PROVIDER=gemini or AI_PROVIDER=mock."
+        "OpenRouter provider not yet implemented. Use AI_PROVIDER=groq, AI_PROVIDER=gemini or AI_PROVIDER=mock."
       );
 
     default:

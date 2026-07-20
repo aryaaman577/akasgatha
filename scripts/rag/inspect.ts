@@ -45,26 +45,14 @@ async function main() {
   console.log(`Total results: ${result.totalResults}`);
   console.log();
   
-  // Show science chunks
-  if (result.scienceChunks.length > 0) {
-    console.log(`SCIENCE CHUNKS (${result.scienceChunks.length}):`);
-    for (const chunk of result.scienceChunks) {
-      console.log(`  [${chunk.rank}] ${chunk.title}`);
-      console.log(`      Raw Score: ${chunk.score.toFixed(3)}`);
-      console.log(`      Citation: ${chunk.id}`);
-      console.log(`      Source: ${chunk.sourceName}`);
-      console.log(`      Preview: ${chunk.content.substring(0, 100)}...`);
-      console.log();
-    }
-  }
-  
   // Show narrative chunks
   if (result.narrativeChunks.length > 0) {
     console.log(`NARRATIVE CHUNKS (${result.narrativeChunks.length}):`);
-    for (const chunk of result.narrativeChunks) {
-      console.log(`  [${chunk.rank}] ${chunk.title}`);
-      console.log(`      Raw Score: ${chunk.score.toFixed(3)}`);
-      console.log(`      Citation: ${chunk.id}`);
+    for (const item of result.narrativeChunks) {
+      const chunk = item.chunk;
+      console.log(`  [${item.rank}] ${chunk.documentTitle}`);
+      console.log(`      Raw Score: ${item.score.toFixed(3)}`);
+      console.log(`      Citation: ${chunk.citationId}`);
       console.log(`      Source: ${chunk.sourceName}`);
       console.log(`      Preview: ${chunk.content.substring(0, 100)}...`);
       console.log();
@@ -74,10 +62,11 @@ async function main() {
   // Show boundary chunks
   if (result.boundaryChunks.length > 0) {
     console.log(`BOUNDARY CHUNKS (${result.boundaryChunks.length}):`);
-    for (const chunk of result.boundaryChunks) {
-      console.log(`  [${chunk.rank}] ${chunk.title}`);
-      console.log(`      Raw Score: ${chunk.score.toFixed(3)}`);
-      console.log(`      Citation: ${chunk.id}`);
+    for (const item of result.boundaryChunks) {
+      const chunk = item.chunk;
+      console.log(`  [${item.rank}] ${chunk.documentTitle}`);
+      console.log(`      Raw Score: ${item.score.toFixed(3)}`);
+      console.log(`      Citation: ${chunk.citationId}`);
       console.log();
     }
   }
@@ -85,10 +74,11 @@ async function main() {
   // Show glossary chunks
   if (result.glossaryChunks.length > 0) {
     console.log(`GLOSSARY CHUNKS (${result.glossaryChunks.length}):`);
-    for (const chunk of result.glossaryChunks) {
-      console.log(`  [${chunk.rank}] ${chunk.title}`);
-      console.log(`      Raw Score: ${chunk.score.toFixed(3)}`);
-      console.log(`      Citation: ${chunk.id}`);
+    for (const item of result.glossaryChunks) {
+      const chunk = item.chunk;
+      console.log(`  [${item.rank}] ${chunk.documentTitle}`);
+      console.log(`      Raw Score: ${item.score.toFixed(3)}`);
+      console.log(`      Citation: ${chunk.citationId}`);
       console.log();
     }
   }

@@ -3,51 +3,104 @@
 import Link from "next/link";
 import { OrbitHeroVisual } from "@/components/visual/OrbitHeroVisual";
 import { useLanguage, translations } from "@/config/language";
-import { LanguageModeToggle } from "@/components/shared/LanguageModeToggle";
 
 export function AkasDwar() {
   const { language } = useLanguage();
   const t = translations[language];
 
   return (
-    <section className="relative px-5 py-20 sm:px-6 sm:py-24 lg:px-8 lg:py-28">
+    <section
+      className="relative overflow-visible px-5 py-16 sm:px-6 sm:py-24 lg:px-8 lg:py-28"
+      aria-label="AkasGatha — Hero"
+    >
       <div className="relative mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+
+        {/* === Text side === */}
         <div className="relative z-10">
-          <div className="mb-6 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
-            <p className="inline-flex rounded-md border border-[var(--color-antique-gold)]/30 bg-[var(--color-antique-gold)]/10 px-3 py-2 text-sm font-medium uppercase tracking-widest text-[var(--color-antique-gold)]">
-              Akas Dwar
-            </p>
-            <LanguageModeToggle />
-          </div>
-          <h1 className="font-display max-w-4xl text-5xl font-light tracking-tight text-[var(--color-ivory)] sm:text-6xl lg:text-7xl">
+
+          {/* Eyebrow */}
+          <p
+            className="mb-6 inline-flex rounded-full px-3 py-1.5 text-xs font-medium uppercase tracking-[0.2em]"
+            style={{
+              background: "rgba(189,165,106,0.10)",
+              border: "1px solid rgba(189,165,106,0.28)",
+              color: "var(--space-antique-gold)",
+            }}
+          >
+            Akas Dwar
+          </p>
+
+          {/* Site name */}
+          <h1
+            className="font-display max-w-4xl text-5xl font-light tracking-wide sm:text-6xl lg:text-7xl"
+            style={{
+              background: "linear-gradient(135deg, var(--space-gold-light) 0%, var(--space-moonlight) 55%, var(--space-stardust) 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+            }}
+          >
             AkasGatha
           </h1>
-          <p className="mt-6 max-w-2xl text-2xl font-light leading-9 text-[var(--color-ivory)]/90">
+
+          {/* Primary tagline */}
+          <p
+            className="mt-5 max-w-lg text-lg font-light leading-7 sm:text-xl"
+            style={{ color: "var(--space-moonlight)", opacity: 0.92 }}
+          >
             {t.heroTagline}
           </p>
-          <p className="mt-5 max-w-2xl text-base leading-relaxed text-[var(--color-ivory)]/70 sm:text-lg">
-            Where ancient sky stories meet evidence-aware learning.
+
+          {/* Supporting line */}
+          <p
+            className="mt-2 max-w-lg text-sm leading-relaxed sm:text-base"
+            style={{ color: "var(--space-stardust)", opacity: 0.65 }}
+          >
+            {t.heroSub}
           </p>
-          <p className="mt-6 max-w-3xl rounded-lg border border-[var(--color-cosmic-blue)]/40 bg-[var(--color-cosmic-blue)]/20 px-5 py-4 text-sm leading-relaxed text-[var(--color-ivory)]/90 backdrop-blur-sm">
+
+          {/* Safety statement */}
+          <p
+            className="mt-7 max-w-md rounded-xl px-4 py-3 text-xs leading-relaxed sm:text-sm"
+            style={{
+              background: "rgba(24,35,90,0.22)",
+              border: "1px solid rgba(85,124,214,0.18)",
+              color: "var(--space-stardust)",
+              opacity: 0.8,
+              backdropFilter: "blur(8px)",
+            }}
+          >
             {t.safetyLine}
           </p>
-          <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+
+          {/* CTA buttons */}
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
               href="/ask"
-              className="inline-flex min-h-12 items-center justify-center rounded-md bg-[var(--color-ivory)] px-6 py-3 text-sm font-semibold tracking-wide text-[var(--color-obsidian)] outline-none transition-all duration-300 hover:bg-[var(--color-antique-gold)] hover:text-[var(--color-obsidian)] focus-visible:ring-2 focus-visible:ring-[var(--color-antique-gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-obsidian)]"
+              className="inline-flex min-h-[46px] items-center justify-center rounded-full px-7 text-sm font-semibold tracking-wide outline-none transition-all duration-300 hover:shadow-[0_4px_24px_rgba(189,165,106,0.2)] focus-visible:ring-2 focus-visible:ring-[var(--space-antique-gold)]"
+              style={{
+                background: "var(--space-moonlight)",
+                color: "var(--space-obsidian)",
+              }}
             >
               {t.ctaStart}
             </Link>
             <Link
               href="/granth"
-              className="inline-flex min-h-12 items-center justify-center rounded-md border border-[var(--color-ivory)]/20 bg-white/5 px-6 py-3 text-sm font-semibold tracking-wide text-[var(--color-ivory)] outline-none transition-all duration-300 hover:border-[var(--color-antique-gold)]/50 hover:bg-[var(--color-antique-gold)]/10 focus-visible:ring-2 focus-visible:ring-[var(--color-antique-gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-obsidian)]"
+              className="inline-flex min-h-[46px] items-center justify-center rounded-full border px-7 text-sm font-semibold tracking-wide outline-none transition-all duration-300 hover:border-[rgba(189,165,106,0.45)] hover:bg-[rgba(189,165,106,0.08)] focus-visible:ring-2 focus-visible:ring-[var(--space-antique-gold)]"
+              style={{
+                borderColor: "rgba(241,240,232,0.15)",
+                background: "rgba(255,255,255,0.03)",
+                color: "var(--space-moonlight)",
+              }}
             >
               {t.ctaExplore}
             </Link>
           </div>
         </div>
 
-        <div className="relative mt-10 lg:mt-0">
+        {/* === Hero visual side === */}
+        <div className="relative flex items-center justify-center overflow-visible">
           <OrbitHeroVisual />
         </div>
       </div>

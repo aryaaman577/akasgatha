@@ -42,6 +42,7 @@ export interface ProviderOutput {
     durationMs: number;
     model?: string;
     tokensUsed?: number;
+    answerMode?: string; // Phase 5: RAG_GROUNDED, HYBRID, GENERAL_SPACE_KNOWLEDGE, etc.
   };
 }
 

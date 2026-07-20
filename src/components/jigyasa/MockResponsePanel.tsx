@@ -1,56 +1,115 @@
+"use client";
+
 import React from "react";
 import { GlowCard } from "../shared/GlowCard";
+import { InteractiveSpaceModel } from "@/components/visual/InteractiveSpaceModel";
+import { useLanguage, translations } from "@/config/language";
 
 export function MockResponsePanel() {
+  const { language } = useLanguage();
+  const t = translations[language];
+
   return (
-    <div className="mt-8 space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
-      <GlowCard className="border-[var(--color-antique-gold)]/30 bg-[var(--color-obsidian)]/90">
+    <div className="mt-6 space-y-6">
+      {/* Story Lens */}
+      <GlowCard atmosphere="gold">
         <div className="mb-4 inline-flex items-center gap-2">
-          <span className="h-2 w-2 rounded-full bg-[var(--color-antique-gold)]" />
-          <h3 className="font-display text-xl font-light text-[var(--color-antique-gold)]">Story Lens (Katha)</h3>
+          <span
+            className="h-2 w-2 flex-shrink-0 rounded-full"
+            style={{ background: "var(--space-antique-gold)" }}
+          />
+          <h3
+            className="font-display text-fluid-card font-light"
+            style={{ color: "var(--space-antique-gold)" }}
+          >
+            {t.respKatha}
+          </h3>
         </div>
-        <p className="text-[var(--color-ivory)]/80 leading-relaxed text-sm">
-          In cultural narratives, Rahu and Ketu are described as shadow entities involved in a cosmic pursuit. Eclipses occur when they temporarily swallow the Sun or Moon. This story serves to explain the momentary darkness and teaches lessons about cosmic balance and cycles.
+        <p className="mt-2 text-fluid-body max-w-optimal text-balance-pretty" style={{ color: "var(--space-stardust)", opacity: 0.85 }}>
+          {t.respKathaText}
         </p>
       </GlowCard>
 
-      <GlowCard className="border-[var(--color-cosmic-blue)]/40 bg-[var(--color-obsidian)]/90">
+      {/* Science Lens */}
+      <GlowCard atmosphere="cyan">
         <div className="mb-4 inline-flex items-center gap-2">
-          <span className="h-2 w-2 rounded-full bg-[var(--color-cosmic-blue)]" />
-          <h3 className="font-display text-xl font-light text-[var(--color-cosmic-blue)]">Science Lens (Vigyan)</h3>
+          <span
+            className="h-2 w-2 flex-shrink-0 rounded-full"
+            style={{ background: "var(--space-cyan-dim)" }}
+          />
+          <h3
+            className="font-display text-fluid-card font-light"
+            style={{ color: "var(--space-cyan-dim)" }}
+          >
+            {t.respVigyan}
+          </h3>
         </div>
-        <p className="text-[var(--color-ivory)]/80 leading-relaxed text-sm">
-          Scientifically, an eclipse happens when the Earth, Moon, and Sun align in space. A solar eclipse occurs when the Moon passes between the Earth and the Sun, casting a shadow on Earth. A lunar eclipse happens when the Earth passes between the Sun and the Moon, casting a shadow on the Moon. The nodes where these orbital paths cross perfectly match the mathematical positions early astronomers attributed to Rahu and Ketu.
+        <p className="mt-2 text-fluid-body max-w-optimal text-balance-pretty" style={{ color: "var(--space-stardust)", opacity: 0.85 }}>
+          {t.respVigyanText}
         </p>
       </GlowCard>
 
+      {/* Pramaan + Drishya */}
       <div className="grid gap-6 md:grid-cols-2">
         <GlowCard>
-          <h4 className="font-display text-lg text-[var(--color-ivory)]/90 mb-2">Evidence Note (Pramaan)</h4>
-          <p className="text-sm text-[var(--color-ivory)]/70">
-            <strong>Proven:</strong> Orbital mechanics and shadow casting.<br/>
-            <strong>Symbolic:</strong> The pursuit by shadow entities.
-          </p>
+          <h4 className="font-display text-fluid-card" style={{ color: "var(--space-moonlight)", opacity: 0.9 }}>
+            {t.respPramaan}
+          </h4>
+          <div className="mt-4 space-y-2 text-fluid-body max-w-optimal text-balance-pretty" style={{ color: "var(--space-stardust)", opacity: 0.75 }}>
+            <p><strong style={{ color: "var(--space-antique-gold)" }}>{t.respProven}:</strong> {t.respProvenText}</p>
+            <p><strong style={{ color: "var(--space-antique-gold)" }}>{t.respSymbolic}:</strong> {t.respSymbolicText}</p>
+          </div>
         </GlowCard>
         <GlowCard>
-          <h4 className="font-display text-lg text-[var(--color-ivory)]/90 mb-2">Visual Scene (Drishya)</h4>
-          <p className="text-sm text-[var(--color-ivory)]/70">
-            Suggested view: <em>Eclipse Alignment Model</em> showing the intersection of orbital planes.
-          </p>
+          <h4 className="font-display text-fluid-card" style={{ color: "var(--space-moonlight)", opacity: 0.9 }}>
+            {t.respDrishya}
+          </h4>
+          <div className="mt-4 flex items-center gap-4">
+            <div className="h-16 w-16 flex-shrink-0 overflow-visible">
+              <InteractiveSpaceModel variant="eclipse_alignment" size="full" interactionMode="tilt" aria-hidden={true} />
+            </div>
+            <p className="text-fluid-body max-w-optimal text-balance-pretty" style={{ color: "var(--space-stardust)", opacity: 0.7 }}>
+              {t.respDrishyaText}
+            </p>
+          </div>
         </GlowCard>
       </div>
 
-      <GlowCard className="bg-[var(--color-graphite)]/30">
-        <h4 className="font-display text-lg text-[var(--color-antique-gold)] mb-3">Follow-up Questions (Jigyasa Agni)</h4>
-        <ul className="space-y-2 text-sm text-[var(--color-ivory)]/80 list-disc list-inside">
-          <li>How often do perfect alignments happen?</li>
-          <li>Why don&apos;t we have an eclipse every month?</li>
-          <li>How did ancient astronomers calculate the nodes without modern telescopes?</li>
+      {/* Follow-up */}
+      <GlowCard atmosphere="void">
+        <h4
+          className="font-display text-fluid-card"
+          style={{ color: "var(--space-antique-gold)" }}
+        >
+          {t.respFollowup}
+        </h4>
+        <ul className="mt-4 space-y-2 text-fluid-body max-w-optimal text-balance-pretty" style={{ color: "var(--space-stardust)", opacity: 0.8 }}>
+          <li className="flex items-start gap-2">
+            <span className="mt-[0.6rem] h-1.5 w-1.5 flex-shrink-0 rounded-full" style={{ background: "var(--space-antique-gold)" }} />
+            {t.respQ1}
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="mt-[0.6rem] h-1.5 w-1.5 flex-shrink-0 rounded-full" style={{ background: "var(--space-antique-gold)" }} />
+            {t.respQ2}
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="mt-[0.6rem] h-1.5 w-1.5 flex-shrink-0 rounded-full" style={{ background: "var(--space-antique-gold)" }} />
+            {t.respQ3}
+          </li>
         </ul>
       </GlowCard>
 
-      <div className="rounded-lg border border-[var(--color-cosmic-blue)]/20 bg-[var(--color-obsidian)] px-4 py-3 text-xs text-[var(--color-ivory)]/60">
-        <strong>Safety Note:</strong> Cultural narratives stay narratives. Scientific explanations stay evidence-aware.
+      {/* Safety note */}
+      <div
+        className="rounded-xl px-4 py-4 text-fluid-button"
+        style={{
+          background: "rgba(24,35,90,0.20)",
+          border: "1px solid rgba(95,166,184,0.15)",
+          color: "var(--space-stardust)",
+          opacity: 0.7,
+        }}
+      >
+        <strong style={{ color: "var(--space-moonlight)" }}>Safety:</strong> {t.askSafetyNote}
       </div>
     </div>
   );

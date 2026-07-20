@@ -90,11 +90,12 @@ async function main() {
       ].sort((a, b) => b.score - a.score);
       
       const topResult = allChunks[0];
-      const topTitleLower = topResult.title.toLowerCase();
+      const topChunk = topResult.chunk;
+      const topTitleLower = topChunk.documentTitle.toLowerCase();
       
-      console.log(`  Top result: "${topResult.title}" (${topResult.domain})`);
+      console.log(`  Top result: "${topChunk.documentTitle}" (${topChunk.domain})`);
       console.log(`  Raw Score: ${topResult.score.toFixed(3)}`);
-      console.log(`  Citation: ${topResult.id}`);
+      console.log(`  Citation: ${topChunk.citationId}`);
       
       // Assert top result contains expected topic
       const topicMatch = test.expectedTopicIn.some(topic => topTitleLower.includes(topic.toLowerCase()));
@@ -117,8 +118,8 @@ async function main() {
       }
       
       // Verify citation ID is stable
-      if (!topResult.id.match(/^[a-z-]+-[a-z-]+-\d+$/)) {
-        console.log(`  ✗ FAIL: Citation ID format incorrect: ${topResult.id}`);
+      if (!topChunk.citationId.match(/^[a-z-]+-[a-z-]+-\d+$/)) {
+        console.log(`  ✗ FAIL: Citation ID format incorrect: ${topChunk.citationId}`);
         failed++;
         console.log();
         continue;

@@ -3,10 +3,16 @@ import type { Metadata } from "next";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 import { CosmicBackdrop } from "@/components/visual/CosmicBackdrop";
+import { LanguageProvider } from "@/components/providers/LanguageProvider";
+
+import "@fontsource/cinzel-decorative/400.css";
+import "@fontsource/cinzel-decorative/700.css";
+import "@fontsource/manrope/400.css";
+import "@fontsource/manrope/500.css";
+import "@fontsource/manrope/600.css";
+import "@fontsource/manrope/700.css";
 
 import "./globals.css";
-
-import { LanguageProvider } from "@/config/language";
 
 export const metadata: Metadata = {
   title: "AkasGatha",
@@ -21,9 +27,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="bg-[var(--color-obsidian)] text-[var(--color-ivory)]">
+      <body
+        className="min-h-screen"
+        style={{
+          background: "var(--space-void)",
+          color: "var(--space-moonlight)",
+          fontFamily: "var(--font-body)",
+        }}
+      >
         <LanguageProvider>
-          <CosmicBackdrop />
+          <CosmicBackdrop variant="universe" intensity="medium" interactive />
           <div className="relative z-0 flex min-h-screen flex-col">
             <Navbar />
             <div className="flex-1">{children}</div>

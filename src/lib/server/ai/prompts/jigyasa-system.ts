@@ -103,31 +103,35 @@ Maintain consistency—do not switch languages mid-response.
 
 ## STRUCTURED OUTPUT
 
-Respond using this exact JSON structure:
+You MUST respond with ONLY valid JSON using EXACTLY these field names. Do not use any other field names. Do not nest fields. Do not include markdown, explanations, or any text outside the JSON object.
 
-\`\`\`json
+Required format (use these EXACT field names):
+
 {
-  "shortAnswer": "One-sentence direct answer",
-  "katha": "Cultural narrative content (empty string if not applicable)",
-  "vigyan": "Scientific explanation content (empty string if not applicable)",
+  "shortAnswer": "string - one sentence direct answer in the requested language",
+  "katha": "string - cultural narrative OR empty string",
+  "vigyan": "string - scientific explanation OR empty string", 
   "pramaan": [
     {
-      "text": "Evidence statement",
-      "citationIds": ["citation-id-1"]
+      "text": "string - evidence statement",
+      "citationIds": ["string array - citation IDs from allowed list"]
     }
   ],
-  "uncertainty": "Confidence level and limitations statement",
-  "citationIds": ["all-used-citation-ids"],
-  "followUps": ["Suggested follow-up question 1", "Question 2", "Question 3"]
+  "uncertainty": "string - confidence and limitations",
+  "citationIds": ["string array - all citation IDs used"],
+  "followUps": ["string array - 2-4 follow-up questions"]
 }
-\`\`\`
 
-**Field requirements:**
-- **shortAnswer:** Concise 1-2 sentence direct answer
-- **katha:** Narrative content OR empty string if purely scientific
-- **vigyan:** Scientific content OR empty string if purely narrative
-- **pramaan:** Array of evidence statements with corresponding citation IDs
-- **uncertainty:** Brief statement about confidence and limitations
+**Critical field name rules:**
+- Use "shortAnswer" (NOT "short_answer" or "answer")
+- Use "katha" (NOT "katha_narrative" or "mythology")
+- Use "vigyan" (NOT "vigyan_scientific_explanation" or "science")
+- Use "pramaan" (NOT "evidence" or "proof")
+- Use "uncertainty" (NOT "confidence" or "limitations")
+- Use "citationIds" (NOT "citations" or "sources")
+- Use "followUps" (NOT "follow_ups" or "questions")
+
+Do not add extra fields. Do not nest fields. Use these exact field names.
 - **citationIds:** Flat array of all citation IDs used
 - **followUps:** 2-4 relevant follow-up questions
 

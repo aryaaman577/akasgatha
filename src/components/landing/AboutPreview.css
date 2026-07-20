@@ -328,7 +328,7 @@
 .eyebrow {
   margin: 0 0 0.9rem;
   color: #d7b66d;
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   font-weight: 800;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -338,9 +338,9 @@
   margin: 0;
   max-width: 12ch;
   font-family: Cinzel, "Noto Serif Devanagari", Georgia, serif;
-  font-size: clamp(2.2rem, 5.8vw, 5.65rem);
-  line-height: 0.98;
-  letter-spacing: -0.055em;
+  font-size: clamp(1.6rem, 3vw, 2.8rem);
+  line-height: 1.2;
+  letter-spacing: -0.045em;
   color: #f6efd8;
   background: linear-gradient(110deg, #fff8dc 4%, #e7d7a6 42%, #b99250 75%, #edf7ff 100%);
   -webkit-background-clip: text;
@@ -352,24 +352,25 @@
 
 .support-line {
   margin: clamp(1rem, 2vw, 1.45rem) 0 0;
-  max-width: 56ch;
+  max-width: 65ch;
   color: rgba(213, 224, 232, 0.78);
-  font-size: clamp(0.98rem, 1.45vw, 1.13rem);
-  line-height: 1.7;
+  font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+  line-height: 1.65;
+  text-wrap: pretty;
 }
 
 .principles {
   display: grid;
-  gap: 0.8rem;
-  margin-top: clamp(1.35rem, 3vw, 2rem);
+  gap: 16px;
+  margin-top: clamp(1.5rem, 3vw, 2.5rem);
 }
 
 .principle-card {
   display: grid;
   grid-template-columns: 3.35rem 1fr;
-  gap: 0.9rem;
+  gap: 16px;
   align-items: center;
-  padding: 0.92rem;
+  padding: 16px 24px;
   border: 1px solid rgba(220, 229, 235, 0.11);
   border-radius: 1.1rem;
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.055), rgba(99, 161, 223, 0.035));
@@ -378,17 +379,21 @@
 }
 
 .principle-card h2 {
-  margin: 0 0 0.18rem;
+  margin: 0 0 4px;
   color: rgba(251, 244, 220, 0.96);
-  font: 700 0.88rem/1.2 Inter, "Noto Serif Devanagari", sans-serif;
+  font-family: Inter, "Noto Serif Devanagari", sans-serif;
+  font-size: clamp(1.1rem, 1.6vw, 1.4rem);
+  line-height: 1.25;
+  font-weight: 700;
   letter-spacing: 0.02em;
 }
 
 .principle-card p {
   margin: 0;
   color: rgba(196, 211, 222, 0.78);
-  font-size: 0.89rem;
-  line-height: 1.45;
+  font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+  line-height: 1.55;
+  text-wrap: pretty;
 }
 
 .principle-visual {
@@ -478,6 +483,7 @@
   gap: 0.75rem;
   margin-top: clamp(1.15rem, 2.5vw, 1.8rem);
   color: #fff4cf;
+  font-size: 0.875rem;
   text-decoration: none;
   font-weight: 800;
   letter-spacing: 0.015em;
@@ -552,8 +558,8 @@
   }
 
   .copy-column h1 {
-    max-width: 13ch;
-    font-size: clamp(2.15rem, 11vw, 3.7rem);
+    max-width: 15ch;
+    font-size: clamp(1.6rem, 11vw, 2.8rem);
   }
 
   .support-line {

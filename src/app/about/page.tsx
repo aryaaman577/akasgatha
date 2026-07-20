@@ -2,18 +2,19 @@
 
 import { GlowCard } from "@/components/shared/GlowCard";
 import { SectionShell } from "@/components/shared/SectionShell";
-import { InteractiveSpaceModel, SpaceModelVariant } from "@/components/visual/InteractiveSpaceModel";
-import { useLanguage, translations } from "@/config/language";
 
-const coreModules: Array<{ name: string; variant: SpaceModelVariant }> = [
-  { name: "Akas Dwar", variant: "cosmic_gate" },
-  { name: "Akas Granth", variant: "knowledge_library" },
-  { name: "Jigyasa Engine", variant: "question_orb" },
-  { name: "Katha Mandal", variant: "moon_phase" },
-  { name: "Vigyan Drishti", variant: "telescope_view" },
-  { name: "Satya Setu", variant: "eclipse_alignment" },
-  { name: "Pramaan Matrix", variant: "evidence_grid" },
-  { name: "Smriti Quest", variant: "constellation_path" },
+import { useLanguage, translations } from "@/config/language";
+import styles from "./about.module.css";
+
+const coreModules = [
+  { name: "Akas Dwar" },
+  { name: "Akas Granth" },
+  { name: "Jigyasa Engine" },
+  { name: "Katha Mandal" },
+  { name: "Vigyan Drishti" },
+  { name: "Satya Setu" },
+  { name: "Pramaan Matrix" },
+  { name: "Smriti Quest" },
 ];
 
 export default function AboutPage() {
@@ -21,60 +22,119 @@ export default function AboutPage() {
   const t = translations[language];
 
   return (
-    <main className="min-h-screen relative flex flex-col items-center overflow-hidden">
+    <main className="relative flex min-h-screen flex-col items-center overflow-visible">
+      {/* 1. What is AkasGatha? (Hero with Cosmic Orrery Centerpiece) */}
       <SectionShell
-        eyebrow="About"
-        title="What is AkasGatha?"
-        description={t.heroTagline}
+        eyebrow={t.aboutEyebrow}
+        title={t.aboutTitle}
+        description={t.aboutDesc}
         headingLevel="h1"
-        className="w-full relative z-10"
+        className="relative z-10 w-full"
+
       >
-        <div className="grid gap-6 lg:grid-cols-2 mt-8">
-          
-          <GlowCard className="flex flex-col">
-            <h2 className="font-display text-2xl font-light text-[var(--color-antique-gold)]">Project Mission</h2>
-            <p className="mt-4 text-[var(--color-ivory)]/70 text-sm leading-relaxed">
-              Explore planets, stars, eclipses, and cosmic mysteries without reducing cultural stories to misinformation or turning science into decoration.
+        <p
+          className="mb-6 text-fluid-body italic text-balance-pretty"
+          style={{ color: "var(--space-antique-gold)", opacity: 0.7, letterSpacing: "0.01em" }}
+        >
+          {t.aboutSig}
+        </p>
+
+        <div className="grid gap-6 lg:grid-cols-2" style={{ width: "100%", maxWidth: 720 }}>
+          {/* 2. Why it exists */}
+
+          <GlowCard atmosphere="gold" className={styles.aboutCard}>
+            <h2
+              className="font-display text-fluid-card font-light"
+              style={{ color: "var(--space-antique-gold)" }}
+            >
+              {t.aboutWhyTitle}
+            </h2>
+            <p className="mt-2 text-fluid-body max-w-optimal text-balance-pretty" style={{ color: "var(--space-stardust)", opacity: 0.75 }}>
+              {t.aboutWhyDesc}
             </p>
           </GlowCard>
 
-          <GlowCard className="flex flex-col">
-            <h2 className="font-display text-2xl font-light text-[var(--color-antique-gold)]">Story & Science</h2>
-            <p className="mt-4 text-[var(--color-ivory)]/70 text-sm leading-relaxed">
-              Stories build curiosity. Science provides evidence. We keep them separate to honor cultural context while teaching testable observation.
+          {/* 3. Story & Science */}
+          <GlowCard atmosphere="cyan" className={styles.aboutCard}>
+            <h2
+              className="font-display text-fluid-card font-light"
+              style={{ color: "var(--space-cyan-dim)" }}
+            >
+              {t.aboutSepTitle}
+            </h2>
+            <p className="mt-2 text-fluid-body max-w-optimal text-balance-pretty" style={{ color: "var(--space-stardust)", opacity: 0.75 }}>
+              {t.aboutSepDesc}
             </p>
           </GlowCard>
 
+          {/* 4. Core Modules */}
           <GlowCard className="flex flex-col lg:col-span-2">
-            <h2 className="font-display text-2xl font-light text-[var(--color-antique-gold)] mb-6">Core Modules</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {coreModules.map((module) => (
-                <div key={module.name} className="flex flex-col items-center text-center p-4 rounded-lg bg-[var(--color-obsidian)]/50 border border-[var(--color-ivory)]/10">
-                  <div className="h-16 w-16 mb-4">
-                    <InteractiveSpaceModel variant={module.variant} aria-hidden={true} />
-                  </div>
-                  <span className="text-sm font-medium text-[var(--color-ivory)]/90">{module.name}</span>
+            <h2
+              className="font-display text-fluid-card font-light mb-6"
+              style={{ color: "var(--space-antique-gold)" }}
+            >
+              {t.aboutModTitle}
+            </h2>
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+              {coreModules.map((mod) => (
+                <div
+                  key={mod.name}
+                  className={`${styles.aboutModule} rounded-xl text-center flex items-center justify-center`}
+                  style={{
+                    background: "rgba(7,9,18,0.6)",
+                    border: "1px solid rgba(255,255,255,0.05)",
+                  }}
+                >
+                  <span
+                    className="text-fluid-button font-medium"
+                    style={{ color: "var(--space-moonlight)", opacity: 0.85 }}
+                  >
+                    {mod.name}
+                  </span>
                 </div>
               ))}
             </div>
           </GlowCard>
 
-          <GlowCard className="flex flex-col">
-            <h2 className="font-display text-2xl font-light text-[var(--color-cosmic-blue)]">Future Gen AI & Cloud</h2>
-            <p className="mt-4 text-[var(--color-ivory)]/70 text-sm leading-relaxed">
-              Upcoming phases will integrate structured AI responses via server-side APIs, packaged for secure Docker and AWS deployment.
+          {/* 5. Future Direction */}
+          <GlowCard atmosphere="void" className={styles.aboutCard}>
+            <h2
+              className="font-display text-fluid-card font-light"
+              style={{ color: "var(--space-stardust)" }}
+            >
+              {t.aboutFutureTitle}
+            </h2>
+            <p className="mt-2 text-fluid-body max-w-optimal text-balance-pretty" style={{ color: "var(--space-stardust)", opacity: 0.7 }}>
+              {t.aboutFutureDesc}
             </p>
           </GlowCard>
 
-          <GlowCard className="flex flex-col border-[var(--color-ivory)]/20">
-            <h2 className="font-display text-2xl font-light text-[var(--color-ivory)]/90">Safety Stance</h2>
-            <ul className="mt-4 space-y-2 text-[var(--color-ivory)]/70 text-sm leading-relaxed list-disc list-inside">
-              <li>No mythology presented as scientific proof.</li>
-              <li>No personal prediction or astrology claims.</li>
-              <li>No deterministic or miracle-proof language.</li>
+          {/* 6. Safety Stance */}
+          <GlowCard className={styles.aboutCard}>
+            <h2
+              className="font-display text-fluid-card font-light"
+              style={{ color: "var(--space-moonlight)", opacity: 0.9 }}
+            >
+              {t.aboutSafetyTitle}
+            </h2>
+            <ul
+              className="mt-4 space-y-2 text-fluid-body max-w-optimal text-balance-pretty"
+              style={{ color: "var(--space-stardust)", opacity: 0.75 }}
+            >
+              <li className="flex items-start gap-2">
+                <span className="mt-[0.6rem] h-1.5 w-1.5 flex-shrink-0 rounded-full" style={{ background: "var(--space-antique-gold)" }} />
+                {t.aboutSafe1}
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="mt-[0.6rem] h-1.5 w-1.5 flex-shrink-0 rounded-full" style={{ background: "var(--space-antique-gold)" }} />
+                {t.aboutSafe2}
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="mt-[0.6rem] h-1.5 w-1.5 flex-shrink-0 rounded-full" style={{ background: "var(--space-antique-gold)" }} />
+                {t.aboutSafe3}
+              </li>
             </ul>
           </GlowCard>
-
         </div>
       </SectionShell>
     </main>

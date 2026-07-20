@@ -149,7 +149,7 @@ pm.cmd run build\
 
 ### Commit
 
-- Phase 3 commit hash: pending until commit
+- Phase 3 commit hash: ad94a04
 
 ### Next Steps
 

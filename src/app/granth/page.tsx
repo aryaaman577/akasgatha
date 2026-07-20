@@ -12,43 +12,103 @@ export default function GranthPage() {
   const t = translations[language];
 
   return (
-    <main className="min-h-screen relative flex flex-col items-center overflow-hidden">
+    <main className="relative flex min-h-screen flex-col items-center overflow-visible">
+
+      {/* Header with model */}
       <SectionShell
-        eyebrow="Akas Granth"
-        title="A topic library for sky stories and evidence-aware science."
-        description={t.topicIntro}
+        eyebrow={t.granthEyebrow}
+        title={t.granthTitle}
+        description={t.granthIntro}
         headingLevel="h1"
-        className="w-full relative z-10"
+        className="relative z-10 w-full"
+        visualSlot={
+          <div className="relative h-36 w-36 overflow-visible sm:h-44 sm:w-44">
+            <InteractiveSpaceModel variant="knowledge_library" size="full" interactionMode="tilt" aria-hidden={true} />
+          </div>
+        }
       >
-        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3 mt-8">
-          {topicItems.map((topic) => (
-            <GlowCard key={topic.title} className="flex min-h-[320px] flex-col relative overflow-hidden group">
-              <div className="absolute top-0 right-0 h-40 w-40 opacity-40 transition-opacity duration-500 group-hover:opacity-100 -translate-y-1/4 translate-x-1/4">
-                <InteractiveSpaceModel variant={topic.sceneType} aria-hidden={true} />
-              </div>
-              
-              <div className="relative z-10 flex flex-col h-full">
-                <div className="mb-6 inline-flex w-fit rounded-md border border-[var(--color-cosmic-blue)]/30 bg-[var(--color-cosmic-blue)]/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-widest text-[var(--color-cosmic-blue)]">
-                  {topic.sceneType.replace('_', ' ')}
+        {/* Signature line */}
+        <p
+          className="mb-8 text-fluid-body italic text-balance-pretty"
+          style={{ color: "var(--space-antique-gold)", opacity: 0.7 }}
+        >
+          {t.granthSig}
+        </p>
+
+        {/* Topic grid */}
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          {topicItems.map((topic) => {
+            const titleKey = `topic${topic.index}Title` as keyof typeof t;
+            const descKey = `topic${topic.index}Desc` as keyof typeof t;
+            const angleKey = `topic${topic.index}Angle` as keyof typeof t;
+
+            return (
+              <GlowCard
+                key={topic.index}
+                as="div"
+                atmosphere="gold"
+                className="group flex min-h-[320px] flex-col overflow-visible"
+              >
+                {/* Model */}
+                <div className="relative mx-auto mb-4 h-32 w-32 overflow-visible">
+                  <InteractiveSpaceModel
+                    variant={topic.sceneType}
+                    size="full"
+                    interactionMode="tilt"
+                    aria-hidden={true}
+                  />
                 </div>
-                <h2 className="font-display text-2xl font-light tracking-wide text-[var(--color-antique-gold)]">
-                  {topic.title}
+
+                {/* Scene type micro-label */}
+                <div
+                  className="mb-4 inline-flex w-fit rounded-md px-3 py-1 text-fluid-button font-semibold uppercase tracking-widest"
+                  style={{
+                    background: "rgba(95,166,184,0.08)",
+                    border: "1px solid rgba(95,166,184,0.20)",
+                    color: "var(--space-cyan-dim)",
+                  }}
+                >
+                  {topic.sceneType.replace(/_/g, " ")}
+                </div>
+
+                {/* Title */}
+                <h2
+                  className="font-display text-fluid-card font-light tracking-wide"
+                  style={{ color: "var(--space-antique-gold)" }}
+                >
+                  {t[titleKey]}
                 </h2>
-                <p className="mt-3 text-sm leading-relaxed text-[var(--color-ivory)]/70">
-                  {topic.description}
+
+                {/* Description */}
+                <p
+                  className="mt-4 text-fluid-body max-w-optimal text-balance-pretty"
+                  style={{ color: "var(--space-stardust)", opacity: 0.75 }}
+                >
+                  {t[descKey]}
                 </p>
-                <p className="mt-4 text-sm leading-relaxed text-[var(--color-ivory)]/90 flex-1">
-                  {topic.learningAngle}
+
+                {/* Learning angle */}
+                <p
+                  className="mt-4 flex-1 text-fluid-body max-w-optimal text-balance-pretty"
+                  style={{ color: "var(--space-moonlight)", opacity: 0.6 }}
+                >
+                  {t[angleKey]}
                 </p>
+
+                {/* CTA */}
                 <Link
                   href="/ask"
-                  className="mt-6 inline-flex w-fit items-center rounded-md border border-[var(--color-antique-gold)]/40 px-5 py-2.5 text-sm font-medium tracking-wide text-[var(--color-ivory)] transition-colors hover:bg-[var(--color-antique-gold)]/20 hover:border-[var(--color-antique-gold)] focus-visible:ring-2 focus-visible:ring-[var(--color-antique-gold)]"
+                  className="mt-6 inline-flex w-fit items-center rounded-full border px-5 py-2 text-fluid-button font-medium tracking-wide outline-none transition-all duration-200 hover:border-[rgba(189,165,106,0.5)] hover:bg-[rgba(189,165,106,0.08)] focus-visible:ring-2 focus-visible:ring-[var(--space-antique-gold)]"
+                  style={{
+                    borderColor: "rgba(189,165,106,0.30)",
+                    color: "var(--space-moonlight)",
+                  }}
                 >
-                  Preview in Jigyasa -&gt;
+                  {t.granthCta}
                 </Link>
-              </div>
-            </GlowCard>
-          ))}
+              </GlowCard>
+            );
+          })}
         </div>
       </SectionShell>
     </main>

@@ -1,0 +1,85 @@
+.navLink {
+  position: relative;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  letter-spacing: -.02em;
+}
+
+.navLink:after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 1px;
+  bottom: -2px;
+  left: 50%;
+  background: linear-gradient(to right, transparent, #d4af77, transparent);
+  transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+  transform: translateX(-50%);
+}
+
+.navLink:hover:after {
+  width: 80%;
+}
+
+.navLink.active {
+  color: #f1d8a8;
+}
+
+.navLink.active:after {
+  width: 60%;
+  background: linear-gradient(to right, transparent, #f1d8a8, transparent);
+}
+
+.glass {
+  background: rgba(10, 19, 37, 0.72);
+  box-shadow: 0 8px 32px -12px rgb(0 0 0);
+  backdrop-filter: blur(24px);
+  transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.scrolled {
+  background: rgba(9, 16, 32, 0.92);
+  box-shadow: 0 10px 40px -15px rgb(212 175 119);
+}
+
+.celestialArc {
+  animation: orbit 20s linear infinite;
+}
+
+@keyframes orbit {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .celestialArc {
+    animation: none;
+  }
+}
+
+.langOption {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.langOption:hover {
+  background: rgba(212, 175, 119, 0.1);
+  transform: translateX(6px);
+}
+
+.mobileMenu {
+  animation: menuSlide 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes menuSlide {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.brandSvg {
+  filter: drop-shadow(0 0 6px rgb(212 175 119 / 0.5));
+}

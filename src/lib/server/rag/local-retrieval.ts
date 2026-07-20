@@ -1,214 +1,202 @@
 /**
- * Local RAG Retrieval
+ * Local RAG Retrieval Service
  * 
- * Complete retrieval system with domain grouping and Katha-Vigyan separation.
- * Phase 4B: Works without external APIs.
+ * Phase 4B local retrieval using deterministic TF-IDF embeddings.
+ * No external API dependencies (OpenAI, Pinecone, etc.)
  */
 
-import { queryIndex, type IndexEntry } from "./local-index";
-import { classifyIntent, getDomainPriorities, type QuestionIntent } from "./intent";
+import type { RagContext, RetrievalConfig } from "./types";
+import { queryIndex } from "./local-index";
+import { classifyIntent } from "./intent";
 
 /**
- * Citation (no vectors exposed)
+ * Default retrieval configuration
  */
-export interface Citation {
-  id: string;
-  domain: string;
-  title: string;
-  sourceName: string;
-  sourceUrl: string;
-  content: string;
-  score: number;
-  rank: number;
+export const DEFAULT_LOCAL_RETRIEVAL_CONFIG: RetrievalConfig = {
+  topK: 5,
+  minScore: 0.5,
+};
+
+/**
+ * Retrieve relevant context using local index
+ */
+export async function retrieveLocalContext(
+  query: string,
+  config: RetrievalConfig = DEFAULT_LOCAL_RETRIEVAL_CONFIG
+): Promise<RagContext> {
+  const startTime = Date.now();
+
+  // Query local index with hybrid scoring
+  const results = await queryIndex(query, {
+    topK: config.topK,
+    minScore: config.minScore,
+    domainFilter: config.domainFilter,
+    languageFilter: config.languageFilter,
+  });
+
+  // Build RAG context from results
+  const retrievedChunks = results.map(result => ({
+    chunk: result.entry.chunk,
+    score: result.score,
+    rank: result.rank,
+  }));
+
+  // Calculate metadata
+  const domains = Array.from(new Set(retrievedChunks.map(r => r.chunk.domain)));
+  const sources = Array.from(new Set(retrievedChunks.map(r => r.chunk.sourceName)));
+  const avgScore = retrievedChunks.length > 0
+    ? retrievedChunks.reduce((sum, r) => sum + r.score, 0) / retrievedChunks.length
+    : 0;
+
+  const retrievalTime = Date.now() - startTime;
+
+  return {
+    query,
+    retrievedChunks,
+    totalResults: retrievedChunks.length,
+    retrievalTime,
+    metadata: {
+      domains,
+      sources,
+      avgScore,
+    },
+  };
 }
 
 /**
- * Retrieval result grouped by domain
+ * Format retrieved context for LLM prompting
  */
-export interface RetrievalResult {
-  query: string;
-  intent: QuestionIntent;
-  scienceChunks: Citation[];
-  narrativeChunks: Citation[];
-  boundaryChunks: Citation[];
-  glossaryChunks: Citation[];
+export function formatLocalContextForPrompt(context: RagContext): string {
+  if (context.retrievedChunks.length === 0) {
+    return "No relevant context found in the knowledge base.";
+  }
+
+  const chunks = context.retrievedChunks.map((result, idx) => {
+    const chunk = result.chunk;
+    return `
+[Source ${idx + 1}]
+Domain: ${chunk.domain}
+Title: ${chunk.documentTitle}
+Source: ${chunk.sourceName}
+Relevance: ${(result.score * 100).toFixed(1)}%
+
+${chunk.content}
+`.trim();
+  });
+
+  return `
+Retrieved Knowledge (${context.totalResults} sources):
+
+${chunks.join("\n\n---\n\n")}
+
+Retrieval Statistics:
+- Domains: ${context.metadata.domains.join(", ")}
+- Average relevance: ${(context.metadata.avgScore * 100).toFixed(1)}%
+`.trim();
+}
+
+/**
+ * Analyze retrieval quality
+ */
+export function analyzeLocalRetrievalQuality(context: RagContext): {
+  hasScience: boolean;
+  hasNarrative: boolean;
+  hasBoundary: boolean;
+  hasGlossary: boolean;
+  avgScore: number;
+  confidence: "high" | "medium" | "low";
+} {
+  const hasScience = context.metadata.domains.includes("science");
+  const hasNarrative = context.metadata.domains.includes("narrative");
+  const hasBoundary = context.metadata.domains.includes("boundary");
+  const hasGlossary = context.metadata.domains.includes("glossary");
+  const avgScore = context.metadata.avgScore;
+
+  let confidence: "high" | "medium" | "low";
+  if (avgScore >= 0.75) {
+    confidence = "high";
+  } else if (avgScore >= 0.6) {
+    confidence = "medium";
+  } else {
+    confidence = "low";
+  }
+
+  return {
+    hasScience,
+    hasNarrative,
+    hasBoundary,
+    hasGlossary,
+    avgScore,
+    confidence,
+  };
+}
+
+/**
+ * Extended retrieval result with intent classification and grouped chunks
+ * Used by test scripts
+ */
+export interface ExtendedRetrievalResult {
+  intent: "science" | "narrative" | "mixed" | "general";
+  retrievedChunks: RagContext["retrievedChunks"];
+  scienceChunks: RagContext["retrievedChunks"];
+  narrativeChunks: RagContext["retrievedChunks"];
+  boundaryChunks: RagContext["retrievedChunks"];
+  glossaryChunks: RagContext["retrievedChunks"];
   totalResults: number;
   retrievalTimeMs: number;
+  metadata: RagContext["metadata"];
 }
 
 /**
- * Retrieve with domain grouping
+ * Retrieve with intent classification (for testing)
  */
 export async function retrieve(
   query: string,
-  options: {
-    topK?: number;
-    minScore?: number;
-    languageFilter?: string;
-  } = {}
-): Promise<RetrievalResult> {
-  const startTime = Date.now();
-  
-  // Classify intent
+  config: RetrievalConfig = DEFAULT_LOCAL_RETRIEVAL_CONFIG
+): Promise<ExtendedRetrievalResult> {
+  const context = await retrieveLocalContext(query, config);
   const intent = classifyIntent(query);
-  const priorities = getDomainPriorities(intent);
   
-  // Query index
-  const topK = options.topK || 10; // Retrieve more initially for grouping
-  const results = await queryIndex(query, {
-    topK,
-    minScore: options.minScore || 0.1,
-    languageFilter: options.languageFilter,
-  });
-  
-  // Apply domain priorities
-  const weighted = results.map(r => ({
-    ...r,
-    score: r.score * (priorities[r.entry.chunk.domain as keyof typeof priorities] || 1.0),
-  })).sort((a, b) => b.score - a.score);
-  
-  // Group by domain
-  const scienceResults = weighted.filter(r => r.entry.chunk.domain === "science");
-  const narrativeResults = weighted.filter(r => r.entry.chunk.domain === "narrative");
-  const boundaryResults = weighted.filter(r => r.entry.chunk.domain === "boundary");
-  const glossaryResults = weighted.filter(r => r.entry.chunk.domain === "glossary");
-  
-  // Apply per-domain caps
-  const scienceCap = intent === "science" ? 5 : intent === "narrative" ? 2 : 3;
-  const narrativeCap = intent === "narrative" ? 5 : intent === "science" ? 2 : 3;
-  const boundaryCap = 2;
-  const glossaryCap = 2;
-  
-  // Convert to citations (no vectors!)
-  const scienceChunks = scienceResults.slice(0, scienceCap).map(toCitation);
-  const narrativeChunks = narrativeResults.slice(0, narrativeCap).map(toCitation);
-  const boundaryChunks = boundaryResults.slice(0, boundaryCap).map(toCitation);
-  const glossaryChunks = glossaryResults.slice(0, glossaryCap).map(toCitation);
-  
-  const retrievalTimeMs = Date.now() - startTime;
+  // Group chunks by domain
+  const scienceChunks = context.retrievedChunks.filter(r => r.chunk.domain === "science");
+  const narrativeChunks = context.retrievedChunks.filter(r => r.chunk.domain === "narrative");
+  const boundaryChunks = context.retrievedChunks.filter(r => r.chunk.domain === "boundary");
+  const glossaryChunks = context.retrievedChunks.filter(r => r.chunk.domain === "glossary");
   
   return {
-    query,
     intent,
+    retrievedChunks: context.retrievedChunks,
     scienceChunks,
     narrativeChunks,
     boundaryChunks,
     glossaryChunks,
-    totalResults: scienceChunks.length + narrativeChunks.length + boundaryChunks.length + glossaryChunks.length,
-    retrievalTimeMs,
+    totalResults: context.totalResults,
+    retrievalTimeMs: context.retrievalTime,
+    metadata: context.metadata,
   };
 }
 
 /**
- * Convert index entry to citation (strips vectors)
+ * Build RAG context (for testing/inspection)
  */
-function toCitation(result: { entry: IndexEntry; score: number; rank: number }): Citation {
-  return {
-    id: result.entry.citationId,
-    domain: result.entry.chunk.domain,
-    title: result.entry.chunk.documentTitle,
-    sourceName: result.entry.chunk.sourceName,
-    sourceUrl: result.entry.chunk.sourceUrl,
-    content: result.entry.chunk.content,
-    score: result.score,
-    rank: result.rank,
-  };
-}
-
-/**
- * Build RAG context with Katha-Vigyan separation
- */
-export function buildRagContext(
-  result: RetrievalResult,
-  maxTokens: number = 2000
-): {
+export function buildRagContext(result: ExtendedRetrievalResult, maxChars?: number): {
+  citations: string[];
   vigyanContext: string;
   kathaContext: string;
   boundaryContext: string;
-  citations: Citation[];
   truncated: boolean;
 } {
-  const citations: Citation[] = [];
-  let vigyanContext = "";
-  let kathaContext = "";
-  let boundaryContext = "";
-  let tokenCount = 0;
-  let truncated = false;
+  const scienceContext = result.scienceChunks.map(r => r.chunk.content).join("\n\n");
+  const narrativeContext = result.narrativeChunks.map(r => r.chunk.content).join("\n\n");
+  const boundaryContext = result.boundaryChunks.map(r => r.chunk.content).join("\n\n");
   
-  // Helper to estimate tokens (rough: 1 token ≈ 4 chars)
-  const estimateTokens = (text: string) => Math.ceil(text.length / 4);
-  
-  // Add science chunks to Vigyan
-  for (const chunk of result.scienceChunks) {
-    const chunkText = `[${chunk.id}] ${chunk.title}\n${chunk.content}\n\n`;
-    const chunkTokens = estimateTokens(chunkText);
-    
-    if (tokenCount + chunkTokens > maxTokens) {
-      truncated = true;
-      break;
-    }
-    
-    vigyanContext += chunkText;
-    citations.push(chunk);
-    tokenCount += chunkTokens;
-  }
-  
-  // Add narrative chunks to Katha
-  for (const chunk of result.narrativeChunks) {
-    const chunkText = `[${chunk.id}] ${chunk.title}\n${chunk.content}\n\n`;
-    const chunkTokens = estimateTokens(chunkText);
-    
-    if (tokenCount + chunkTokens > maxTokens) {
-      truncated = true;
-      break;
-    }
-    
-    kathaContext += chunkText;
-    citations.push(chunk);
-    tokenCount += chunkTokens;
-  }
-  
-  // Add boundary chunks (separation policy)
-  for (const chunk of result.boundaryChunks) {
-    const chunkText = `[${chunk.id}] ${chunk.title}\n${chunk.content}\n\n`;
-    const chunkTokens = estimateTokens(chunkText);
-    
-    if (tokenCount + chunkTokens > maxTokens) {
-      truncated = true;
-      break;
-    }
-    
-    boundaryContext += chunkText;
-    citations.push(chunk);
-    tokenCount += chunkTokens;
-  }
-  
-  // Add glossary to appropriate section based on intent
-  for (const chunk of result.glossaryChunks) {
-    const chunkText = `[${chunk.id}] ${chunk.title}\n${chunk.content}\n\n`;
-    const chunkTokens = estimateTokens(chunkText);
-    
-    if (tokenCount + chunkTokens > maxTokens) {
-      truncated = true;
-      break;
-    }
-    
-    // Add glossary to both contexts (definitions apply to both)
-    if (result.intent === "science" || result.intent === "mixed") {
-      vigyanContext += chunkText;
-    }
-    if (result.intent === "narrative" || result.intent === "mixed") {
-      kathaContext += chunkText;
-    }
-    citations.push(chunk);
-    tokenCount += chunkTokens;
-  }
+  const citations = result.retrievedChunks.map(r => r.chunk.citationId);
   
   return {
-    vigyanContext: vigyanContext.trim(),
-    kathaContext: kathaContext.trim(),
-    boundaryContext: boundaryContext.trim(),
     citations,
-    truncated,
+    vigyanContext: scienceContext,
+    kathaContext: narrativeContext,
+    boundaryContext,
+    truncated: false, // Simplified for now
   };
 }

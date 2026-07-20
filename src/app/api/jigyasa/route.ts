@@ -123,31 +123,29 @@ export async function POST(request: NextRequest) {
       // Get provider and generate answer
       const provider = getProvider();
       
-      // RAG retrieval (Phase 4B-4)
+      // RAG retrieval using local index (Phase 4B-4 + Phase 5)
       let ragContext = null;
-      if (process.env.OPENAI_API_KEY && process.env.PINECONE_API_KEY) {
-        try {
-          const { retrieveContext } = await import("@/lib/server/rag/retrieval");
-          ragContext = await retrieveContext(input.question, {
-            topK: 5,
-            minScore: 0.5,
-            languageFilter: input.language === "hi" ? "hi" : "en",
-          });
-          
-          logger.info("RAG retrieval completed", {
-            requestId,
-            resultsCount: ragContext.totalResults,
-            domains: ragContext.metadata.domains,
-            avgScore: ragContext.metadata.avgScore,
-            retrievalTime: ragContext.retrievalTime,
-          });
-        } catch (ragError) {
-          // Log RAG errors but don't fail the request
-          logger.warn("RAG retrieval failed", {
-            requestId,
-            error: ragError instanceof Error ? ragError.message : "Unknown error",
-          });
-        }
+      try {
+        const { retrieveLocalContext } = await import("@/lib/server/rag/local-retrieval");
+        ragContext = await retrieveLocalContext(input.question, {
+          topK: 5,
+          minScore: 0.5,
+          languageFilter: input.language === "hi" ? "hi" : "en",
+        });
+        
+        logger.info("RAG retrieval completed", {
+          requestId,
+          resultsCount: ragContext.totalResults,
+          domains: ragContext.metadata.domains,
+          avgScore: ragContext.metadata.avgScore,
+          retrievalTime: ragContext.retrievalTime,
+        });
+      } catch (ragError) {
+        // Log RAG errors but don't fail the request
+        logger.warn("RAG retrieval failed", {
+          requestId,
+          error: ragError instanceof Error ? ragError.message : "Unknown error",
+        });
       }
       
       const result = await provider.generate({

@@ -13,7 +13,7 @@ loadEnvConfig(process.cwd());
 
 import { getServerEnv } from "../../src/lib/server/env";
 import { GeminiProvider } from "../../src/lib/server/ai/gemini-provider";
-import { retrieveContext } from "../../src/lib/server/rag/retrieval";
+import { retrieveLocalContext } from "../../src/lib/server/rag/local-retrieval";
 
 const TEST_QUESTIONS = [
   {
@@ -85,8 +85,8 @@ async function testGemini() {
     console.log(`Question: "${test.question}"`);
 
     try {
-      // Retrieve RAG context
-      const ragContext = await retrieveContext(test.question, {
+      // Retrieve RAG context using local index
+      const ragContext = await retrieveLocalContext(test.question, {
         topK: 5,
         minScore: 0.5,
       });

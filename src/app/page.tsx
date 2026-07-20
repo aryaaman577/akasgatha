@@ -1,87 +1,170 @@
+"use client";
+
 import Link from "next/link";
-import { AkasDwar } from "@/components/landing/AkasDwar";
+import AkasGathaHero from "@/components/visual/AkasGathaHero";
 import { FeatureGrid } from "@/components/landing/FeatureGrid";
 import { GlowCard } from "@/components/shared/GlowCard";
 import { SectionShell } from "@/components/shared/SectionShell";
 import { InteractiveSpaceModel } from "@/components/visual/InteractiveSpaceModel";
+import { AkasGranthPreview } from "@/components/landing/AkasGranthPreview";
+import { AboutPreview } from "@/components/landing/AboutPreview";
+import { useLanguage, translations } from "@/config/language";
 
 export default function Home() {
+  const { language } = useLanguage();
+  const t = translations[language];
+
   return (
-    <main className="relative flex flex-col items-center overflow-hidden">
-      {/* Scroll connector line */}
-      <div className="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-[var(--color-ivory)]/5 mix-blend-screen pointer-events-none" aria-hidden="true" />
-      
-      <div className="w-full relative z-10">
-        <AkasDwar />
+    <main className="relative flex flex-col items-center overflow-visible" style={{ background: 'transparent' }}>
+      {/* Thin scroll connector line */}
+      <div
+        className="pointer-events-none absolute left-1/2 top-0 h-full w-px -translate-x-1/2"
+        style={{ background: "linear-gradient(to bottom, transparent, rgba(189,165,106,0.06) 10%, rgba(189,165,106,0.06) 90%, transparent)" }}
+        aria-hidden="true"
+      />
+
+      {/* 1. Hero - Cinematic AkasGatha Hero */}
+      <div className="relative z-10 w-full overflow-visible">
+        <AkasGathaHero />
       </div>
 
-      <div className="w-full max-w-7xl relative z-10 mt-16 px-5 sm:px-6 lg:px-8">
-        <div className="mx-auto flex flex-col gap-12 md:flex-row">
-          {/* Jigyasa Preview */}
-          <GlowCard className="flex-1 flex flex-col items-center text-center p-10 min-h-[400px]">
-            <div className="h-48 w-48 mb-8 relative">
-              <InteractiveSpaceModel variant="question_orb" aria-hidden={true} />
-            </div>
-            <h2 className="font-display text-3xl text-[var(--color-antique-gold)] font-light mb-4">
-              Ask with curiosity.
-            </h2>
-            <p className="text-[var(--color-ivory)]/70 text-lg leading-relaxed mb-8 max-w-md mx-auto">
-              Our Jigyasa engine separates symbolic stories from observable science, letting you safely explore cosmic questions.
-            </p>
-            <Link href="/ask" className="mt-auto px-6 py-2.5 rounded-full border border-[var(--color-cosmic-blue)] bg-[var(--color-graphite)]/50 text-sm font-medium tracking-wide text-[var(--color-ivory)] transition-colors hover:bg-[var(--color-cosmic-blue)]/30 hover:border-[var(--color-cosmic-blue)]">
-              Try Jigyasa
-            </Link>
-          </GlowCard>
-
-          {/* Granth Preview */}
-          <GlowCard className="flex-1 flex flex-col items-center text-center p-10 min-h-[400px]">
-            <div className="h-48 w-48 mb-8 relative">
-              <InteractiveSpaceModel variant="knowledge_library" aria-hidden={true} />
-            </div>
-            <h2 className="font-display text-3xl text-[var(--color-antique-gold)] font-light mb-4">
-              Learn with structure.
-            </h2>
-            <p className="text-[var(--color-ivory)]/70 text-lg leading-relaxed mb-8 max-w-md mx-auto">
-              Browse the Akas Granth library to see ancient narratives compared with modern evidence-aware learning.
-            </p>
-            <Link href="/granth" className="mt-auto px-6 py-2.5 rounded-full border border-[var(--color-cosmic-blue)] bg-[var(--color-graphite)]/50 text-sm font-medium tracking-wide text-[var(--color-ivory)] transition-colors hover:bg-[var(--color-cosmic-blue)]/30 hover:border-[var(--color-cosmic-blue)]">
-              Explore Library
-            </Link>
-          </GlowCard>
-        </div>
-      </div>
-
-      <div className="w-full relative z-10 mt-12">
+      {/* 2. Feature Grid — Eight Dwars */}
+      <div className="relative z-10 w-full section-blend section-atm-violet">
         <FeatureGrid />
       </div>
 
+      {/* 3. Jigyasa Preview */}
       <SectionShell
-        eyebrow="Learning stance"
-        title="Stories spark curiosity. Science brings clarity."
-        description="AkasGatha is designed so learners can enjoy cultural meaning while still seeing what science can measure, what remains symbolic, and what is unknown."
-        className="relative z-10 border-t border-[var(--color-ivory)]/5 bg-[var(--color-obsidian)]/80 w-full"
+        eyebrow={t.homeJigyasaEyebrow}
+        title={t.homeJigyasaTitle}
+        description={t.homeJigyasaDesc}
+        className="relative z-10 w-full section-blend section-atm-cyan"
+      >
+        <div className="grid gap-8 lg:grid-cols-[0.45fr_0.55fr] lg:items-center">
+          {/* Model */}
+          <div className="relative mx-auto h-56 w-56 overflow-visible lg:mx-0 lg:h-64 lg:w-64">
+            <InteractiveSpaceModel variant="question_orb" size="full" interactionMode="tilt" aria-hidden={true} />
+          </div>
+
+          {/* Content */}
+          <GlowCard atmosphere="violet" className="flex flex-col">
+            {/* Example question */}
+            <p
+              className="rounded-lg px-4 py-4 text-fluid-body text-balance-pretty italic"
+              style={{ background: "rgba(119,89,217,0.08)", border: "1px solid rgba(119,89,217,0.15)", color: "var(--space-stardust)" }}
+            >
+              {t.homeJigyasaExample}
+            </p>
+
+            {/* Response structure labels */}
+            <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
+              {[
+                { label: t.homeJigyasaLens1, color: "var(--space-antique-gold)" },
+                { label: t.homeJigyasaLens2, color: "var(--space-cyan-dim)" },
+                { label: t.homeJigyasaLens3, color: "var(--space-stardust)" },
+                { label: t.homeJigyasaLens4, color: "var(--space-pulsar)" },
+              ].map((lens) => (
+                <div
+                  key={lens.label}
+                  className="flex items-center gap-2 rounded-lg px-3 py-2"
+                  style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}
+                >
+                  <span className="h-1.5 w-1.5 flex-shrink-0 rounded-full" style={{ background: lens.color }} />
+                  <span className="text-fluid-label font-medium" style={{ color: lens.color }}>{lens.label}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* CTA */}
+            <Link
+              href="/ask"
+              className="mt-8 inline-flex w-fit min-h-[40px] items-center rounded-full px-6 text-fluid-button font-medium tracking-wide outline-none transition-all duration-200 hover:shadow-[0_0_20px_rgba(119,89,217,0.2)] focus-visible:ring-2 focus-visible:ring-[var(--space-antique-gold)]"
+              style={{ border: "1px solid rgba(119,89,217,0.35)", background: "rgba(119,89,217,0.08)", color: "var(--space-moonlight)" }}
+            >
+              {t.homeJigyasaCta}
+            </Link>
+          </GlowCard>
+        </div>
+      </SectionShell>
+
+      {/* 4. Granth Preview */}
+      <div className="relative z-10 w-full section-blend section-atm-sapphire">
+        <AkasGranthPreview />
+      </div>
+
+      {/* 5. Story vs Science Bridge */}
+      <SectionShell
+        eyebrow={t.homeBridgeEyebrow}
+        title={t.homeBridgeTitle}
+        description={t.homeBridgeDesc}
+        className="relative z-10 w-full section-blend section-atm-gold"
+        connectedScroll
+      >
+        <div className="grid gap-8 lg:grid-cols-[0.4fr_0.6fr] lg:items-center">
+          <div className="relative mx-auto h-48 w-48 overflow-visible lg:mx-0">
+            <InteractiveSpaceModel variant="truth_bridge" size="full" interactionMode="tilt" aria-hidden={true} />
+          </div>
+          <div className="space-y-4">
+            {[
+              { label: t.homeBridgeStory, text: t.homeBridgeLine1, color: "var(--space-antique-gold)" },
+              { label: t.homeBridgeScience, text: t.homeBridgeLine2, color: "var(--space-cyan-dim)" },
+              { label: t.homeBridgeBoundary, text: t.homeBridgeLine3, color: "var(--space-stardust)" },
+            ].map((item) => (
+              <div
+                key={item.label}
+                className="flex items-start gap-3 rounded-xl px-4 py-3"
+                style={{ background: "rgba(16,19,29,0.6)", border: "1px solid rgba(255,255,255,0.04)" }}
+              >
+                <span className="mt-1.5 h-2 w-2 flex-shrink-0 rounded-full" style={{ background: item.color }} />
+                <div>
+                  <p className="text-fluid-label font-medium" style={{ color: item.color }}>{item.label}</p>
+                  <p className="mt-2 text-fluid-body text-balance-pretty" style={{ color: "var(--space-stardust)", opacity: 0.7 }}>{item.text}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </SectionShell>
+
+      {/* 6. Learning Stance */}
+      <SectionShell
+        eyebrow={t.homeStanceEyebrow}
+        title={t.homeStanceTitle}
+        description={t.homeStanceDesc}
+        className="relative z-10 w-full section-blend section-atm-violet"
       >
         <div className="grid gap-6 md:grid-cols-3">
-          <GlowCard>
-            <h3 className="font-display text-2xl font-light text-[var(--color-antique-gold)]">Narrative layer</h3>
-            <p className="mt-4 text-base leading-relaxed text-[var(--color-ivory)]/70">
-              Cultural narratives stay narratives. They inspire wonder and imagination without being treated as factual proof.
+          <GlowCard as="div" atmosphere="gold">
+            <h3 className="font-display text-fluid-card font-light" style={{ color: "var(--space-antique-gold)" }}>
+              {t.homeStanceCard1}
+            </h3>
+            <p className="mt-4 text-fluid-body text-balance-pretty" style={{ color: "var(--space-stardust)", opacity: 0.7 }}>
+              {t.homeStanceCard1Desc}
             </p>
           </GlowCard>
-          <GlowCard>
-            <h3 className="font-display text-2xl font-light text-[var(--color-antique-gold)]">Science layer</h3>
-            <p className="mt-4 text-base leading-relaxed text-[var(--color-ivory)]/70">
-              Scientific explanations stay evidence-aware, focusing on observation, measurement, and objective facts.
+          <GlowCard as="div" atmosphere="cyan">
+            <h3 className="font-display text-fluid-card font-light" style={{ color: "var(--space-cyan-dim)" }}>
+              {t.homeStanceCard2}
+            </h3>
+            <p className="mt-4 text-fluid-body text-balance-pretty" style={{ color: "var(--space-stardust)", opacity: 0.7 }}>
+              {t.homeStanceCard2Desc}
             </p>
           </GlowCard>
-          <GlowCard>
-            <h3 className="font-display text-2xl font-light text-[var(--color-antique-gold)]">Safety layer</h3>
-            <p className="mt-4 text-base leading-relaxed text-[var(--color-ivory)]/70">
-              The platform avoids personal prediction claims, miracle claims, and mythology-as-proof language entirely.
+          <GlowCard as="div" atmosphere="void">
+            <h3 className="font-display text-fluid-card font-light" style={{ color: "var(--space-stardust)" }}>
+              {t.homeStanceCard3}
+            </h3>
+            <p className="mt-4 text-fluid-body text-balance-pretty" style={{ color: "var(--space-stardust)", opacity: 0.7 }}>
+              {t.homeStanceCard3Desc}
             </p>
           </GlowCard>
         </div>
       </SectionShell>
+
+      {/* 7. About Preview */}
+      <div className="relative z-10 w-full mt-12 mb-12 section-blend section-atm-gold">
+        <AboutPreview />
+      </div>
     </main>
   );
 }
