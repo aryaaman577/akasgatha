@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useState, useRef } from "react";
+
 type ResponseStyleOption = "balanced" | "quick" | "structured" | "deep" | "katha-vigyan";
 
 interface ResponseStyleSelectorProps {
@@ -17,8 +19,37 @@ const styles: { value: ResponseStyleOption; label: string; description: string }
 ];
 
 export function ResponseStyleSelector({ value, onChange, disabled }: ResponseStyleSelectorProps) {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
+
+  const getDisplayLabel = () => {
+    const selected = styles.find((style) => style.value === value);
+    return selected ? selected.label : "Balanced";
+  };
+
+  const handleSelect = (option: ResponseStyleOption) => {
+    onChange(option);
+    setIsOpen(false);
+  };
+
   return (
-    <div>
+    <div ref={dropdownRef} className="relative">
       <label
         htmlFor="style-select"
         className="block text-fluid-button font-medium mb-2"
@@ -26,24 +57,50 @@ export function ResponseStyleSelector({ value, onChange, disabled }: ResponseSty
       >
         Answer Style
       </label>
-      <select
-        id="style-select"
-        value={value}
-        onChange={(e) => onChange(e.target.value as ResponseStyleOption)}
+      
+      <button
+        type="button"
+        onClick={() => !disabled && setIsOpen(!isOpen)}
         disabled={disabled}
-        className="w-full min-h-[44px] rounded-lg border px-4 py-2 text-fluid-body outline-none transition-colors focus:border-[var(--space-antique-gold)]/50 focus:ring-1 focus:ring-[var(--space-antique-gold)]/30 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full min-h-[44px] px-4 py-2 rounded-lg text-fluid-button font-medium transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-[var(--space-antique-gold)] disabled:opacity-50 disabled:cursor-not-allowed border flex items-center justify-between"
         style={{
-          borderColor: "rgba(189,165,106,0.2)",
-          background: "rgba(7,9,18,0.80)",
+          borderColor: isOpen ? "var(--space-antique-gold)" : "rgba(189,165,106,0.2)",
+          background: "rgba(7,9,18,0.6)",
           color: "var(--space-moonlight)",
         }}
       >
-        {styles.map((style) => (
-          <option key={style.value} value={style.value}>
-            {style.label} — {style.description}
-          </option>
-        ))}
-      </select>
+        <span>{getDisplayLabel()}</span>
+        <span style={{ transform: isOpen ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.2s" }}>▼</span>
+      </button>
+
+      {isOpen && !disabled && (
+        <div
+          className="absolute z-50 w-full mt-2 rounded-lg border overflow-hidden shadow-lg"
+          style={{
+            background: "rgba(7,9,18,0.95)",
+            borderColor: "rgba(189,165,106,0.3)",
+            backdropFilter: "blur(10px)",
+          }}
+        >
+          {styles.map((style) => (
+            <button
+              key={style.value}
+              type="button"
+              onClick={() => handleSelect(style.value)}
+              className="w-full px-4 py-3 text-left transition-all duration-200 hover:bg-[rgba(189,165,106,0.12)] focus:outline-none focus:bg-[rgba(189,165,106,0.12)]"
+              style={{
+                color: value === style.value ? "var(--space-antique-gold)" : "var(--space-moonlight)",
+                background: value === style.value ? "rgba(189,165,106,0.08)" : "transparent",
+              }}
+            >
+              <div className="flex flex-col">
+                <span className="text-fluid-button font-medium">{style.label}</span>
+                <span className="text-xs opacity-70 mt-0.5">{style.description}</span>
+              </div>
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
