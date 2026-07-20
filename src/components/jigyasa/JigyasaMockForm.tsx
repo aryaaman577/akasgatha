@@ -7,8 +7,11 @@ import { ResponsePanel } from "./ResponsePanel";
 import { ErrorPanel } from "./ErrorPanel";
 import { ProviderSelector } from "./ProviderSelector";
 import { ResponseStyleSelector } from "./ResponseStyleSelector";
+import { RotatingTopics } from "./RotatingTopics";
+import { SuggestedQuestions } from "./SuggestedQuestions";
 import { useLanguage, translations } from "@/config/language";
 import type { JigyasaSuccessResponse, JigyasaErrorResponse } from "@/lib/server/jigyasa/schema";
+import type { SpaceTopic } from "@/config/space-topics";
 
 type FormStatus = "idle" | "loading" | "success" | "error";
 type ProviderOption = "auto" | "groq" | "cerebras";
@@ -24,8 +27,36 @@ export function JigyasaMockForm() {
   const [status, setStatus] = useState<FormStatus>("idle");
   const [response, setResponse] = useState<JigyasaSuccessResponse | null>(null);
   const [error, setError] = useState<JigyasaErrorResponse | null>(null);
+  const [selectedTopic, setSelectedTopic] = useState<SpaceTopic | null>(null);
   
   const abortControllerRef = useRef<AbortController | null>(null);
+
+  // Get topic title based on language
+  const getTopicTitle = (topic: SpaceTopic): string => {
+    switch (language) {
+      case "hi":
+        return topic.titleHi;
+      case "hinglish":
+        return topic.titleHinglish;
+      case "hi-en":
+        return `${topic.titleHi} — ${topic.titleEn}`;
+      default:
+        return topic.titleEn;
+    }
+  };
+
+  // Compute placeholder text based on selected topic
+  const placeholderText = selectedTopic
+    ? `Ask about ${getTopicTitle(selectedTopic)}...`
+    : t.askPlaceholder;
+
+  const handleTopicSelect = (topic: SpaceTopic) => {
+    setSelectedTopic(topic);
+  };
+
+  const handleQuestionSelect = (questionText: string) => {
+    setQuestion(questionText);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -64,6 +95,8 @@ export function JigyasaMockForm() {
       if (data.status === "ok") {
         setResponse(data);
         setStatus("success");
+        // Reset topic selection after successful answer
+        setSelectedTopic(null);
       } else {
         setError(data);
         setStatus("error");
@@ -129,6 +162,22 @@ export function JigyasaMockForm() {
             />
           </div>
 
+          {/* Rotating Topics */}
+          <RotatingTopics
+            onTopicSelect={handleTopicSelect}
+            selectedTopicId={selectedTopic?.id}
+            disabled={status === "loading"}
+            autoRotate={true}
+            rotationInterval={15000}
+          />
+
+          {/* Suggested Questions */}
+          <SuggestedQuestions
+            topic={selectedTopic}
+            onQuestionSelect={handleQuestionSelect}
+            disabled={status === "loading"}
+          />
+
           {/* Question */}
           <div>
             <label
@@ -143,7 +192,7 @@ export function JigyasaMockForm() {
               name="question"
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
-              placeholder={t.askPlaceholder}
+              placeholder={placeholderText}
               rows={3}
               disabled={status === "loading"}
               className={`${inputClass} resize-none placeholder:opacity-40 disabled:opacity-50 disabled:cursor-not-allowed`}

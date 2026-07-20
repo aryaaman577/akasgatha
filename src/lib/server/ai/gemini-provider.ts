@@ -36,6 +36,13 @@ interface ModelStructuredOutput {
   followUps: string[];
 }
 
+/**
+ * Raw output from Gemini (may use creative field names)
+ */
+interface RawModelOutput {
+  [key: string]: unknown;
+}
+
 export class GeminiProvider implements JigyasaProvider {
   readonly name = "gemini";
   private client: GoogleGenAI;
@@ -87,6 +94,63 @@ export class GeminiProvider implements JigyasaProvider {
         temperature: this.env.GEMINI_TEMPERATURE,
         maxOutputTokens: this.env.GEMINI_MAX_OUTPUT_TOKENS,
         responseMimeType: "application/json" as const,
+        responseSchema: {
+          type: "object" as const,
+          properties: {
+            shortAnswer: {
+              type: "string" as const,
+              description: "One sentence direct answer in the requested language"
+            },
+            katha: {
+              type: "string" as const,
+              description: "Cultural narrative or empty string"
+            },
+            vigyan: {
+              type: "string" as const,
+              description: "Scientific explanation or empty string"
+            },
+            pramaan: {
+              type: "array" as const,
+              items: {
+                type: "object" as const,
+                properties: {
+                  text: {
+                    type: "string" as const,
+                    description: "Evidence statement"
+                  },
+                  citationIds: {
+                    type: "array" as const,
+                    items: {
+                      type: "string" as const
+                    },
+                    description: "Citation IDs from allowed list"
+                  }
+                },
+                required: ["text", "citationIds"]
+              },
+              description: "Array of evidence statements with citations"
+            },
+            uncertainty: {
+              type: "string" as const,
+              description: "Confidence and limitations"
+            },
+            citationIds: {
+              type: "array" as const,
+              items: {
+                type: "string" as const
+              },
+              description: "All citation IDs used"
+            },
+            followUps: {
+              type: "array" as const,
+              items: {
+                type: "string" as const
+              },
+              description: "2-4 follow-up questions"
+            }
+          },
+          required: ["shortAnswer", "katha", "vigyan", "pramaan", "uncertainty", "citationIds", "followUps"]
+        }
       },
     };
 
@@ -109,8 +173,17 @@ export class GeminiProvider implements JigyasaProvider {
           throw new Error(`PROVIDER_SAFETY_BLOCK: Content blocked (${blockReason || "unknown reason"})`);
         }
 
-        // Parse structured output
+        // Get full text from response
         const rawText = response.text.trim();
+        
+        // Log response length for debugging
+        logger.info("Gemini response received", {
+          requestId: input.requestId,
+          textLength: rawText.length,
+          hasContent: rawText.length > 0,
+        });
+
+        // Parse structured output
         let structured: ModelStructuredOutput;
         
         try {
@@ -122,13 +195,28 @@ export class GeminiProvider implements JigyasaProvider {
             jsonText = jsonText.replace(/^```(?:json)?\n?/, "").replace(/\n?```$/, "").trim();
           }
           
-          structured = JSON.parse(jsonText);
+          // Parse JSON
+          let rawOutput: RawModelOutput;
+          try {
+            rawOutput = JSON.parse(jsonText);
+          } catch (parseErr) {
+            // Try cleaning up common JSON formatting issues
+            // Replace smart quotes with regular quotes
+            jsonText = jsonText.replace(/[\u201C\u201D]/g, '"').replace(/[\u2018\u2019]/g, "'");
+            // Try parsing again
+            rawOutput = JSON.parse(jsonText);
+          }
+          
+          // Normalize field names to expected schema
+          structured = this.normalizeFieldNames(rawOutput);
         } catch (parseError) {
-          // Log first 200 chars of response for debugging (no secrets)
-          const preview = rawText.substring(0, 200);
-          logger.warn("Failed to parse Gemini response as JSON", {
+          // Log more details for debugging
+          logger.error("JSON parse failure details", {
             requestId: input.requestId,
-            preview: preview.includes("GEMINI_API_KEY") ? "[REDACTED]" : preview,
+            textLength: rawText.length,
+            firstChars: rawText.substring(0, 100),
+            lastChars: rawText.substring(Math.max(0, rawText.length - 100)),
+            parseError: parseError instanceof Error ? parseError.message : String(parseError),
           });
           throw new Error("PROVIDER_INVALID_OUTPUT: Failed to parse JSON response");
         }
@@ -229,6 +317,94 @@ export class GeminiProvider implements JigyasaProvider {
         mock: false,
       };
     }
+  }
+
+  /**
+   * Normalize field names from Gemini's creative variations to expected schema
+   */
+  private normalizeFieldNames(raw: RawModelOutput): ModelStructuredOutput {
+    const normalized: Partial<ModelStructuredOutput> = {};
+
+    // Normalize shortAnswer (common variations)
+    const shortAnswerKey = this.findKey(raw, ["shortAnswer", "short_answer", "answer", "directAnswer", "brief"]);
+    normalized.shortAnswer = shortAnswerKey && typeof raw[shortAnswerKey] === "string" 
+      ? raw[shortAnswerKey] as string 
+      : "";
+
+    // Normalize katha (common variations)
+    const kathaKey = this.findKey(raw, ["katha", "katha_narrative", "mythological_perspective", "mythology", "narrative", "cultural_context"]);
+    normalized.katha = kathaKey && typeof raw[kathaKey] === "string"
+      ? raw[kathaKey] as string
+      : "";
+
+    // Normalize vigyan (common variations)
+    const vigyanKey = this.findKey(raw, ["vigyan", "vigyan_scientific_explanation", "science", "scientific_explanation", "scientific"]);
+    normalized.vigyan = vigyanKey && typeof raw[vigyanKey] === "string"
+      ? raw[vigyanKey] as string
+      : "";
+
+    // Normalize pramaan (common variations)
+    const pramaanKey = this.findKey(raw, ["pramaan", "evidence", "proof", "supporting_evidence"]);
+    const pramaanArray = pramaanKey && Array.isArray(raw[pramaanKey]) ? raw[pramaanKey] as unknown[] : [];
+    
+    // Normalize each pramaan item
+    normalized.pramaan = pramaanArray.map((item: unknown) => {
+      if (typeof item === "object" && item !== null) {
+        const itemObj = item as Record<string, unknown>;
+        const textKey = this.findKey(itemObj, ["text", "statement", "evidence"]);
+        const citationKey = this.findKey(itemObj, ["citationIds", "citations", "sources"]);
+        
+        return {
+          text: textKey && typeof itemObj[textKey] === "string" ? itemObj[textKey] as string : "",
+          citationIds: citationKey && Array.isArray(itemObj[citationKey]) ? itemObj[citationKey] as string[] : [],
+        };
+      }
+      return { text: "", citationIds: [] };
+    });
+
+    // Normalize uncertainty (common variations)
+    const uncertaintyKey = this.findKey(raw, ["uncertainty", "confidence", "limitations", "caveats"]);
+    normalized.uncertainty = uncertaintyKey && typeof raw[uncertaintyKey] === "string"
+      ? raw[uncertaintyKey] as string
+      : "";
+
+    // Normalize citationIds (common variations)
+    const citationIdsKey = this.findKey(raw, ["citationIds", "citations", "sources", "references"]);
+    normalized.citationIds = citationIdsKey && Array.isArray(raw[citationIdsKey])
+      ? raw[citationIdsKey] as string[]
+      : [];
+
+    // Normalize followUps (common variations)
+    const followUpsKey = this.findKey(raw, ["followUps", "follow_ups", "followup_questions", "related_questions", "suggestions"]);
+    normalized.followUps = followUpsKey && Array.isArray(raw[followUpsKey])
+      ? raw[followUpsKey] as string[]
+      : [];
+
+    return normalized as ModelStructuredOutput;
+  }
+
+  /**
+   * Find first matching key in object (case-insensitive)
+   */
+  private findKey(obj: Record<string, unknown>, candidates: string[]): string | null {
+    // First try exact match
+    for (const candidate of candidates) {
+      if (candidate in obj) {
+        return candidate;
+      }
+    }
+
+    // Then try case-insensitive match
+    const lowerKeys = Object.keys(obj).map(k => k.toLowerCase());
+    for (const candidate of candidates) {
+      const lowerCandidate = candidate.toLowerCase();
+      const index = lowerKeys.indexOf(lowerCandidate);
+      if (index !== -1) {
+        return Object.keys(obj)[index];
+      }
+    }
+
+    return null;
   }
 
   /**

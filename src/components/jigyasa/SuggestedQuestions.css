@@ -1,0 +1,106 @@
+.suggested-questions {
+  margin-block: 1.25rem;
+}
+
+.suggested-questions__label {
+  display: block;
+  margin-bottom: 0.75rem;
+  font-size: var(--text-fluid-label);
+  font-weight: 500;
+  color: var(--space-moonlight);
+  opacity: 0.85;
+}
+
+.suggested-questions__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.suggested-questions__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-size: 0.9375rem;
+  color: var(--space-stardust);
+  background: rgba(7, 9, 18, 0.5);
+  border: 1px solid rgba(139, 101, 232, 0.15);
+  border-radius: 0.625rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.suggested-questions__item:hover:not(:disabled) {
+  color: var(--space-moonlight);
+  background: rgba(139, 101, 232, 0.08);
+  border-color: rgba(139, 101, 232, 0.3);
+  transform: translateX(2px);
+}
+
+.suggested-questions__item:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.suggested-questions__icon {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-top: 0.125rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--space-obsidian);
+  background: var(--space-antique-gold);
+  border-radius: 50%;
+}
+
+.suggested-questions__text {
+  flex: 1;
+  line-height: 1.5;
+}
+
+/* Fade-in animation */
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.suggested-questions__item {
+  animation: fadeSlideIn 0.4s ease;
+  animation-fill-mode: backwards;
+}
+
+.suggested-questions__item:nth-child(1) {
+  animation-delay: 0.05s;
+}
+
+.suggested-questions__item:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.suggested-questions__item:nth-child(3) {
+  animation-delay: 0.15s;
+}
+
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .suggested-questions__item {
+    animation: none;
+    transition: none;
+  }
+
+  .suggested-questions__item:hover:not(:disabled) {
+    transform: none;
+  }
+}
