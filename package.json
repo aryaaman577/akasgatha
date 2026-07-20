@@ -19,7 +19,9 @@
     "ai:test-gemini": "tsx scripts/ai/test-gemini.ts",
     "ai:test-groq": "tsx scripts/ai/test-groq.ts",
     "ai:test-cerebras": "tsx scripts/ai/test-cerebras.ts",
-    "ai:test-fallback": "tsx scripts/ai/test-fallback.ts"
+    "ai:test-fallback": "tsx scripts/ai/test-fallback.ts",
+    "ai:preflight-groq": "tsx scripts/ai/preflight-groq.ts",
+    "ai:preflight-cloudflare": "tsx scripts/ai/preflight-cloudflare.ts"
   },
   "dependencies": {
     "@cerebras/cerebras_cloud_sdk": "^1.91.0",

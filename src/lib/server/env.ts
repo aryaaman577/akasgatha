@@ -13,18 +13,23 @@ import { z } from "zod";
 const envSchema = z.object({
   // AI Provider Configuration
   AI_PROVIDER: z.enum(["mock", "gemini", "groq", "cerebras", "openrouter"]).default("mock"),
-  AI_FALLBACK_PROVIDER: z.enum(["none", "mock", "cerebras"]).default("none"),
+  AI_FALLBACK_PROVIDER: z.enum(["none", "mock", "cerebras", "cloudflare"]).default("none"),
   
   // Model Configuration
   JIGYASA_MODEL: z.string().optional(),
   GEMINI_MODEL: z.string().optional(),
-  GROQ_MODEL: z.string().optional(),
+  GROQ_PRIMARY_MODEL: z.string().optional(),
+  GROQ_SECONDARY_MODEL: z.string().optional(),
+  GROQ_MODEL: z.string().optional(), // Legacy support
   CEREBRAS_MODEL: z.string().optional(),
+  CLOUDFLARE_MODEL: z.string().optional(),
   
   // API Keys (not required for mock provider)
   GEMINI_API_KEY: z.string().optional(),
   GROQ_API_KEY: z.string().optional(),
   CEREBRAS_API_KEY: z.string().optional(),
+  CLOUDFLARE_ACCOUNT_ID: z.string().optional(),
+  CLOUDFLARE_API_TOKEN: z.string().optional(),
   OPENROUTER_API_KEY: z.string().optional(),
   OPENROUTER_MODEL: z.string().optional(),
   
@@ -37,7 +42,7 @@ const envSchema = z.object({
   // Groq Configuration
   GROQ_TEMPERATURE: z.coerce.number().min(0).max(2).default(0.2),
   GROQ_MAX_OUTPUT_TOKENS: z.coerce.number().int().positive().default(1800),
-  GROQ_MAX_RETRIES: z.coerce.number().int().nonnegative().default(1),
+  GROQ_MAX_RETRIES: z.coerce.number().int().nonnegative().default(0),
   
   // Cerebras Configuration
   CEREBRAS_TEMPERATURE: z.coerce.number().min(0).max(2).default(0.2),
@@ -45,6 +50,12 @@ const envSchema = z.object({
   CEREBRAS_MAX_RETRIES: z.coerce.number().int().nonnegative().default(0),
   CEREBRAS_TIMEOUT_MS: z.coerce.number().int().positive().default(30000),
   CEREBRAS_VERSION_PATCH: z.coerce.number().int().positive().optional(),
+  
+  // Cloudflare Configuration
+  CLOUDFLARE_TEMPERATURE: z.coerce.number().min(0).max(2).default(0.2),
+  CLOUDFLARE_MAX_OUTPUT_TOKENS: z.coerce.number().int().positive().default(1800),
+  CLOUDFLARE_TIMEOUT_MS: z.coerce.number().int().positive().default(30000),
+  CLOUDFLARE_MAX_RETRIES: z.coerce.number().int().nonnegative().default(0),
   
   // RAG Configuration
   JIGYASA_REQUIRE_RAG: z.enum(["true", "false"]).default("true").transform(v => v === "true"),
@@ -99,10 +110,15 @@ export function getServerEnv(): Env {
       JIGYASA_MODEL: process.env.JIGYASA_MODEL,
       GEMINI_MODEL: process.env.GEMINI_MODEL,
       GROQ_MODEL: process.env.GROQ_MODEL,
+      GROQ_PRIMARY_MODEL: process.env.GROQ_PRIMARY_MODEL,
+      GROQ_SECONDARY_MODEL: process.env.GROQ_SECONDARY_MODEL,
       CEREBRAS_MODEL: process.env.CEREBRAS_MODEL,
+      CLOUDFLARE_MODEL: process.env.CLOUDFLARE_MODEL,
       GEMINI_API_KEY: process.env.GEMINI_API_KEY,
       GROQ_API_KEY: process.env.GROQ_API_KEY,
       CEREBRAS_API_KEY: process.env.CEREBRAS_API_KEY,
+      CLOUDFLARE_ACCOUNT_ID: process.env.CLOUDFLARE_ACCOUNT_ID,
+      CLOUDFLARE_API_TOKEN: process.env.CLOUDFLARE_API_TOKEN,
       GEMINI_TEMPERATURE: process.env.GEMINI_TEMPERATURE,
       GEMINI_MAX_OUTPUT_TOKENS: process.env.GEMINI_MAX_OUTPUT_TOKENS,
       GEMINI_THINKING_LEVEL: process.env.GEMINI_THINKING_LEVEL,
@@ -115,6 +131,10 @@ export function getServerEnv(): Env {
       CEREBRAS_MAX_RETRIES: process.env.CEREBRAS_MAX_RETRIES,
       CEREBRAS_TIMEOUT_MS: process.env.CEREBRAS_TIMEOUT_MS,
       CEREBRAS_VERSION_PATCH: process.env.CEREBRAS_VERSION_PATCH,
+      CLOUDFLARE_TEMPERATURE: process.env.CLOUDFLARE_TEMPERATURE,
+      CLOUDFLARE_MAX_OUTPUT_TOKENS: process.env.CLOUDFLARE_MAX_OUTPUT_TOKENS,
+      CLOUDFLARE_TIMEOUT_MS: process.env.CLOUDFLARE_TIMEOUT_MS,
+      CLOUDFLARE_MAX_RETRIES: process.env.CLOUDFLARE_MAX_RETRIES,
       OPENROUTER_API_KEY: process.env.OPENROUTER_API_KEY,
       OPENROUTER_MODEL: process.env.OPENROUTER_MODEL,
       JIGYASA_REQUIRE_RAG: process.env.JIGYASA_REQUIRE_RAG,
