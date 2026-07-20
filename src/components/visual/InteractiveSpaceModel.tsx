@@ -309,29 +309,68 @@ function KnowledgeLibrary() {
 function QuestionOrb() {
   return (
     <div className="relative flex h-full w-full items-center justify-center" style={{ transformStyle: "preserve-3d" }}>
-      {/* Outer energy field */}
+      {/* Layered cosmic depth — deep background glow */}
+      <div className="absolute h-64 w-64 rounded-full"
+        style={{
+          background: "radial-gradient(circle, rgba(119,89,217,0.08) 0%, rgba(41,29,85,0.12) 40%, transparent 70%)",
+          filter: "blur(20px)",
+          transform: "translateZ(-30px)",
+        }} />
+      
+      {/* Mid-depth nebula layer */}
+      <div className="absolute h-56 w-56 rounded-full"
+        style={{
+          background: "radial-gradient(circle, rgba(119,89,217,0.15) 20%, rgba(41,29,85,0.08) 50%, transparent 75%)",
+          filter: "blur(14px)",
+          transform: "translateZ(-15px)",
+        }} />
+      
+      {/* Outer energy field with enhanced depth */}
       <div className="absolute h-52 w-52 rounded-full"
         style={{
-          border: "1px solid rgba(119,89,217,0.3)",
-          boxShadow: "0 0 30px rgba(119,89,217,0.1)",
-          transform: `rotateX(45deg) rotateZ(calc(var(--idle) * 0.2))`,
+          border: "1px solid rgba(119,89,217,0.35)",
+          boxShadow: "0 0 30px rgba(119,89,217,0.15), inset 0 0 20px rgba(119,89,217,0.05)",
+          transform: `rotateX(45deg) rotateZ(calc(var(--idle) * 0.08))`,
+          animation: "subtle-pulse 6s ease-in-out infinite",
         }} />
-      {/* Pulsar orb */}
+      
+      {/* Secondary energy ring for layering */}
+      <div className="absolute h-44 w-44 rounded-full"
+        style={{
+          border: "0.5px solid rgba(95,166,184,0.25)",
+          transform: `rotateX(50deg) rotateZ(calc(var(--idle) * -0.06))`,
+          animation: "subtle-pulse 8s ease-in-out infinite 1s",
+        }} />
+      
+      {/* Pulsar orb — enhanced with depth layers */}
       <div className="absolute h-28 w-28 rounded-full"
         style={{
-          background: "radial-gradient(circle, rgba(119,89,217,0.4) 0%, rgba(41,29,85,0.8) 50%, rgba(7,9,18,0.95) 100%)",
-          boxShadow: "0 0 40px rgba(119,89,217,0.4), 0 0 80px rgba(119,89,217,0.1)",
+          background: "radial-gradient(circle at 35% 35%, rgba(119,89,217,0.5) 0%, rgba(85,124,214,0.4) 25%, rgba(41,29,85,0.85) 60%, rgba(7,9,18,0.98) 100%)",
+          boxShadow: "0 0 40px rgba(119,89,217,0.5), 0 0 80px rgba(119,89,217,0.15), inset -8px -8px 20px rgba(0,0,0,0.4)",
+          transform: "translateZ(5px)",
         }} />
-      {/* Energy filaments as SVG */}
+      
+      {/* Atmospheric rim for 3D effect */}
+      <div className="absolute h-32 w-32 rounded-full"
+        style={{
+          background: "radial-gradient(circle at 35% 35%, transparent 75%, rgba(119,89,217,0.2) 85%, transparent 95%)",
+          filter: "blur(3px)",
+          transform: "translateZ(6px)",
+        }} />
+      
+      {/* Energy filaments as SVG with enhanced depth */}
       <svg viewBox="0 0 100 100" className="absolute h-36 w-36"
-        style={{ transform: `rotateZ(calc(var(--idle) * 0.3))` }}>
+        style={{ 
+          transform: `rotateZ(calc(var(--idle) * 0.12)) translateZ(2px)`,
+          filter: "drop-shadow(0 0 3px rgba(119,89,217,0.4))",
+        }}>
         {[0,60,120,180,240,300].map((deg, i) => (
           <line key={i}
             x1="50" y1="50"
             x2={50 + Math.cos(deg * Math.PI / 180) * 42}
             y2={50 + Math.sin(deg * Math.PI / 180) * 42}
-            stroke="rgba(119,89,217,0.5)" strokeWidth="0.8"
-            style={{ animation: `filament-pulse ${2 + i * 0.4}s ease-in-out infinite ${i * 0.3}s` }}
+            stroke="rgba(119,89,217,0.6)" strokeWidth="1"
+            style={{ animation: `filament-pulse ${3 + i * 0.4}s ease-in-out infinite ${i * 0.3}s` }}
           />
         ))}
         {/* Constellation nodes */}
@@ -339,14 +378,48 @@ function QuestionOrb() {
           <circle key={i}
             cx={50 + Math.cos(deg * Math.PI / 180) * 38}
             cy={50 + Math.sin(deg * Math.PI / 180) * 38}
-            r="2" fill="rgba(95,166,184,0.8)" />
+            r="2" 
+            fill="rgba(95,166,184,0.85)"
+            style={{ filter: "drop-shadow(0 0 2px rgba(95,166,184,0.6))" }}
+          />
         ))}
       </svg>
-      {/* Silver core */}
-      <div className="absolute h-6 w-6 rounded-full"
+      
+      {/* Particle field — floating cosmic dust */}
+      {[...Array(12)].map((_, i) => {
+        const angle = (i * 30) * Math.PI / 180;
+        const radius = 45 + (i % 3) * 8;
+        return (
+          <div key={i} className="absolute rounded-full"
+            style={{
+              width: i % 3 === 0 ? "2px" : "1.5px",
+              height: i % 3 === 0 ? "2px" : "1.5px",
+              background: i % 2 === 0 ? "rgba(216,220,233,0.6)" : "rgba(119,89,217,0.5)",
+              left: `calc(50% + ${Math.cos(angle) * radius}px)`,
+              top: `calc(50% + ${Math.sin(angle) * radius}px)`,
+              transform: "translateZ(10px)",
+              boxShadow: "0 0 3px rgba(216,220,233,0.4)",
+              animation: `particle-float ${4 + (i % 3)}s ease-in-out infinite ${i * 0.2}s`,
+            }}
+          />
+        );
+      })}
+      
+      {/* Silver core with internal depth glow */}
+      <div className="absolute h-7 w-7 rounded-full"
         style={{
-          background: "radial-gradient(circle, rgba(216,220,233,0.95), rgba(180,185,200,0.7))",
-          boxShadow: "0 0 15px rgba(216,220,233,0.6)",
+          background: "radial-gradient(circle at 40% 40%, rgba(241,240,232,0.98), rgba(216,220,233,0.9) 40%, rgba(180,185,200,0.75) 80%)",
+          boxShadow: "0 0 15px rgba(216,220,233,0.7), 0 0 25px rgba(119,89,217,0.3), inset 2px 2px 6px rgba(255,255,255,0.5)",
+          transform: "translateZ(8px)",
+        }} />
+      
+      {/* Inner glow accent */}
+      <div className="absolute h-4 w-4 rounded-full"
+        style={{
+          background: "radial-gradient(circle, rgba(241,240,232,0.6), transparent 70%)",
+          filter: "blur(2px)",
+          transform: "translateZ(9px)",
+          animation: "core-pulse 4s ease-in-out infinite",
         }} />
     </div>
   );
@@ -786,7 +859,7 @@ export function InteractiveSpaceModel({
       rafId = requestAnimationFrame(tick);
       if (!isVisible) return;
 
-      const _dt = Math.min((time - lastTime) / 1000, 0.1);
+      const dt = Math.min((time - lastTime) / 1000, 0.1);
       lastTime = time;
 
       const s = state.current;
@@ -794,13 +867,26 @@ export function InteractiveSpaceModel({
       if (!reducedMotion) {
         s.idle += 0.4;
         
-        // Dampen current rotations toward target
-        s.currRotX += (s.targetRotX - s.currRotX) * 0.1;
-        s.currRotY += (s.targetRotY - s.currRotY) * 0.1;
+        // Dampen current rotations toward target with stronger damping for Jigyasa
+        const dampingFactor = variant === "question_orb" ? 0.08 : 0.1;
+        s.currRotX += (s.targetRotX - s.currRotX) * dampingFactor;
+        s.currRotY += (s.targetRotY - s.currRotY) * dampingFactor;
       }
 
-      const totalX = s.currRotX + s.dragRotX;
-      const totalY = s.idle * 0.3 + s.currRotY + s.dragRotY;
+      // For question_orb: remove continuous rotation, add subtle breathing motion only
+      let totalX: number, totalY: number;
+      if (variant === "question_orb") {
+        // Breathing motion: gentle sine wave oscillation
+        const breathX = Math.sin(s.idle * 0.02) * 1.5;
+        const breathY = Math.cos(s.idle * 0.015) * 1;
+        totalX = breathX + s.currRotX + s.dragRotX;
+        totalY = breathY + s.currRotY + s.dragRotY;
+      } else {
+        // Other models: keep original rotation behavior
+        totalX = s.currRotX + s.dragRotX;
+        totalY = s.idle * 0.3 + s.currRotY + s.dragRotY;
+      }
+      
       const scale = baseScale * s.hoverScale;
 
       if (innerRef.current && containerRef.current) {
@@ -816,7 +902,7 @@ export function InteractiveSpaceModel({
       cancelAnimationFrame(rafId);
       observer.disconnect();
     };
-  }, [reducedMotion, interactionMode, size, intensity]);
+  }, [reducedMotion, interactionMode, size, intensity, variant]);
 
   /* Mouse & Touch Handlers (passive & ref-based) */
   const updateRotation = useCallback((clientX: number, clientY: number) => {
@@ -824,9 +910,17 @@ export function InteractiveSpaceModel({
     const rect = containerRef.current.getBoundingClientRect();
     const nx = (clientX - rect.left - rect.width / 2) / (rect.width / 2);
     const ny = (clientY - rect.top - rect.height / 2) / (rect.height / 2);
-    state.current.targetRotX = -ny * 20;
-    state.current.targetRotY = nx * 20;
-  }, [reducedMotion, interactionMode]);
+    
+    // For question_orb: severely limit pointer interaction (subtle parallax only)
+    if (variant === "question_orb") {
+      state.current.targetRotX = -ny * 2; // Limit vertical: -2 to +2 degrees
+      state.current.targetRotY = nx * 4;  // Limit horizontal: -4 to +4 degrees
+    } else {
+      // Other models: keep original interaction strength
+      state.current.targetRotX = -ny * 20;
+      state.current.targetRotY = nx * 20;
+    }
+  }, [reducedMotion, interactionMode, variant]);
 
   const onPointerMove = useCallback((e: React.PointerEvent) => {
     if (interactionMode === "rotate" && state.current.isDragging) {

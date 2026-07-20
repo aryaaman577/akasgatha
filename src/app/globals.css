@@ -373,6 +373,22 @@ a, button, input, select, textarea {
   50%      { opacity: 0.9; stroke-width: 1.5; }
 }
 
+/* Jigyasa QuestionOrb animations */
+@keyframes subtle-pulse {
+  0%, 100% { opacity: 0.35; transform: rotateX(45deg) rotateZ(calc(var(--idle) * 0.08)) scale(1); }
+  50%      { opacity: 0.50; transform: rotateX(45deg) rotateZ(calc(var(--idle) * 0.08)) scale(1.02); }
+}
+
+@keyframes particle-float {
+  0%, 100% { transform: translateZ(10px) translateY(0px); opacity: 0.6; }
+  50%      { transform: translateZ(10px) translateY(-3px); opacity: 1; }
+}
+
+@keyframes core-pulse {
+  0%, 100% { opacity: 0.9; }
+  50%      { opacity: 0.6; }
+}
+
 /* Fade in from below */
 @keyframes fade-up {
   from { opacity: 0; transform: translateY(12px); }
