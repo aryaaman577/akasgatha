@@ -9,10 +9,10 @@
 | Field | Value |
 |---|---|
 | **Project** | AkasGatha |
-| **Current Phase** | Phase 3 - Mock Jigyasa UI |
-| **Phase Status** | ✅ Complete |
-| **Next Phase** | Phase 4 - Mock Backend API |
-| **Last Updated** | 2026-07-17 |
+| **Current Phase** | Phase 6 - Dynamic 3D Scenes |
+| **Phase Status** | ⏸️ Deferred |
+| **Next Phase** | Phase 7 - Security Hardening |
+| **Last Updated** | 2026-07-21 |
 
 ---
 
@@ -22,6 +22,8 @@
 - [x] Phase 1: Project Setup
 - [x] Phase 2: Frontend Foundation
 - [x] Phase 3: Mock Jigyasa UI
+- [x] Phase 4: Backend API Foundation
+- [x] Phase 5: Real LLM Integration (Groq + RAG)
 
 ---
 
@@ -31,11 +33,20 @@ None
 
 ---
 
+## Deferred Phases
+
+- [⏸️] **Phase 6: Dynamic 3D Scenes** — DEFERRED
+  - **Reason:** Current generated visual quality not approved
+  - **Status:** Phase 6A Eclipse prototype preserved for future redesign
+  - **Feature Flag:** `FEATURE_FLAGS.drishyaYantraEnabled = false`
+  - **Code Preserved:** Eclipse scene source code remains in repository
+  - **Commits Preserved:** e116870, 0096aec
+  - **Not Started:** Phase 6B (Planet Orbit), Phase 6C (Cosmic Sky)
+
+---
+
 ## Not Started
 
-- [ ] Phase 4: Mock Backend API
-- [ ] Phase 5: Real LLM Integration
-- [ ] Phase 6: 3D Scenes
 - [ ] Phase 7: Security Hardening
 - [ ] Phase 8: Docker + AWS Deployment
 - [ ] Phase 9: Final Report + Polish

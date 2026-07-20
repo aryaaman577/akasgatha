@@ -5,14 +5,18 @@ import dynamic from "next/dynamic";
 import { GlowCard } from "../shared/GlowCard";
 import { InteractiveSpaceModel } from "@/components/visual/InteractiveSpaceModel";
 import { useLanguage, translations } from "@/config/language";
+import { FEATURE_FLAGS } from "@/config/feature-flags";
 import type { JigyasaSuccessResponse } from "@/lib/server/jigyasa/schema";
 import { detectEclipseQuestion } from "@/components/drishya/EclipseDrishyaYantra";
 
 // Dynamic import for Eclipse scene (client-only)
-const EclipseDrishyaYantra = dynamic(
-  () => import("@/components/drishya/EclipseDrishyaYantra").then((mod) => ({ default: mod.EclipseDrishyaYantra })),
-  { ssr: false }
-);
+// Only loaded when feature is enabled
+const EclipseDrishyaYantra = FEATURE_FLAGS.drishyaYantraEnabled
+  ? dynamic(
+      () => import("@/components/drishya/EclipseDrishyaYantra").then((mod) => ({ default: mod.EclipseDrishyaYantra })),
+      { ssr: false }
+    )
+  : null;
 
 interface ResponsePanelProps {
   response: JigyasaSuccessResponse;
@@ -24,9 +28,9 @@ export function ResponsePanel({ response, question }: ResponsePanelProps) {
   const t = translations[language];
   const { answer, meta } = response;
 
-  // Detect if Eclipse scene should be shown
+  // Detect if Eclipse scene should be shown (only when feature enabled)
   const eclipseMode = useMemo(() => {
-    if (!question) return null;
+    if (!FEATURE_FLAGS.drishyaYantraEnabled || !question) return null;
     return detectEclipseQuestion(question);
   }, [question]);
 
@@ -125,8 +129,8 @@ export function ResponsePanel({ response, question }: ResponsePanelProps) {
             {t.respDrishya}
           </h4>
           
-          {/* Live Eclipse Drishya Yantra scene */}
-          {eclipseMode ? (
+          {/* Live Eclipse Drishya Yantra scene (Phase 6 - currently deferred) */}
+          {eclipseMode && EclipseDrishyaYantra ? (
             <div className="mt-4">
               <div className="relative h-[300px] sm:h-[400px] rounded-lg overflow-hidden">
                 <EclipseDrishyaYantra mode={eclipseMode} />
