@@ -3,7 +3,6 @@
 import React, { useMemo } from "react";
 import dynamic from "next/dynamic";
 import { GlowCard } from "../shared/GlowCard";
-import { InteractiveSpaceModel } from "@/components/visual/InteractiveSpaceModel";
 import { useLanguage, translations } from "@/config/language";
 import { FEATURE_FLAGS } from "@/config/feature-flags";
 import type { JigyasaSuccessResponse } from "@/lib/server/jigyasa/schema";
@@ -104,7 +103,7 @@ export function ResponsePanel({ response, question }: ResponsePanelProps) {
       </GlowCard>
 
       {/* Evidence (Pramaan) and Visual (Drishya) */}
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className={`grid gap-6 ${eclipseMode && EclipseDrishyaYantra ? "md:grid-cols-2" : ""}`}>
         <GlowCard>
           <h4 className="font-display text-fluid-card" style={{ color: "var(--space-moonlight)", opacity: 0.9 }}>
             {t.respPramaan}
@@ -124,13 +123,12 @@ export function ResponsePanel({ response, question }: ResponsePanelProps) {
           )}
         </GlowCard>
 
-        <GlowCard>
-          <h4 className="font-display text-fluid-card" style={{ color: "var(--space-moonlight)", opacity: 0.9 }}>
-            {t.respDrishya}
-          </h4>
-          
-          {/* Live Eclipse Drishya Yantra scene (Phase 6 - currently deferred) */}
-          {eclipseMode && EclipseDrishyaYantra ? (
+        {/* Drishya Yantra scene (Phase 6 - currently deferred) */}
+        {eclipseMode && EclipseDrishyaYantra && (
+          <GlowCard>
+            <h4 className="font-display text-fluid-card" style={{ color: "var(--space-moonlight)", opacity: 0.9 }}>
+              {t.respDrishya}
+            </h4>
             <div className="mt-4">
               <div className="relative h-[300px] sm:h-[400px] rounded-lg overflow-hidden">
                 <EclipseDrishyaYantra mode={eclipseMode} />
@@ -139,21 +137,8 @@ export function ResponsePanel({ response, question }: ResponsePanelProps) {
                 {eclipseMode === "solar" ? "सूर्य ग्रहण / Solar Eclipse" : eclipseMode === "lunar" ? "चंद्र ग्रहण / Lunar Eclipse" : "Eclipse Alignment"}
               </p>
             </div>
-          ) : answer.visual ? (
-            <div className="mt-4 flex items-center gap-4">
-              <div className="h-16 w-16 flex-shrink-0 overflow-visible">
-                <InteractiveSpaceModel variant="eclipse_alignment" size="full" interactionMode="tilt" aria-hidden={true} />
-              </div>
-              <p className="text-fluid-body max-w-optimal text-balance-pretty" style={{ color: "var(--space-stardust)", opacity: 0.7 }}>
-                Scene: {answer.visual.sceneId}
-              </p>
-            </div>
-          ) : (
-            <p className="mt-4 text-fluid-body" style={{ color: "var(--space-stardust)", opacity: 0.5 }}>
-              Visual representation pending answer-specific scene implementation.
-            </p>
-          )}
-        </GlowCard>
+          </GlowCard>
+        )}
       </div>
 
       {/* Sources (if any) */}
