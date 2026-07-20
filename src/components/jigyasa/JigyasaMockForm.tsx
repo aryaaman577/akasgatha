@@ -236,7 +236,7 @@ export function JigyasaMockForm() {
       </GlowCard>
 
       {status === "loading" && <ResponseSkeleton />}
-      {status === "success" && response && <ResponsePanel response={response} />}
+      {status === "success" && response && <ResponsePanel response={response} question={question} />}
       {status === "error" && error && <ErrorPanel error={error} onRetry={handleRetry} />}
     </div>
   );
