@@ -189,8 +189,8 @@ export function validateProviderConfig(env: Env): void {
     if (!env.GROQ_API_KEY) {
       throw new Error("GROQ_API_KEY is required when AI_PROVIDER=groq");
     }
-    if (!env.GROQ_MODEL) {
-      throw new Error("GROQ_MODEL is required when AI_PROVIDER=groq");
+    if (!env.GROQ_PRIMARY_MODEL && !env.GROQ_MODEL) {
+      throw new Error("GROQ_PRIMARY_MODEL or GROQ_MODEL is required when AI_PROVIDER=groq");
     }
   }
 
@@ -198,6 +198,8 @@ export function validateProviderConfig(env: Env): void {
     if (!env.CEREBRAS_API_KEY) {
       throw new Error("CEREBRAS_API_KEY is required when AI_PROVIDER=cerebras");
     }
+    // Note: Cerebras currently disabled due to billing requirement (HTTP 402)
+    // Model validation kept for future re-enablement
     if (!env.CEREBRAS_MODEL) {
       throw new Error("CEREBRAS_MODEL is required when AI_PROVIDER=cerebras");
     }

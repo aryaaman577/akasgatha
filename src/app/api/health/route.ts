@@ -42,20 +42,33 @@ export async function GET() {
     const router = getProviderWithFallback();
     const routerInfo = router.getProviderInfo();
 
+    // Determine primary and fallback models
+    let primaryModel = null;
+    let fallbackModel = null;
+    
+    if (env.AI_PROVIDER === "groq") {
+      primaryModel = env.GROQ_PRIMARY_MODEL || env.GROQ_MODEL || null;
+      fallbackModel = env.GROQ_SECONDARY_MODEL || null;
+    } else if (env.AI_PROVIDER === "cerebras") {
+      primaryModel = env.CEREBRAS_MODEL || null;
+      fallbackModel = null; // Cerebras disabled
+    }
+
     // Determine available providers (Phase 5)
     const availableProviders: ("groq" | "cerebras")[] = [];
     
     // Check Groq
-    if (env.GROQ_API_KEY && env.GROQ_MODEL) {
+    if (env.GROQ_API_KEY && (env.GROQ_PRIMARY_MODEL || env.GROQ_MODEL)) {
       availableProviders.push("groq");
     }
     
-    // Check Cerebras
-    if (env.CEREBRAS_API_KEY && env.CEREBRAS_MODEL) {
-      availableProviders.push("cerebras");
-    }
+    // Cerebras disabled due to billing requirement
+    // Keep code for future re-enablement
+    // if (env.CEREBRAS_API_KEY && env.CEREBRAS_MODEL) {
+    //   availableProviders.push("cerebras");
+    // }
     
-    const fallbackEnabled = env.AI_FALLBACK_PROVIDER !== "none";
+    const fallbackEnabled = !!(env.GROQ_SECONDARY_MODEL || (env.AI_FALLBACK_PROVIDER && env.AI_FALLBACK_PROVIDER !== "none"));
 
     // Check RAG status (Phase 4B)
     let ragStatus: HealthResponse["rag"] = undefined;
@@ -94,11 +107,11 @@ export async function GET() {
         configured: providerHealth.configured,
         mock: providerHealth.mock,
         primary: routerInfo.primary,
-        primaryModel: env.GROQ_MODEL || env.CEREBRAS_MODEL || null,
+        primaryModel: primaryModel,
         primaryConfigured: routerInfo.primaryConfigured,
-        fallback: routerInfo.fallback,
-        fallbackModel: routerInfo.fallback === "cerebras" ? env.CEREBRAS_MODEL || null : null,
-        fallbackConfigured: routerInfo.fallbackConfigured,
+        fallback: routerInfo.fallback || (fallbackModel ? "groq-secondary" : null),
+        fallbackModel: fallbackModel,
+        fallbackConfigured: routerInfo.fallbackConfigured || !!fallbackModel,
       },
       capabilities: {
         providers: availableProviders,

@@ -20,6 +20,7 @@
     "ai:test-groq": "tsx scripts/ai/test-groq.ts",
     "ai:test-cerebras": "tsx scripts/ai/test-cerebras.ts",
     "ai:test-fallback": "tsx scripts/ai/test-fallback.ts",
+    "ai:test-routing": "tsx scripts/ai/test-routing.ts",
     "ai:preflight-groq": "tsx scripts/ai/preflight-groq.ts",
     "ai:preflight-cloudflare": "tsx scripts/ai/preflight-cloudflare.ts"
   },

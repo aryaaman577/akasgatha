@@ -42,10 +42,16 @@ export class JigyasaProviderRouter {
     try {
       switch (this.env.AI_PROVIDER) {
         case "groq":
-          this.primaryProvider = new GroqProvider();
+          // Use GROQ_PRIMARY_MODEL if available, otherwise GROQ_MODEL
+          const primaryModel = this.env.GROQ_PRIMARY_MODEL || this.env.GROQ_MODEL;
+          this.primaryProvider = new GroqProvider(primaryModel);
           break;
         case "cerebras":
-          this.primaryProvider = new CerebrasProvider();
+          // Cerebras disabled due to billing (HTTP 402)
+          // Keep code for future re-enablement
+          // this.primaryProvider = new CerebrasProvider();
+          this.primaryProvider = null;
+          logger.warn("Cerebras provider disabled due to billing requirement");
           break;
         case "mock":
         case "gemini":
@@ -69,9 +75,21 @@ export class JigyasaProviderRouter {
       try {
         switch (this.env.AI_FALLBACK_PROVIDER) {
           case "cerebras":
-            // Only create fallback if it's different from primary
-            if (this.env.AI_PROVIDER !== "cerebras") {
-              this.fallbackProvider = new CerebrasProvider();
+            // Cerebras disabled due to billing (HTTP 402)
+            // Keep code for future re-enablement
+            // if (this.env.AI_PROVIDER !== "cerebras") {
+            //   this.fallbackProvider = new CerebrasProvider();
+            // }
+            this.fallbackProvider = null;
+            logger.warn("Cerebras fallback disabled due to billing requirement");
+            break;
+          case "cloudflare":
+            // Cloudflare support to be added in future
+            // For now, use Groq secondary model as fallback
+            if (this.env.AI_PROVIDER === "groq" && this.env.GROQ_SECONDARY_MODEL) {
+              this.fallbackProvider = new GroqProvider(this.env.GROQ_SECONDARY_MODEL);
+            } else {
+              this.fallbackProvider = null;
             }
             break;
           case "mock":
@@ -84,6 +102,19 @@ export class JigyasaProviderRouter {
       } catch (error) {
         logger.error("Failed to initialize fallback provider", {
           provider: this.env.AI_FALLBACK_PROVIDER,
+          error: error instanceof Error ? error.message : String(error),
+        });
+        this.fallbackProvider = null;
+      }
+    } else if (this.env.AI_PROVIDER === "groq" && this.env.GROQ_SECONDARY_MODEL) {
+      // Auto-configure Groq secondary as fallback if available
+      try {
+        this.fallbackProvider = new GroqProvider(this.env.GROQ_SECONDARY_MODEL);
+        logger.info("Auto-configured Groq secondary model as fallback", {
+          model: this.env.GROQ_SECONDARY_MODEL,
+        });
+      } catch (error) {
+        logger.error("Failed to initialize Groq secondary fallback", {
           error: error instanceof Error ? error.message : String(error),
         });
         this.fallbackProvider = null;

@@ -42,19 +42,26 @@ export class GroqProvider implements JigyasaProvider {
   readonly name = "groq";
   private client: Groq;
   private env: ReturnType<typeof getServerEnv>;
+  private model: string;
 
-  constructor() {
+  constructor(modelOverride?: string) {
     this.env = getServerEnv();
     
     if (!this.env.GROQ_API_KEY) {
       throw new Error("GROQ_API_KEY is required for Groq provider");
     }
     
-    if (!this.env.GROQ_MODEL) {
-      throw new Error("GROQ_MODEL is required for Groq provider");
-    }
+    // Determine model: override > PRIMARY > GROQ_MODEL > default
+    this.model = modelOverride 
+      || this.env.GROQ_PRIMARY_MODEL 
+      || this.env.GROQ_MODEL 
+      || "openai/gpt-oss-20b";
 
     this.client = new Groq({ apiKey: this.env.GROQ_API_KEY });
+  }
+
+  getModel(): string {
+    return this.model;
   }
 
   async generate(input: ProviderInput): Promise<ProviderOutput> {
@@ -177,7 +184,7 @@ export class GroqProvider implements JigyasaProvider {
 
         // Call Groq API
         const response = await this.client.chat.completions.create({
-          model: this.env.GROQ_MODEL!,
+          model: this.model,
           messages: [
             {
               role: "system",
@@ -272,7 +279,7 @@ export class GroqProvider implements JigyasaProvider {
           answer,
           meta: {
             durationMs,
-            model: this.env.GROQ_MODEL,
+            model: this.model,
             tokensUsed: response.usage?.total_tokens,
             answerMode: structured.answerMode,
           },
