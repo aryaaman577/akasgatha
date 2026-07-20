@@ -97,8 +97,8 @@
 .mission-grid {
   width: min(1120px, 100%);
   display: grid;
-  grid-template-columns: minmax(320px, 0.92fr) minmax(360px, 1.08fr);
-  gap: clamp(2rem, 6vw, 5.5rem);
+  grid-template-columns: minmax(0, 0.46fr) minmax(0, 0.54fr);
+  gap: clamp(2.5rem, 6vw, 6rem);
   align-items: center;
   animation: section-reveal 900ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
@@ -322,11 +322,11 @@
 .tick-four { transform: rotate(296deg) translateY(calc(-0.92 * var(--tick-radius))) translateZ(calc(var(--tick-depth) * 0.65)); }
 
 .copy-column {
-  max-width: 620px;
+  max-width: 580px;
 }
 
 .eyebrow {
-  margin: 0 0 0.9rem;
+  margin: 0 0 1rem;
   color: #d7b66d;
   font-size: 0.875rem;
   font-weight: 800;
@@ -336,10 +336,10 @@
 
 .copy-column h1 {
   margin: 0;
-  max-width: 12ch;
+  max-width: 16ch;
   font-family: Cinzel, "Noto Serif Devanagari", Georgia, serif;
-  font-size: clamp(1.6rem, 3vw, 2.8rem);
-  line-height: 1.2;
+  font-size: clamp(1.75rem, 3.2vw, 2.9rem);
+  line-height: 1.18;
   letter-spacing: -0.045em;
   color: #f6efd8;
   background: linear-gradient(110deg, #fff8dc 4%, #e7d7a6 42%, #b99250 75%, #edf7ff 100%);
@@ -351,11 +351,11 @@
 }
 
 .support-line {
-  margin: clamp(1rem, 2vw, 1.45rem) 0 0;
-  max-width: 65ch;
-  color: rgba(213, 224, 232, 0.78);
-  font-size: clamp(0.95rem, 1.2vw, 1.1rem);
-  line-height: 1.65;
+  margin: clamp(1.1rem, 2.2vw, 1.6rem) 0 0;
+  max-width: 56ch;
+  color: rgba(213, 224, 232, 0.80);
+  font-size: clamp(0.98rem, 1.25vw, 1.12rem);
+  line-height: 1.62;
   text-wrap: pretty;
 }
 
@@ -542,28 +542,37 @@
 @media (max-width: 860px) {
   .mission-preview {
     min-height: auto;
-    padding-top: 4.65rem;
-    padding-bottom: 2.2rem;
+    padding-top: clamp(3.5rem, 8vw, 4.65rem);
+    padding-bottom: clamp(2.5rem, 5vw, 3.5rem);
   }
 
   .mission-grid {
     grid-template-columns: 1fr;
-    gap: 1.3rem;
+    gap: clamp(1.8rem, 4vw, 2.5rem);
     text-align: left;
   }
 
+  .model-column {
+    order: 2;
+  }
+
+  .copy-column {
+    order: 1;
+  }
+
   .model-shell {
-    width: min(86vw, 330px);
+    width: min(82vw, 340px);
     margin-inline: auto;
   }
 
   .copy-column h1 {
-    max-width: 15ch;
-    font-size: clamp(1.6rem, 11vw, 2.8rem);
+    max-width: 18ch;
+    font-size: clamp(1.7rem, 7vw, 2.9rem);
   }
 
   .support-line {
-    line-height: 1.58;
+    line-height: 1.6;
+    max-width: 100%;
   }
 }
 
