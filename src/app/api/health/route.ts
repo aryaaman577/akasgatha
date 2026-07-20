@@ -16,6 +16,7 @@ export async function GET() {
   try {
     const provider = getProvider();
     const { getServerEnv } = await import("@/lib/server/env");
+    const { getProviderWithFallback } = await import("@/lib/server/ai/provider-registry");
     const env = getServerEnv();
     
     let providerHealth = {
@@ -37,7 +38,11 @@ export async function GET() {
       }
     }
 
-    // Determine available providers (Phase 5 UX)
+    // Get router info for fallback status
+    const router = getProviderWithFallback();
+    const routerInfo = router.getProviderInfo();
+
+    // Determine available providers (Phase 5)
     const availableProviders: ("groq" | "cerebras")[] = [];
     
     // Check Groq
@@ -45,9 +50,10 @@ export async function GET() {
       availableProviders.push("groq");
     }
     
-    // Check Cerebras (when implemented)
-    // Note: Cerebras will be added when its provider is implemented
-    // For now, it's not included in available providers
+    // Check Cerebras
+    if (env.CEREBRAS_API_KEY && env.CEREBRAS_MODEL) {
+      availableProviders.push("cerebras");
+    }
     
     const fallbackEnabled = env.AI_FALLBACK_PROVIDER !== "none";
 
@@ -87,6 +93,12 @@ export async function GET() {
         name: provider.name,
         configured: providerHealth.configured,
         mock: providerHealth.mock,
+        primary: routerInfo.primary,
+        primaryModel: env.GROQ_MODEL || env.CEREBRAS_MODEL || null,
+        primaryConfigured: routerInfo.primaryConfigured,
+        fallback: routerInfo.fallback,
+        fallbackModel: routerInfo.fallback === "cerebras" ? env.CEREBRAS_MODEL || null : null,
+        fallbackConfigured: routerInfo.fallbackConfigured,
       },
       capabilities: {
         providers: availableProviders,

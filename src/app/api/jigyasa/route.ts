@@ -17,7 +17,7 @@ import { generateRequestId } from "@/lib/server/utils/request-id";
 import { logger, truncateForLog } from "@/lib/server/utils/logger";
 import { createTimeoutController, isAbortError } from "@/lib/server/utils/timeout";
 import { getRateLimiter } from "@/lib/server/rate-limit/in-memory-limiter";
-import { getProvider, isProviderMock } from "@/lib/server/ai/provider-registry";
+import { isProviderMock } from "@/lib/server/ai/provider-registry";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -120,10 +120,8 @@ export async function POST(request: NextRequest) {
     const { controller, cleanup } = createTimeoutController(env.JIGYASA_REQUEST_TIMEOUT_MS);
 
     try {
-      // Get provider and generate answer
-      const provider = getProvider();
-      
       // RAG retrieval using local index (Phase 4B-4 + Phase 5)
+      // RAG runs ONCE before any provider attempt
       let ragContext = null;
       try {
         const { retrieveLocalContext } = await import("@/lib/server/rag/local-retrieval");
@@ -148,13 +146,17 @@ export async function POST(request: NextRequest) {
         });
       }
       
-      const result = await provider.generate({
+      // Use provider router for automatic fallback support
+      const { getProviderWithFallback } = await import("@/lib/server/ai/provider-registry");
+      const router = getProviderWithFallback();
+      
+      const result = await router.generate({
         question: input.question,
         language: input.language,
         history: input.history,
         requestId,
         signal: controller.signal,
-        ragContext, // Pass RAG context to provider
+        ragContext, // Pass SAME RAG context to all providers
       });
 
       const durationMs = Date.now() - startTime;
@@ -162,7 +164,10 @@ export async function POST(request: NextRequest) {
       logger.info("Jigyasa request completed", {
         requestId,
         status: 200,
-        provider: provider.name,
+        provider: result.meta.provider,
+        primaryProvider: result.meta.primaryProvider,
+        fallbackUsed: result.meta.fallbackUsed,
+        providerAttempts: result.meta.providerAttempts,
         mock: isProviderMock(),
         ragEnabled: ragContext !== null,
         durationMs,
@@ -173,8 +178,8 @@ export async function POST(request: NextRequest) {
         status: "ok",
         answer: result.answer,
         meta: {
-          provider: provider.name,
-          model: result.meta.model || provider.name,
+          provider: result.meta.provider,
+          model: result.meta.model || result.meta.provider,
           mock: isProviderMock(),
           ragUsed: ragContext !== null,
           retrievedChunkCount: ragContext?.totalResults || 0,

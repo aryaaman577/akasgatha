@@ -1,9 +1,7 @@
 "use client";
 
 import { GlowCard } from "@/components/shared/GlowCard";
-import { SectionShell } from "@/components/shared/SectionShell";
 import { useLanguage, translations } from "@/config/language";
-import styles from "./about.module.css";
 
 export default function AboutPage() {
   const { language } = useLanguage();

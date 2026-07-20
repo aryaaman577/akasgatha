@@ -163,6 +163,13 @@ export const healthResponseSchema = z.object({
     name: z.string(),
     configured: z.boolean(),
     mock: z.boolean(),
+    // Phase 5: Provider routing info
+    primary: z.string().nullable().optional(),
+    primaryModel: z.string().nullable().optional(),
+    primaryConfigured: z.boolean().optional(),
+    fallback: z.string().nullable().optional(),
+    fallbackModel: z.string().nullable().optional(),
+    fallbackConfigured: z.boolean().optional(),
   }),
   // Phase 5 UX: Available provider capabilities
   capabilities: z.object({
