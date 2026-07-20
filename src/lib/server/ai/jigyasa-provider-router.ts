@@ -9,7 +9,6 @@
 
 import type { JigyasaProvider, ProviderInput, ProviderOutput } from "./types";
 import { GroqProvider } from "./groq-provider";
-import { CerebrasProvider } from "./cerebras-provider";
 import { getServerEnv } from "../env";
 import { categorizeError } from "./provider-errors";
 import { logger } from "../utils/logger";

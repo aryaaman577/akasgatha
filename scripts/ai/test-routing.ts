@@ -17,7 +17,6 @@ loadEnvConfig(process.cwd());
 
 import { getProviderRouter } from "../../src/lib/server/ai/jigyasa-provider-router";
 import { retrieveLocalContext } from "../../src/lib/server/rag/local-retrieval";
-import { logger } from "../../src/lib/server/utils/logger";
 
 const CYAN = "\x1b[36m";
 const GREEN = "\x1b[32m";
