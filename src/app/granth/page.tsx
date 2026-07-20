@@ -50,7 +50,7 @@ export default function GranthPage() {
                 className="group flex min-h-[320px] flex-col overflow-visible"
               >
                 {/* Model */}
-                <div className="relative mx-auto mb-4 h-32 w-32 overflow-visible">
+                <div className="relative mx-auto mb-4 h-32 w-32 overflow-hidden">
                   <InteractiveSpaceModel
                     variant={topic.sceneType}
                     size="full"

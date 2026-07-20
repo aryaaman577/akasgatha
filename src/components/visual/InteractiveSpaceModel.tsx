@@ -111,7 +111,7 @@ function CosmicGate() {
 
 function PlanetOrbit() {
   return (
-    <div className="relative flex h-full w-full items-center justify-center" style={{ transformStyle: "preserve-3d" }}>
+    <div className="relative flex h-full w-full items-center justify-center" style={{ transformStyle: "preserve-3d", transform: "scale(0.65)" }}>
       {/* Planet sphere */}
       <div className="absolute h-28 w-28 rounded-full"
         style={{
