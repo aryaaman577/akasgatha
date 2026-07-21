@@ -68,8 +68,16 @@ export async function GET() {
     //   availableProviders.push("cerebras");
     // }
 
-    // Check Gemini
-    if (env.GEMINI_API_KEY && env.GEMINI_MODEL) {
+    // Check Gemini (only allow official stable models)
+    const officialGeminiModels = [
+      "gemini-3.5-flash",
+      "gemini-3.1-flash-lite",
+      "gemini-2.5-flash",
+      "gemini-2.5-flash-lite"
+    ];
+    const isGeminiModelValid = env.GEMINI_MODEL && officialGeminiModels.includes(env.GEMINI_MODEL);
+    
+    if (env.GEMINI_API_KEY && isGeminiModelValid) {
       availableProviders.push("gemini");
     }
     
@@ -123,7 +131,7 @@ export async function GET() {
         fallbackEnabled,
         models: {
           groq: env.GROQ_PRIMARY_MODEL || env.GROQ_MODEL || null,
-          gemini: env.GEMINI_MODEL || null
+          gemini: isGeminiModelValid ? env.GEMINI_MODEL : null
         }
       },
       rag: ragStatus,

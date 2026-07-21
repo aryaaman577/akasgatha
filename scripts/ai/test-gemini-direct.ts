@@ -74,21 +74,20 @@ async function main() {
     process.exit(1);
   }
 
-  // Prioritize newer flash models that are available
+  // Prioritize official models
   const preferredModels = [
     "gemini-3.5-flash",
-    "gemini-3.5-flash-lite",
     "gemini-3.1-flash-lite",
-    "gemini-2.0-flash-lite",
-    "gemini-2.0-flash-001"
+    "gemini-2.5-flash",
+    "gemini-2.5-flash-lite"
   ];
-  const modelsToTest = preferredModels.filter(m => availableModels.includes(m)).slice(0, 2); // test top 2
+  const modelsToTest = preferredModels.filter(m => availableModels.includes(m)); // test all that are available
 
   if (modelsToTest.length === 0) {
-    console.log("No compatible models found for testing. Available models:");
+    console.log("No compatible official models found in model listing. Available models:");
     console.log(availableModels.join(", "));
-    // fallback to try testing whatever is there
-    modelsToTest.push(...availableModels.slice(0, 2));
+    // fallback to try testing the preferred models anyway to see if the SDK supports them directly
+    modelsToTest.push(...preferredModels);
   }
 
   const results: Record<string, {
