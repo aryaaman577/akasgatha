@@ -32,7 +32,6 @@ const diskVertexShader = /* glsl */ `
 `;
 
 const diskFragmentShader = /* glsl */ `
-  precision mediump float;
   uniform float uTime;
   uniform float uOpacity;
   uniform float uPhase;
@@ -119,7 +118,6 @@ const pointVertexShader = /* glsl */ `
 `;
 
 const pointFragmentShader = /* glsl */ `
-  precision mediump float;
   varying float vHeat;
 
   void main() {
@@ -145,7 +143,6 @@ const coreVertexShader = /* glsl */ `
 `;
 
 const coreFragmentShader = /* glsl */ `
-  precision mediump float;
   uniform float uPulse;
   varying vec3 vNormalView;
   varying vec3 vViewPosition;
@@ -188,17 +185,6 @@ const starVertexShader = /* glsl */ `
   }
 `;
 
-const starFragmentShader = /* glsl */ `
-  precision mediump float;
-  varying float vAlpha;
-
-  void main() {
-    float d = length(gl_PointCoord - 0.5);
-    float alpha = smoothstep(0.5, 0.08, d) * vAlpha;
-    gl_FragColor = vec4(0.56, 0.78, 1.0, alpha);
-  }
-`;
-
 const trailVertexShader = /* glsl */ `
   uniform float uPixelRatio;
   attribute float aAlpha;
@@ -213,7 +199,6 @@ const trailVertexShader = /* glsl */ `
 `;
 
 const trailFragmentShader = /* glsl */ `
-  precision mediump float;
   varying float vAlpha;
 
   void main() {
@@ -234,7 +219,6 @@ const shootingStarVertexShader = /* glsl */ `
 `;
 
 const shootingStarFragmentShader = /* glsl */ `
-  precision mediump float;
   uniform float uOpacity;
   varying vec2 vUv;
 
@@ -244,6 +228,16 @@ const shootingStarFragmentShader = /* glsl */ `
     float head = smoothstep(0.52, 0.92, vUv.x);
     vec3 color = mix(vec3(0.02, 0.26, 1.0), vec3(0.84, 1.0, 1.0), head);
     gl_FragColor = vec4(color, tail * centre * uOpacity);
+  }
+`;
+
+const starFragmentShader = /* glsl */ `
+  varying float vAlpha;
+
+  void main() {
+    float d = length(gl_PointCoord - 0.5);
+    float alpha = smoothstep(0.5, 0.08, d) * vAlpha;
+    gl_FragColor = vec4(0.56, 0.78, 1.0, alpha);
   }
 `;
 
@@ -263,73 +257,42 @@ export default function BlackHoleScene() {
     const interaction = interactionRef.current;
     if (!host || !interaction) return;
 
-    // Detect browser & hardware capabilities safely inside useEffect
-    const userAgent = typeof navigator !== "undefined" ? navigator.userAgent : "";
-    const isSafari = /^((?!chrome|android).)*safari/i.test(userAgent);
-    const isMobile = typeof window !== "undefined" && (window.innerWidth < 640 || /iPhone|iPad|iPod|Android/i.test(userAgent));
-
-    // Create mounted canvas element directly inside host
-    const canvas = document.createElement("canvas");
-    canvas.setAttribute("aria-hidden", "true");
-    canvas.style.display = "block";
-    canvas.style.width = "100%";
-    canvas.style.height = "100%";
-    host.appendChild(canvas);
-
-    // Capability Detection: WebGL2 vs WebGL1 vs Failover
-    let gl: WebGLRenderingContext | WebGL2RenderingContext | null = null;
+    const probe = document.createElement("canvas");
     const contextAttributes: WebGLContextAttributes = {
       alpha: true,
       antialias: true,
-      depth: true,
-      stencil: false,
-      failIfMajorPerformanceCaveat: false,
+      premultipliedAlpha: false,
+      powerPreference: "high-performance",
     };
-
-    try {
-      gl = canvas.getContext("webgl2", contextAttributes) as WebGL2RenderingContext | null;
-    } catch {
-      gl = null;
-    }
-
-    if (!gl) {
-      try {
-        gl = (canvas.getContext("webgl", contextAttributes) ||
-          canvas.getContext("experimental-webgl", contextAttributes)) as WebGLRenderingContext | null;
-      } catch {
-        gl = null;
-      }
-    }
-
+    const gl =
+      probe.getContext("webgl2", contextAttributes) || probe.getContext("webgl", contextAttributes);
     if (!gl) {
       host.classList.add("webgl-unavailable");
-      return () => {
-        if (canvas.parentElement === host) host.removeChild(canvas);
-        host.classList.remove("webgl-unavailable");
-      };
+      return () => host.classList.remove("webgl-unavailable");
     }
 
     let renderer: THREE.WebGLRenderer;
     try {
       renderer = new THREE.WebGLRenderer({
-        canvas,
+        canvas: probe,
         context: gl,
         alpha: true,
-        antialias: !isMobile,
-        powerPreference: isSafari ? "default" : "high-performance",
+        antialias: true,
+        powerPreference: "high-performance",
+        premultipliedAlpha: false,
       });
     } catch {
+      // Some preview/assistive browsers intentionally disable GPU contexts.
+      // The real experience remains procedural WebGL where supported.
       host.classList.add("webgl-unavailable");
-      return () => {
-        if (canvas.parentElement === host) host.removeChild(canvas);
-        host.classList.remove("webgl-unavailable");
-      };
+      return () => host.classList.remove("webgl-unavailable");
     }
-
     renderer.setClearColor(0x000000, 0);
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.16;
+    renderer.domElement.setAttribute("aria-hidden", "true");
+    host.appendChild(renderer.domElement);
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(36, 1, 0.1, 80);
@@ -341,25 +304,19 @@ export default function BlackHoleScene() {
     const animatedMaterials: THREE.ShaderMaterial[] = [];
     const geometries: THREE.BufferGeometry[] = [];
     const materials: THREE.Material[] = [];
-    
     const trackMaterial = <T extends THREE.Material>(material: T) => {
       materials.push(material);
       if (material instanceof THREE.ShaderMaterial) animatedMaterials.push(material);
       return material;
     };
-    
     const trackGeometry = <T extends THREE.BufferGeometry>(geometry: T) => {
       geometries.push(geometry);
       return geometry;
     };
 
-    // Adaptive Quality Tiers
-    const qualityTier = isMobile ? "reduced" : isSafari ? "balanced" : "high";
-    const starCount = qualityTier === "reduced" ? 500 : qualityTier === "balanced" ? 1000 : 1550;
-    const dustCount = qualityTier === "reduced" ? 600 : qualityTier === "balanced" ? 1500 : 2600;
-    const particleCount = qualityTier === "reduced" ? 1800 : qualityTier === "balanced" ? 3600 : 6800;
-
-    // Deep-space stars
+    // Sparse deep-space stars, intentionally quieter behind the copy.
+    const mobileAtStart = window.matchMedia("(max-width: 640px)").matches;
+    const starCount = mobileAtStart ? 620 : 1550;
     const starPositions: number[] = [];
     const starSizes: number[] = [];
     const starPhases: number[] = [];
@@ -393,7 +350,8 @@ export default function BlackHoleScene() {
     const stars = new THREE.Points(starGeometry, starMaterial);
     scene.add(stars);
 
-    // Stardust
+    // A second, finer field gives the background real depth and grows denser near the core.
+    const dustCount = mobileAtStart ? 850 : 2600;
     const dustPositions: number[] = [];
     const dustSizes: number[] = [];
     const dustPhases: number[] = [];
@@ -412,8 +370,8 @@ export default function BlackHoleScene() {
     stardust.rotation.z = -0.035;
     scene.add(stardust);
 
-    // Pointer trail
-    const trailLength = isMobile ? 24 : 48;
+    // A restrained cyan trail follows the pointer without replacing the native cursor.
+    const trailLength = mobileAtStart ? 28 : 54;
     const trailPositions = new Float32Array(trailLength * 3);
     const trailAlpha = new Float32Array(trailLength);
     trailPositions.fill(100);
@@ -435,7 +393,7 @@ export default function BlackHoleScene() {
     pointerTrail.renderOrder = 10;
     scene.add(pointerTrail);
 
-    // Shooting stars
+    // Occasional short shooting stars stay behind the copy and respawn at irregular intervals.
     const shootingGeometry = trackGeometry(new THREE.PlaneGeometry(1, 1, 1, 1));
     const shootingStars: Array<{
       mesh: THREE.Mesh;
@@ -445,7 +403,7 @@ export default function BlackHoleScene() {
       delay: number;
       initialized: boolean;
     }> = [];
-    const shootingCount = isMobile ? 2 : 4;
+    const shootingCount = mobileAtStart ? 2 : 4;
     for (let i = 0; i < shootingCount; i += 1) {
       const material = trackMaterial(
         new THREE.ShaderMaterial({
@@ -472,8 +430,8 @@ export default function BlackHoleScene() {
       });
     }
 
-    // Black Hole Core
-    const coreGeometry = trackGeometry(new THREE.SphereGeometry(3.02, isMobile ? 64 : 112, isMobile ? 48 : 80));
+    // The light-swallowing core stays stable; only its lensing edge breathes.
+    const coreGeometry = trackGeometry(new THREE.SphereGeometry(3.02, 112, 80));
     const coreMaterial = trackMaterial(
       new THREE.ShaderMaterial({
         uniforms: { uPulse: { value: 0 } },
@@ -487,7 +445,7 @@ export default function BlackHoleScene() {
     core.renderOrder = 6;
     model.add(core);
 
-    // Plasma Accretion Disk
+    // The broad plasma surface creates thickness and turbulent brightness variation.
     const diskGroup = new THREE.Group();
     diskGroup.rotation.set(-1.215, 0.015, 0.145);
     diskGroup.scale.x = 1.68;
@@ -501,7 +459,7 @@ export default function BlackHoleScene() {
       { inner: 3.08, outer: 4.62, opacity: 0.3, phase: 5.12, z: 0.2 },
     ];
     diskLayers.forEach((layer, index) => {
-      const geometry = trackGeometry(new THREE.RingGeometry(layer.inner, layer.outer, isMobile ? 192 : 384, 16));
+      const geometry = trackGeometry(new THREE.RingGeometry(layer.inner, layer.outer, 384, 24));
       const material = trackMaterial(
         new THREE.ShaderMaterial({
           uniforms: {
@@ -524,10 +482,10 @@ export default function BlackHoleScene() {
       diskGroup.add(mesh);
     });
 
-    // Layered Torus Strands
+    // Layered torus strands keep the crossing lane sharp without turning it into a flat ring.
     const torusLayers = [
       { radius: 3.08, tube: 0.42, color: 0x003dff, opacity: 0.075 },
-      { radius: 3.12, tube: 0.11, color: 0x008cff, opacity: 0.16 },
+      { radius: 3.12, tube: 0.24, color: 0x008cff, opacity: 0.16 },
       { radius: 3.16, tube: 0.105, color: 0x74e8ff, opacity: 0.44 },
       { radius: 3.18, tube: 0.036, color: 0xe2ffff, opacity: 0.86 },
       { radius: 3.55, tube: 0.035, color: 0x00a7ff, opacity: 0.26 },
@@ -535,7 +493,7 @@ export default function BlackHoleScene() {
       { radius: 4.72, tube: 0.018, color: 0x003cff, opacity: 0.16 },
     ];
     torusLayers.forEach((layer) => {
-      const geometry = trackGeometry(new THREE.TorusGeometry(layer.radius, layer.tube, 12, isMobile ? 160 : 320));
+      const geometry = trackGeometry(new THREE.TorusGeometry(layer.radius, layer.tube, 16, 320));
       const material = trackMaterial(
         new THREE.MeshBasicMaterial({
           color: layer.color,
@@ -550,7 +508,8 @@ export default function BlackHoleScene() {
       diskGroup.add(mesh);
     });
 
-    // Disk Embers / Particles
+    // Thousands of individually moving embers make the disk volumetric instead of graphic.
+    const particleCount = mobileAtStart ? 2300 : 6800;
     const particlePositions: number[] = [];
     const particleSpeeds: number[] = [];
     const particleSizes: number[] = [];
@@ -586,7 +545,7 @@ export default function BlackHoleScene() {
     diskParticles.renderOrder = 4;
     diskGroup.add(diskParticles);
 
-    // Photon Crescents
+    // Directional photon crescents recreate the thin lens on the core and the white lower bend.
     const lensArcGroup = new THREE.Group();
     model.add(lensArcGroup);
     const lensArcs = [
@@ -596,7 +555,7 @@ export default function BlackHoleScene() {
       { radius: 3.08, tube: 0.018, arc: Math.PI * 1.28, zRot: -0.12, color: 0x00c8ff, opacity: 0.3 },
     ];
     lensArcs.forEach((arc, index) => {
-      const geometry = trackGeometry(new THREE.TorusGeometry(arc.radius, arc.tube, 12, isMobile ? 120 : 210, arc.arc));
+      const geometry = trackGeometry(new THREE.TorusGeometry(arc.radius, arc.tube, 14, 210, arc.arc));
       const material = trackMaterial(
         new THREE.MeshBasicMaterial({
           color: arc.color,
@@ -613,8 +572,8 @@ export default function BlackHoleScene() {
       lensArcGroup.add(mesh);
     });
 
-    // Outer Halo
-    const haloGeometry = trackGeometry(new THREE.SphereGeometry(3.34, 48, 36));
+    // A low-opacity outer halo softens the gravitational boundary.
+    const haloGeometry = trackGeometry(new THREE.SphereGeometry(3.34, 72, 52));
     const haloMaterial = trackMaterial(
       new THREE.MeshBasicMaterial({
         color: 0x003dff,
@@ -629,22 +588,18 @@ export default function BlackHoleScene() {
     halo.renderOrder = 0;
     model.add(halo);
 
-    // Canvas Sizing and Container Bounds (Zero-Size Prevention)
     let width = 1;
     let height = 1;
     let pixelRatio = 1;
     let visibleWorldWidth = 1;
     let visibleWorldHeight = 1;
-
     const resize = () => {
       const rect = host.getBoundingClientRect();
-      width = Math.max(300, Math.floor(rect.width || host.clientWidth || window.innerWidth * 0.45));
-      height = Math.max(300, Math.floor(rect.height || host.clientHeight || 500));
-      
-      const isMobileWidth = width < 640;
-      const isTabletWidth = width >= 640 && width < 1050;
-      
-      pixelRatio = Math.min(window.devicePixelRatio || 1, isMobileWidth ? 1.0 : isSafari ? 1.25 : 1.5);
+      width = Math.max(1, Math.floor(rect.width));
+      height = Math.max(1, Math.floor(rect.height));
+      const isMobile = width < 640;
+      const isTablet = width >= 640 && width < 1050;
+      pixelRatio = Math.min(window.devicePixelRatio || 1, isMobile ? 1.25 : 1.6);
       renderer.setPixelRatio(pixelRatio);
       renderer.setSize(width, height, false);
       camera.aspect = width / height;
@@ -654,18 +609,16 @@ export default function BlackHoleScene() {
       const worldWidth = worldHeight * camera.aspect;
       visibleWorldHeight = worldHeight;
       visibleWorldWidth = worldWidth;
-      
       const mobileScale = THREE.MathUtils.clamp(width / 585, 0.54, 0.68);
-      const scale = isMobileWidth ? mobileScale : isTabletWidth ? 0.76 : 1;
+      const scale = isMobile ? mobileScale : isTablet ? 0.76 : 1;
       model.scale.setScalar(scale);
-      model.position.x = worldWidth * (isMobileWidth ? 0.27 : isTabletWidth ? 0.305 : 0.345);
-      model.position.y = isMobileWidth ? (height < 660 ? -2.88 : -2.62) : isTabletWidth ? -1.08 : -0.34;
+      model.position.x = worldWidth * (isMobile ? 0.27 : isTablet ? 0.305 : 0.345);
+      model.position.y = isMobile ? (height < 660 ? -2.88 : -2.62) : isTablet ? -1.08 : -0.34;
 
       starMaterial.uniforms.uPixelRatio.value = pixelRatio;
       particleMaterial.uniforms.uPixelRatio.value = pixelRatio;
       trailMaterial.uniforms.uPixelRatio.value = pixelRatio;
     };
-
     const resizeObserver = new ResizeObserver(resize);
     resizeObserver.observe(host);
     resize();
@@ -703,7 +656,6 @@ export default function BlackHoleScene() {
         previousY = event.clientY;
       }
     };
-
     const onPointerDown = (event: PointerEvent) => {
       if (reducedMotion.matches) return;
       pointerDown = true;
@@ -712,13 +664,11 @@ export default function BlackHoleScene() {
       interaction.setPointerCapture(event.pointerId);
       interaction.classList.add("is-dragging");
     };
-
     const onPointerUp = (event: PointerEvent) => {
       pointerDown = false;
       if (interaction.hasPointerCapture(event.pointerId)) interaction.releasePointerCapture(event.pointerId);
       interaction.classList.remove("is-dragging");
     };
-
     window.addEventListener("pointermove", onWindowPointerMove, { passive: true });
     interaction.addEventListener("pointerdown", onPointerDown);
     interaction.addEventListener("pointerup", onPointerUp);
@@ -736,8 +686,8 @@ export default function BlackHoleScene() {
       resize();
     };
 
-    canvas.addEventListener("webglcontextlost", handleContextLost, false);
-    canvas.addEventListener("webglcontextrestored", handleContextRestored, false);
+    probe.addEventListener("webglcontextlost", handleContextLost, false);
+    probe.addEventListener("webglcontextrestored", handleContextRestored, false);
 
     let tabVisible = !document.hidden;
     const onVisibilityChange = () => {
@@ -747,7 +697,6 @@ export default function BlackHoleScene() {
 
     const clock = new THREE.Clock();
     let elapsed = 0;
-
     const resetShootingStar = (star: (typeof shootingStars)[number]) => {
       star.mesh.visible = false;
       star.material.uniforms.uOpacity.value = 0;
@@ -759,7 +708,7 @@ export default function BlackHoleScene() {
 
     RenderManager.register(
       "black-hole",
-      canvas,
+      renderer.domElement,
       renderer,
       (delta: number) => {
         if (!tabVisible || isContextLost) {
@@ -771,7 +720,6 @@ export default function BlackHoleScene() {
         const speed = reducedMotion.matches ? 0.13 : 1;
         elapsed += delta * speed;
         const pulse = 0.5 + 0.5 * Math.sin(elapsed * 0.72);
-
         animatedMaterials.forEach((material) => {
           const uniforms = material.uniforms as AnimatedUniforms;
           if (uniforms.uTime) uniforms.uTime.value = elapsed;
@@ -848,19 +796,18 @@ export default function BlackHoleScene() {
       RenderManager.unregister("black-hole");
       resizeObserver.disconnect();
 
-      canvas.removeEventListener("webglcontextlost", handleContextLost);
-      canvas.removeEventListener("webglcontextrestored", handleContextRestored);
+      probe.removeEventListener("webglcontextlost", handleContextLost);
+      probe.removeEventListener("webglcontextrestored", handleContextRestored);
       document.removeEventListener("visibilitychange", onVisibilityChange);
       window.removeEventListener("pointermove", onWindowPointerMove);
       interaction.removeEventListener("pointerdown", onPointerDown);
       interaction.removeEventListener("pointerup", onPointerUp);
       interaction.removeEventListener("pointercancel", onPointerUp);
-
       geometries.forEach((geometry) => geometry.dispose());
       materials.forEach((material) => material.dispose());
       renderer.dispose();
       renderer.forceContextLoss();
-      if (canvas.parentElement === host) host.removeChild(canvas);
+      if (renderer.domElement.parentElement === host) host.removeChild(renderer.domElement);
     };
   }, [isMounted]);
 
