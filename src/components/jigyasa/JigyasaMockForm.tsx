@@ -26,15 +26,14 @@ export function JigyasaMockForm() {
   const [responseStyle, setResponseStyle] = useState<ResponseStyleOption>("balanced");
   const [status, setStatus] = useState<FormStatus>("idle");
   
-  // Replace single response/error state with a history array
-  type ChatMessage = {
+  type ActiveExchange = {
     id: string;
     question: string;
     response?: JigyasaSuccessResponse;
     error?: JigyasaErrorResponse;
-    status: "success" | "error";
+    status: "loading" | "success" | "error";
   };
-  const [history, setHistory] = useState<ChatMessage[]>([]);
+  const [activeExchange, setActiveExchange] = useState<ActiveExchange | null>(null);
   
   const [selectedTopic, setSelectedTopic] = useState<SpaceTopic | null>(null);
   
@@ -93,10 +92,10 @@ export function JigyasaMockForm() {
     }, 45000); // 45 second timeout
 
     setStatus("loading");
-    setQuestion(""); // Copy question to stable state (history will show it)
+    setQuestion(""); // Copy question to stable state (activeExchange will show it)
     
-    // Optimistically add to history as loading (will update later)
-    // We just render loading skeleton at the bottom.
+    // Set active exchange immediately to show question and loading state
+    setActiveExchange({ id: messageId, question: questionText, status: "loading" });
 
     try {
       const res = await fetch("/api/jigyasa", {
@@ -117,12 +116,12 @@ export function JigyasaMockForm() {
       clearTimeout(timeoutId);
 
       if (data.status === "ok") {
-        setHistory(prev => [...prev, { id: messageId, question: questionText, response: data, status: "success" }]);
+        setActiveExchange({ id: messageId, question: questionText, response: data, status: "success" });
         setStatus("idle");
         // Reset topic selection after successful answer
         setSelectedTopic(null);
       } else {
-        setHistory(prev => [...prev, { id: messageId, question: questionText, error: data, status: "error" }]);
+        setActiveExchange({ id: messageId, question: questionText, error: data, status: "error" });
         setStatus("idle");
       }
     } catch (err) {
@@ -143,7 +142,7 @@ export function JigyasaMockForm() {
           retryable: true,
         },
       };
-      setHistory(prev => [...prev, { id: messageId, question: questionText, error: errorData, status: "error" }]);
+      setActiveExchange({ id: messageId, question: questionText, error: errorData, status: "error" });
       setStatus("idle");
     }
   };
@@ -268,9 +267,9 @@ export function JigyasaMockForm() {
         </form>
       </GlowCard>
 
-      {/* Conversation History */}
-      {history.map((msg) => (
-        <div key={msg.id} className="mt-8">
+      {/* Active Exchange */}
+      {activeExchange && (
+        <div key={activeExchange.id} className="mt-8">
           <div className="mb-4 text-right">
             <span className="inline-block rounded-2xl px-5 py-3 text-fluid-body font-medium"
               style={{
@@ -278,19 +277,18 @@ export function JigyasaMockForm() {
                 color: "var(--space-moonlight)",
                 border: "1px solid rgba(189,165,106,0.3)"
               }}>
-              {msg.question}
+              {activeExchange.question}
             </span>
           </div>
-          {msg.status === "success" && msg.response && (
-            <ResponsePanel response={msg.response} question={msg.question} />
+          {activeExchange.status === "loading" && <ResponseSkeleton />}
+          {activeExchange.status === "success" && activeExchange.response && (
+            <ResponsePanel response={activeExchange.response} question={activeExchange.question} />
           )}
-          {msg.status === "error" && msg.error && (
-            <ErrorPanel error={msg.error} onRetry={() => handleRetry(msg.question)} />
+          {activeExchange.status === "error" && activeExchange.error && (
+            <ErrorPanel error={activeExchange.error} onRetry={() => handleRetry(activeExchange.question)} />
           )}
         </div>
-      ))}
-
-      {status === "loading" && <ResponseSkeleton />}
+      )}
     </div>
   );
 }
