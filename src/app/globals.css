@@ -817,7 +817,7 @@ a, button, input, select, textarea {
   }
 
   .black-hole-interaction {
-    left: 45%;
+    left: 50%;
   }
 }
 
@@ -896,7 +896,8 @@ a, button, input, select, textarea {
 
   .black-hole-interaction {
     top: 48%;
-    left: 18%;
+    left: 48%;
+    bottom: 0;
   }
 }
 
