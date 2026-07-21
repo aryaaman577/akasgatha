@@ -1,8 +1,10 @@
 /**
  * Local Vector Index
  * 
- * File-based vector index with deterministic IDs and content hashing.
- * Phase 4B: Works without external APIs.
+ * File-based vector index with deterministic IDs, content hashing,
+ * in-memory caching, domain sharding, and single-promise loading.
+ * 
+ * Phase 4B / Gate 1
  */
 
 import * as fs from "fs/promises";
@@ -57,6 +59,33 @@ const TEMP_MANIFEST_FILE = path.join(INDEX_DIR, "manifest.json.tmp");
 const SCHEMA_VERSION = "1.0.0";
 const INDEX_VERSION = "1.0.0";
 
+// ─── IN-MEMORY CACHE & CONCURRENCY CONTROL ─────────────────────────────
+let cachedIndex: VectorIndex | null = null;
+let cachedManifest: IndexManifest | null = null;
+let cachedIndexMtime: number = 0;
+let indexLoadPromise: Promise<VectorIndex | null> | null = null;
+let manifestLoadPromise: Promise<IndexManifest | null> | null = null;
+
+// Domain-sharded map for fast lookup
+let entriesByDomain: Map<string, IndexEntry[]> = new Map();
+
+// Bounded LRU embedding cache for query vectors
+const queryEmbeddingCache = new Map<string, number[]>();
+const MAX_QUERY_CACHE_SIZE = 100;
+
+/**
+ * Invalidate in-memory caches (called on new ingestion or stats tests)
+ */
+export function invalidateCache(): void {
+  cachedIndex = null;
+  cachedManifest = null;
+  cachedIndexMtime = 0;
+  indexLoadPromise = null;
+  manifestLoadPromise = null;
+  entriesByDomain.clear();
+  queryEmbeddingCache.clear();
+}
+
 /**
  * Generate deterministic chunk ID
  */
@@ -65,7 +94,6 @@ export function generateChunkId(
   chunkIndex: number,
   contentHash: string
 ): string {
-  // Format: docId-idx-hash
   return `${documentId}-${chunkIndex}-${contentHash.substring(0, 8)}`;
 }
 
@@ -77,7 +105,6 @@ export function generateCitationId(
   documentId: string,
   chunkIndex: number
 ): string {
-  // Format: domain-docId-idx
   return `${domain}-${documentId}-${chunkIndex}`;
 }
 
@@ -100,49 +127,93 @@ export function calculateCorpusHash(chunks: RagChunk[]): string {
 }
 
 /**
- * Load existing index
+ * Load index with memory caching, mtime validation, and concurrent promise deduplication
  */
 export async function loadIndex(): Promise<VectorIndex | null> {
-  try {
-    const data = await fs.readFile(INDEX_FILE, "utf-8");
-    return JSON.parse(data);
-  } catch (error) {
-    if ((error as NodeJS.ErrnoException).code === "ENOENT") {
-      return null;
-    }
-    throw error;
+  if (indexLoadPromise) {
+    return indexLoadPromise;
   }
+
+  indexLoadPromise = (async () => {
+    try {
+      const stat = await fs.stat(INDEX_FILE);
+      if (cachedIndex && stat.mtimeMs === cachedIndexMtime) {
+        return cachedIndex;
+      }
+
+      const data = await fs.readFile(INDEX_FILE, "utf-8");
+      const index: VectorIndex = JSON.parse(data);
+
+      cachedIndex = index;
+      cachedIndexMtime = stat.mtimeMs;
+
+      // Build domain shard map
+      entriesByDomain = new Map();
+      for (const entry of index.entries) {
+        const domain = entry.chunk.domain || "general";
+        if (!entriesByDomain.has(domain)) {
+          entriesByDomain.set(domain, []);
+        }
+        entriesByDomain.get(domain)!.push(entry);
+      }
+
+      return cachedIndex;
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException).code === "ENOENT") {
+        return null;
+      }
+      throw error;
+    } finally {
+      indexLoadPromise = null;
+    }
+  })();
+
+  return indexLoadPromise;
 }
 
 /**
- * Load existing manifest
+ * Load existing manifest with caching
  */
 export async function loadManifest(): Promise<IndexManifest | null> {
-  try {
-    const data = await fs.readFile(MANIFEST_FILE, "utf-8");
-    return JSON.parse(data);
-  } catch (error) {
-    if ((error as NodeJS.ErrnoException).code === "ENOENT") {
-      return null;
-    }
-    throw error;
+  if (cachedManifest) {
+    return cachedManifest;
   }
+  if (manifestLoadPromise) {
+    return manifestLoadPromise;
+  }
+
+  manifestLoadPromise = (async () => {
+    try {
+      const data = await fs.readFile(MANIFEST_FILE, "utf-8");
+      cachedManifest = JSON.parse(data);
+      return cachedManifest;
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException).code === "ENOENT") {
+        return null;
+      }
+      throw error;
+    } finally {
+      manifestLoadPromise = null;
+    }
+  })();
+
+  return manifestLoadPromise;
 }
 
 /**
- * Save index atomically
+ * Save index atomically and update in-memory cache
  */
 export async function saveIndex(index: VectorIndex): Promise<void> {
-  // Ensure directory exists
   await fs.mkdir(INDEX_DIR, { recursive: true });
   
-  // Write to temp files
   await fs.writeFile(TEMP_INDEX_FILE, JSON.stringify(index, null, 2), "utf-8");
   await fs.writeFile(TEMP_MANIFEST_FILE, JSON.stringify(index.manifest, null, 2), "utf-8");
   
-  // Atomic rename
   await fs.rename(TEMP_INDEX_FILE, INDEX_FILE);
   await fs.rename(TEMP_MANIFEST_FILE, MANIFEST_FILE);
+
+  // Invalidate cache so next load gets fresh stats
+  invalidateCache();
 }
 
 /**
@@ -156,14 +227,12 @@ export async function buildIndex(chunks: RagChunk[]): Promise<{
   const corpusHash = calculateCorpusHash(chunks);
   const existingIndex = await loadIndex();
   
-  // Check if we can reuse embeddings
   const canReuse =
     existingIndex &&
     existingIndex.manifest.provider === LOCAL_EMBEDDING_CONFIG.model &&
     existingIndex.manifest.dimensions === LOCAL_EMBEDDING_CONFIG.dimensions &&
     existingIndex.manifest.schemaVersion === SCHEMA_VERSION;
   
-  // Build content hash map for reuse lookup
   const existingByHash = new Map<string, IndexEntry>();
   if (canReuse && existingIndex) {
     for (const entry of existingIndex.entries) {
@@ -171,18 +240,15 @@ export async function buildIndex(chunks: RagChunk[]): Promise<{
     }
   }
   
-  // Process chunks
   const entries: IndexEntry[] = [];
   let reusedCount = 0;
   let newCount = 0;
   
   for (const chunk of chunks) {
     const contentHash = calculateContentHash(chunk.content);
-    
-    // Try to reuse existing embedding by content hash
     const existing = existingByHash.get(contentHash);
+
     if (existing) {
-      // Reuse embedding - regenerate IDs based on current chunk data
       const chunkId = generateChunkId(chunk.documentId, chunk.chunkIndex, contentHash);
       const citationId = generateCitationId(chunk.domain, chunk.documentId, chunk.chunkIndex);
       
@@ -195,7 +261,6 @@ export async function buildIndex(chunks: RagChunk[]): Promise<{
       });
       reusedCount++;
     } else {
-      // Generate new embedding
       const chunkId = generateChunkId(chunk.documentId, chunk.chunkIndex, contentHash);
       const citationId = generateCitationId(chunk.domain, chunk.documentId, chunk.chunkIndex);
       const textForEmbedding = `${chunk.documentTitle}\n\n${chunk.content}`;
@@ -212,15 +277,12 @@ export async function buildIndex(chunks: RagChunk[]): Promise<{
     }
   }
   
-  // Calculate index hash
   const indexHash = createHash("sha256")
     .update(JSON.stringify(entries.map(e => e.chunkId).sort()))
     .digest("hex");
   
-  // Count documents
   const documentIds = new Set(chunks.map(c => c.documentId));
   
-  // Create manifest
   const manifest: IndexManifest = {
     version: INDEX_VERSION,
     schemaVersion: SCHEMA_VERSION,
@@ -244,7 +306,25 @@ export async function buildIndex(chunks: RagChunk[]): Promise<{
 }
 
 /**
- * Query index with hybrid scoring
+ * Get or compute query embedding with LRU cache
+ */
+function getCachedQueryEmbedding(query: string): number[] {
+  const normKey = query.toLowerCase().trim();
+  if (queryEmbeddingCache.has(normKey)) {
+    return queryEmbeddingCache.get(normKey)!;
+  }
+
+  const vec = generateLocalEmbedding(query);
+  if (queryEmbeddingCache.size >= MAX_QUERY_CACHE_SIZE) {
+    const firstKey = queryEmbeddingCache.keys().next().value;
+    if (firstKey) queryEmbeddingCache.delete(firstKey);
+  }
+  queryEmbeddingCache.set(normKey, vec);
+  return vec;
+}
+
+/**
+ * Query index with hybrid scoring, domain-sharding, and max 3 domain shards limit per query
  */
 export async function queryIndex(
   query: string,
@@ -263,48 +343,42 @@ export async function queryIndex(
   const topK = options.topK || 5;
   const minScore = options.minScore || 0.1;
   
-  // Generate query embedding
-  const queryEmbedding = generateLocalEmbedding(query);
+  const queryEmbedding = getCachedQueryEmbedding(query);
+
+  // Enforce maximum 3 domain shards per query
+  let entriesToScan: IndexEntry[] = [];
+  if (options.domainFilter && options.domainFilter.length > 0) {
+    const boundedDomains = options.domainFilter.slice(0, 3);
+    for (const d of boundedDomains) {
+      const sharded = entriesByDomain.get(d) || [];
+      entriesToScan.push(...sharded);
+    }
+  } else {
+    entriesToScan = index.entries;
+  }
   
-  // Score all entries
-  const scored = index.entries
+  const scored = entriesToScan
     .filter(entry => {
-      if (options.domainFilter && !options.domainFilter.includes(entry.chunk.domain)) {
-        return false;
-      }
       if (options.languageFilter && entry.chunk.language !== options.languageFilter) {
         return false;
       }
       return true;
     })
     .map(entry => {
-      // Semantic similarity (primary signal)
       const semanticScore = cosineSimilarity(queryEmbedding, entry.embedding);
-      
-      // Keyword boost
       const keywordBoost = calculateKeywordBoost(query, entry.chunk.content);
-      
-      // Topic boost using aliases
       const topicBoost = getTopicBoost(query, entry.chunk.documentTitle, entry.chunk.topic);
-      
-      // Metadata boost (science slightly preferred for factual queries)
       const metadataBoost = entry.chunk.domain === "science" ? 1.05 : 1.0;
       
-      // Hybrid score with very high topic weight for exact matches
       const score = (semanticScore * 0.4 + keywordBoost * 0.1 + topicBoost * 0.5) * metadataBoost;
-      
       return { entry, score };
     })
     .filter(item => item.score >= minScore)
     .sort((a, b) => b.score - a.score);
   
-  // Apply diversity (max 2 chunks per document)
   const diversified = applyDiversity(scored, 2);
-  
-  // Take top K
   const results = diversified.slice(0, topK);
   
-  // Add ranks
   return results.map((item, idx) => ({
     ...item,
     rank: idx + 1,
@@ -329,7 +403,7 @@ function calculateKeywordBoost(query: string, content: string): number {
 }
 
 /**
- * Apply diversity constraint
+ * Apply diversity constraint (max per doc)
  */
 function applyDiversity(
   scored: Array<{ entry: IndexEntry; score: number }>,
