@@ -73,7 +73,8 @@ async function preflightCloudflare() {
       }),
     });
 
-    const data = await response.json() as any;
+    interface CloudflareApiResponse { result?: unknown; errors?: { message: string }[]; [key: string]: unknown; }
+    const data = await response.json() as CloudflareApiResponse;
 
     if (!response.ok) {
       let category = "UNKNOWN";
