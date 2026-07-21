@@ -1,41 +1,30 @@
 ---
 id: rahu-ketu-eclipse-story
-title: Rahu-Ketu Eclipse Narrative
+title: "Rahu and Ketu - Mythological Narrative of Eclipses"
 domain: narrative
-topic: eclipse
+topic: mythology
 language: en
-sourceName: Puranic Traditions
-sourceUrl: https://www.sacred-texts.com/
-sourceType: reference
-reviewedAt: "2024-01-15"
-licenseNote: Traditional narrative, paraphrased from public domain references
-tags: [rahu, ketu, eclipse, mythology, asura]
-relatedTopics: [eclipses-scientific, nakshatra]
-culturalRegion: Indian subcontinent
-notes: This is a traditional narrative explanation, not a scientific account
+sourceName: "Sanskrit Puranic Heritage"
+sourceUrl: "https://ignca.gov.in/"
+sourceType: primary-text
+reviewedAt: "2024-01-20"
+licenseNote: "Public domain cultural heritage narrative"
+tags: ["rahu-ketu", "samudra-manthan", "mythology", "katha"]
+relatedTopics: ["rahu-ketu-nodes-connection", "eclipses"]
 ---
 
-# Rahu-Ketu Eclipse Narrative
+# Rahu and Ketu - Mythological Narrative of Eclipses
 
-In Puranic narratives, Rahu and Ketu are described as two parts of an asura (a class of beings in Hindu-Buddhist cosmology) associated with eclipses.
+In ancient Indian Puranic mythology, the origin of Rahu and Ketu is linked to the cosmic event known as **Samudra Manthan** (the Churning of the Ocean of Milk).
 
-## The Samudra Manthan Story
+## The Amrita Story
+According to the narrative, the Devas and Asuras churned the ocean to obtain *Amrita*, the nectar of immortality. When Mohini (the divine avatar) distributed the nectar to the Devas, an Asura named Swarbhanu disguised himself as a Deva and drank a drop of Amrita.
 
-According to traditional narratives, during the churning of the cosmic ocean (Samudra Manthan), an asura disguised himself and consumed some of the nectar of immortality (amrita). The Sun and Moon detected the deception and alerted Vishnu, who severed the asura with his discus.
+Surya (the Sun god) and Chandra (the Moon god) recognized Swarbhanu and alerted Mohini, who severed Swarbhanu's head with the Sudarshana Chakra.
 
-Because the asura had already consumed the nectar, both parts became immortal. The head became known as Rahu, and the body became Ketu.
+## Formation of Rahu and Ketu
+Because Swarbhanu had swallowed the nectar, both parts of his body survived:
+- The severed head became **Rahu**.
+- The remaining serpent-like body became **Ketu**.
 
-## Eclipse as Celestial Pursuit
-
-In this narrative framework, eclipses are explained as Rahu periodically attempting to swallow the Sun or Moon in an act of cosmic vengeance. Because Rahu is only a head without a body, the celestial body passes through and reemerges, ending the eclipse.
-
-## Cultural Significance
-
-This narrative served multiple purposes in traditional contexts:
-- Provided a memorable explanation for the temporary darkening of celestial bodies
-- Connected eclipse events to broader cosmological and ethical themes
-- Established ritual practices and timings associated with eclipse observations
-
-## Interpretive Context
-
-These narratives represent symbolic and cultural interpretations of observed natural phenomena. They are not presented as physical descriptions of celestial mechanics.
+According to mythological tradition, Rahu and Ketu hold an eternal enmity toward Surya and Chandra, periodically swallowing them—causing solar and lunar eclipses.

@@ -17,6 +17,8 @@
     "rag:index": "tsx scripts/rag/index-corpus.ts",
     "rag:test-retrieval": "tsx scripts/rag/test-retrieval.ts",
     "rag:stats": "tsx scripts/rag/stats.ts",
+    "rag:verify-sources": "tsx scripts/rag/verify-sources.ts",
+    "rag:check-duplicates": "tsx scripts/rag/check-duplicates.ts",
     "ai:test-gemini": "tsx scripts/ai/test-gemini.ts",
     "ai:test-groq": "tsx scripts/ai/test-groq.ts",
     "ai:test-cerebras": "tsx scripts/ai/test-cerebras.ts",
