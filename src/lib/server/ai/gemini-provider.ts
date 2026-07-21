@@ -65,20 +65,27 @@ export class GeminiProvider implements JigyasaProvider {
   async generate(input: ProviderInput): Promise<ProviderOutput> {
     const startTime = Date.now();
 
-    // Check for RAG requirement
-    if (this.env.JIGYASA_REQUIRE_RAG && !isContextSufficient(input.ragContext || null, this.env.JIGYASA_MIN_RAG_RESULTS)) {
+    const hasRagContext = !!(input.ragContext && input.ragContext.totalResults > 0);
+    const contextSufficient = isContextSufficient(input.ragContext || null, this.env.JIGYASA_MIN_RAG_RESULTS);
+    const allowGeneralSpace = this.env.JIGYASA_ALLOW_GENERAL_SPACE_ANSWERS && !this.env.JIGYASA_REQUIRE_RAG_FOR_ALL_ANSWERS;
+
+    if (this.env.JIGYASA_KNOWLEDGE_MODE === "strict" && !contextSufficient && !allowGeneralSpace) {
       throw new Error("INSUFFICIENT_KNOWLEDGE: No relevant knowledge found in corpus");
     }
 
+    const answerMode = hasRagContext 
+      ? (contextSufficient ? "RAG_GROUNDED" : "HYBRID") 
+      : "GENERAL_SPACE_KNOWLEDGE";
+
     // Build citation map and allowed IDs
-    const citationMap = input.ragContext ? buildCitationMap(input.ragContext) : {};
+    const citationMap = input.ragContext && hasRagContext ? buildCitationMap(input.ragContext) : {};
     const allowedCitationIds = getAllowedCitationIds(citationMap);
 
     // Build system instruction
     const systemInstruction = buildSystemInstruction(allowedCitationIds);
 
     // Build context
-    const groupedContext = input.ragContext
+    const groupedContext = input.ragContext && hasRagContext
       ? buildGroupedContext(input.ragContext, this.env.JIGYASA_MAX_CONTEXT_CHARS)
       : { full: "No relevant context available.", charCount: 0 } as const;
 
@@ -226,31 +233,29 @@ export class GeminiProvider implements JigyasaProvider {
 
         // Validate citations
         const allCitationIds = this.extractAllCitationIds(structured);
-        const validation = validateCitationIds(allCitationIds, allowedCitationIds);
+        
+        if (allowedCitationIds.length === 0) {
+          // GENERAL_SPACE_KNOWLEDGE mode: enforce empty citations
+          structured.citationIds = [];
+          structured.pramaan = structured.pramaan.map(p => ({ ...p, citationIds: [] }));
+        } else {
+          const validation = validateCitationIds(allCitationIds, allowedCitationIds);
 
-        if (!validation.valid) {
-          logger.warn("Unknown citation IDs detected", {
-            requestId: input.requestId,
-            unknownIds: validation.unknownIds,
-            attempt,
-          });
+          if (!validation.valid) {
+            logger.warn("Unknown citation IDs detected", {
+              requestId: input.requestId,
+              unknownIds: validation.unknownIds,
+              attempt,
+            });
 
-          // Allow one repair attempt
-          if (attempt < this.env.GEMINI_MAX_RETRIES) {
-            attempt++;
-            continue;
+            // Filter out unknown citations
+            const validCitationIds = filterValidCitations(allCitationIds, allowedCitationIds);
+            structured.citationIds = validCitationIds;
+            structured.pramaan = structured.pramaan.map(p => ({
+              ...p,
+              citationIds: filterValidCitations(p.citationIds || [], allowedCitationIds),
+            }));
           }
-
-          // Filter out unknown citations
-          const validCitationIds = filterValidCitations(allCitationIds, allowedCitationIds);
-          
-          // If no valid citations remain, reject
-          if (validCitationIds.length === 0 && allCitationIds.length > 0) {
-            throw new Error("CITATION_VALIDATION_FAILED: All citations are invalid");
-          }
-
-          // Use filtered citations
-          structured.citationIds = validCitationIds;
         }
 
         // Build public sources
@@ -275,6 +280,7 @@ export class GeminiProvider implements JigyasaProvider {
             durationMs,
             model: this.env.GEMINI_MODEL,
             tokensUsed: response.usageMetadata?.totalTokenCount,
+            answerMode,
           },
         };
       } catch (error) {

@@ -311,9 +311,15 @@ export async function POST(request: NextRequest) {
           provider: result.meta.provider,
           model: result.meta.model || result.meta.provider,
           mock: isProviderMock(),
-          ragUsed: ragContext !== null,
+          ragUsed: ragContext !== null && ragContext.totalResults > 0,
           retrievedChunkCount: ragContext?.totalResults || 0,
           durationMs,
+          requestedProvider: input.providerPreference || "auto",
+          actualProvider: result.meta.provider,
+          requestedModel: input.providerPreference === "gemini" ? env.GEMINI_MODEL : input.providerPreference === "groq" ? (env.GROQ_PRIMARY_MODEL || env.GROQ_MODEL) : undefined,
+          actualModel: result.meta.model || result.meta.provider,
+          fallbackUsed: result.meta.fallbackUsed || false,
+          answerMode: result.meta.answerMode || (ragContext && ragContext.totalResults > 0 ? "RAG_GROUNDED" : "GENERAL_SPACE_KNOWLEDGE"),
         },
       };
 

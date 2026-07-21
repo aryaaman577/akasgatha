@@ -117,6 +117,12 @@ export const jigyasaSuccessResponseSchema = z.object({
     ragUsed: z.boolean(),
     retrievedChunkCount: z.number(),
     durationMs: z.number(),
+    requestedProvider: z.string().optional(),
+    actualProvider: z.string().optional(),
+    requestedModel: z.string().optional(),
+    actualModel: z.string().optional(),
+    fallbackUsed: z.boolean().optional(),
+    answerMode: z.string().optional(),
   }),
 });
 
