@@ -25,11 +25,22 @@ export function JigyasaMockForm() {
   const [providerPreference, setProviderPreference] = useState<ProviderOption>("auto");
   const [responseStyle, setResponseStyle] = useState<ResponseStyleOption>("balanced");
   const [status, setStatus] = useState<FormStatus>("idle");
-  const [response, setResponse] = useState<JigyasaSuccessResponse | null>(null);
-  const [error, setError] = useState<JigyasaErrorResponse | null>(null);
+  
+  // Replace single response/error state with a history array
+  type ChatMessage = {
+    id: string;
+    question: string;
+    response?: JigyasaSuccessResponse;
+    error?: JigyasaErrorResponse;
+    status: "success" | "error";
+  };
+  const [history, setHistory] = useState<ChatMessage[]>([]);
+  
   const [selectedTopic, setSelectedTopic] = useState<SpaceTopic | null>(null);
   
   const abortControllerRef = useRef<AbortController | null>(null);
+  const submitButtonRef = useRef<HTMLButtonElement>(null);
+  const messageIdCounter = useRef<number>(0);
 
   // Get topic title based on language
   const getTopicTitle = (topic: SpaceTopic): string => {
@@ -58,10 +69,17 @@ export function JigyasaMockForm() {
     setQuestion(questionText);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    const questionText = question.trim() || t.homeJigyasaExample;
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      if (question.trim() && status !== "loading") {
+        submitButtonRef.current?.click();
+      }
+    }
+  };
+
+  const submitQuestion = async (textToSubmit: string, messageId: string) => {
+    const questionText = textToSubmit.trim() || t.homeJigyasaExample;
     
     // Cancel any existing request
     if (abortControllerRef.current) {
@@ -70,10 +88,15 @@ export function JigyasaMockForm() {
 
     // Create new abort controller for this request
     abortControllerRef.current = new AbortController();
+    const timeoutId = setTimeout(() => {
+      if (abortControllerRef.current) abortControllerRef.current.abort();
+    }, 45000); // 45 second timeout
 
     setStatus("loading");
-    setResponse(null);
-    setError(null);
+    setQuestion(""); // Copy question to stable state (history will show it)
+    
+    // Optimistically add to history as loading (will update later)
+    // We just render loading skeleton at the bottom.
 
     try {
       const res = await fetch("/api/jigyasa", {
@@ -91,17 +114,19 @@ export function JigyasaMockForm() {
       });
 
       const data = await res.json();
+      clearTimeout(timeoutId);
 
       if (data.status === "ok") {
-        setResponse(data);
-        setStatus("success");
+        setHistory(prev => [...prev, { id: messageId, question: questionText, response: data, status: "success" }]);
+        setStatus("idle");
         // Reset topic selection after successful answer
         setSelectedTopic(null);
       } else {
-        setError(data);
-        setStatus("error");
+        setHistory(prev => [...prev, { id: messageId, question: questionText, error: data, status: "error" }]);
+        setStatus("idle");
       }
     } catch (err) {
+      clearTimeout(timeoutId);
       // Handle abort separately
       if (err instanceof Error && err.name === "AbortError") {
         setStatus("idle");
@@ -109,24 +134,30 @@ export function JigyasaMockForm() {
       }
 
       // Network or other errors
-      setError({
+      const errorData: JigyasaErrorResponse = {
         requestId: "unknown",
         status: "error",
         error: {
-          code: "INTERNAL_ERROR",
-          message: err instanceof Error ? err.message : "An unexpected error occurred",
+          code: "PROVIDER_TIMEOUT",
+          message: err instanceof Error && err.name === "AbortError" ? "Request timed out" : (err instanceof Error ? err.message : "An unexpected error occurred"),
           retryable: true,
         },
-      });
-      setStatus("error");
+      };
+      setHistory(prev => [...prev, { id: messageId, question: questionText, error: errorData, status: "error" }]);
+      setStatus("idle");
     }
   };
 
-  const handleRetry = () => {
-    const form = document.querySelector("form");
-    if (form) {
-      form.dispatchEvent(new Event("submit", { cancelable: true, bubbles: true }));
-    }
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    messageIdCounter.current += 1;
+    await submitQuestion(question, String(messageIdCounter.current));
+  };
+
+  const handleRetry = (failedQuestion: string) => {
+    setQuestion(failedQuestion);
+    messageIdCounter.current += 1;
+    submitQuestion(failedQuestion, String(messageIdCounter.current));
   };
 
   const handleCancel = () => {
@@ -192,6 +223,7 @@ export function JigyasaMockForm() {
               name="question"
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
+              onKeyDown={handleKeyDown}
               placeholder={placeholderText}
               rows={3}
               disabled={status === "loading"}
@@ -216,6 +248,7 @@ export function JigyasaMockForm() {
               </button>
             ) : (
               <button
+                ref={submitButtonRef}
                 type="submit"
                 className="inline-flex min-h-[44px] items-center justify-center rounded-full px-7 text-fluid-button font-semibold outline-none transition-all duration-200 hover:opacity-90 focus-visible:ring-2 focus-visible:ring-[var(--space-antique-gold)]"
                 style={{
@@ -235,9 +268,29 @@ export function JigyasaMockForm() {
         </form>
       </GlowCard>
 
+      {/* Conversation History */}
+      {history.map((msg) => (
+        <div key={msg.id} className="mt-8">
+          <div className="mb-4 text-right">
+            <span className="inline-block rounded-2xl px-5 py-3 text-fluid-body font-medium"
+              style={{
+                background: "rgba(189,165,106,0.15)",
+                color: "var(--space-moonlight)",
+                border: "1px solid rgba(189,165,106,0.3)"
+              }}>
+              {msg.question}
+            </span>
+          </div>
+          {msg.status === "success" && msg.response && (
+            <ResponsePanel response={msg.response} question={msg.question} />
+          )}
+          {msg.status === "error" && msg.error && (
+            <ErrorPanel error={msg.error} onRetry={() => handleRetry(msg.question)} />
+          )}
+        </div>
+      ))}
+
       {status === "loading" && <ResponseSkeleton />}
-      {status === "success" && response && <ResponsePanel response={response} question={question} />}
-      {status === "error" && error && <ErrorPanel error={error} onRetry={handleRetry} />}
     </div>
   );
 }

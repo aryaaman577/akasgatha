@@ -24,8 +24,12 @@ export function ProviderSelector({ value, onChange, disabled }: ProviderSelector
   const [status, setStatus] = useState<"checking" | "ready" | "unavailable">("checking");
 
   useEffect(() => {
-    fetch("/api/health")
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+
+    fetch("/api/health", { signal: controller.signal })
       .then((res) => {
+        clearTimeout(timeoutId);
         if (!res.ok) throw new Error("Health check failed");
         return res.json();
       })
@@ -38,9 +42,15 @@ export function ProviderSelector({ value, onChange, disabled }: ProviderSelector
         }
       })
       .catch(() => {
+        clearTimeout(timeoutId);
         setStatus("unavailable");
         setCapabilities({ providers: [], fallbackEnabled: false });
       });
+
+    return () => {
+      clearTimeout(timeoutId);
+      controller.abort();
+    };
   }, []);
 
   const isGroqAvailable = capabilities?.providers.includes("groq") ?? false;
