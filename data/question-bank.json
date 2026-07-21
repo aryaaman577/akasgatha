@@ -1,0 +1,5089 @@
+[
+  {
+    "id": "eval-found-1",
+    "question": "What is a solar eclipse?",
+    "language": "en",
+    "domain": "foundation",
+    "difficulty": "beginner",
+    "questionStyle": "what",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Moon between Earth and Sun",
+      "Shadow on Earth",
+      "New Moon phase"
+    ],
+    "forbiddenClaims": [
+      "supernatural causality",
+      "astrological predictions"
+    ],
+    "expectedAnswerMode": "balanced",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-found-2",
+    "question": "Surya grahan kyon hota hai?",
+    "language": "hinglish",
+    "domain": "foundation",
+    "difficulty": "beginner",
+    "questionStyle": "why",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Chandrama Prithvi aur Suraj ke beech",
+      "Parchhai",
+      "New moon / Amavasya"
+    ],
+    "forbiddenClaims": [
+      "supernatural causality",
+      "astrological predictions"
+    ],
+    "expectedAnswerMode": "balanced",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-found-3",
+    "question": "सूर्य ग्रहण क्या है और यह कैसे होता है?",
+    "language": "hi",
+    "domain": "foundation",
+    "difficulty": "beginner",
+    "questionStyle": "what",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "चंद्रमा सूर्य और पृथ्वी के बीच",
+      "छाया",
+      "अमावस्या"
+    ],
+    "forbiddenClaims": [
+      "supernatural causality",
+      "astrological predictions"
+    ],
+    "expectedAnswerMode": "balanced",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-found-4",
+    "question": "Why does the Moon have phases?",
+    "language": "en",
+    "domain": "foundation",
+    "difficulty": "beginner",
+    "questionStyle": "why",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Moon orbits Earth",
+      "Sunlight angle changes",
+      "Lit side portion visible"
+    ],
+    "forbiddenClaims": [
+      "supernatural causality",
+      "astrological predictions"
+    ],
+    "expectedAnswerMode": "balanced",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-found-5",
+    "question": "Chand ki kalayein kyu badalti hain?",
+    "language": "hinglish",
+    "domain": "foundation",
+    "difficulty": "beginner",
+    "questionStyle": "why",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Chand Prithvi ke chakkar lagata hai",
+      "Roshni ka angle",
+      "Purnima aur Amavasya"
+    ],
+    "forbiddenClaims": [
+      "supernatural causality",
+      "astrological predictions"
+    ],
+    "expectedAnswerMode": "balanced",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-found-6",
+    "question": "चंद्रमा की कलाएँ क्यों बदलती हैं?",
+    "language": "hi",
+    "domain": "foundation",
+    "difficulty": "beginner",
+    "questionStyle": "why",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "प्रकाशित भाग का दिखना",
+      "परिक्रमा",
+      "सूर्य का प्रकाश"
+    ],
+    "forbiddenClaims": [
+      "supernatural causality",
+      "astrological predictions"
+    ],
+    "expectedAnswerMode": "balanced",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-found-7",
+    "question": "How do seasons change on Earth?",
+    "language": "en",
+    "domain": "foundation",
+    "difficulty": "intermediate",
+    "questionStyle": "how",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Earth axial tilt 23.5 degrees",
+      "Revolution around Sun",
+      "Sunlight angle variations"
+    ],
+    "forbiddenClaims": [
+      "supernatural causality",
+      "astrological predictions"
+    ],
+    "expectedAnswerMode": "balanced",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-found-8",
+    "question": "Mausam kaise badalte hain?",
+    "language": "hinglish",
+    "domain": "foundation",
+    "difficulty": "beginner",
+    "questionStyle": "how",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Prithvi ka jhukav 23.5 degree",
+      "Suraj ke charo taraf chakkar",
+      "Garmi aur sardi"
+    ],
+    "forbiddenClaims": [
+      "supernatural causality",
+      "astrological predictions"
+    ],
+    "expectedAnswerMode": "balanced",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-found-9",
+    "question": "पृथ्वी पर ऋतु परिवर्तन कैसे होता है?",
+    "language": "hi",
+    "domain": "foundation",
+    "difficulty": "intermediate",
+    "questionStyle": "how",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "अक्षीय झुकाव 23.5 डिग्री",
+      "सूर्य की परिक्रमा",
+      "प्रकाश का कोण"
+    ],
+    "forbiddenClaims": [
+      "supernatural causality",
+      "astrological predictions"
+    ],
+    "expectedAnswerMode": "balanced",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-found-10",
+    "question": "What causes tides on Earth?",
+    "language": "en",
+    "domain": "foundation",
+    "difficulty": "intermediate",
+    "questionStyle": "what",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Moon gravitational pull",
+      "Sun gravitational pull",
+      "Ocean water bulge"
+    ],
+    "forbiddenClaims": [
+      "supernatural causality",
+      "astrological predictions"
+    ],
+    "expectedAnswerMode": "balanced",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-found-11",
+    "question": "Samundar me jwar bhata kyu aata hai?",
+    "language": "hinglish",
+    "domain": "foundation",
+    "difficulty": "intermediate",
+    "questionStyle": "why",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Chand ka gurutvakarshan",
+      "Suraj ka prabhav",
+      "High tide low tide"
+    ],
+    "forbiddenClaims": [
+      "supernatural causality",
+      "astrological predictions"
+    ],
+    "expectedAnswerMode": "balanced",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-found-12",
+    "question": "समुद्र में ज्वार-भाटा क्यों आता है?",
+    "language": "hi",
+    "domain": "foundation",
+    "difficulty": "intermediate",
+    "questionStyle": "why",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "चंद्रमा का गुरुत्वाकर्षण",
+      "सूर्य का आकर्षण",
+      "ज्वार और भाटा"
+    ],
+    "forbiddenClaims": [
+      "supernatural causality",
+      "astrological predictions"
+    ],
+    "expectedAnswerMode": "balanced",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-found-13",
+    "question": "What are the inner rocky planets?",
+    "language": "en",
+    "domain": "foundation",
+    "difficulty": "beginner",
+    "questionStyle": "what",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Mercury Venus Earth Mars",
+      "Solid surface",
+      "Metal and rock composition"
+    ],
+    "forbiddenClaims": [
+      "supernatural causality",
+      "astrological predictions"
+    ],
+    "expectedAnswerMode": "balanced",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-found-14",
+    "question": "Aanth grahon me se kaun se rocky planets hain?",
+    "language": "hinglish",
+    "domain": "foundation",
+    "difficulty": "beginner",
+    "questionStyle": "what",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Budh Shukra Prithvi Mangal",
+      "Dhatu aur chatthan",
+      "Atmosphere difference"
+    ],
+    "forbiddenClaims": [
+      "supernatural causality",
+      "astrological predictions"
+    ],
+    "expectedAnswerMode": "balanced",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-found-15",
+    "question": "सौर मंडल के आंतरिक ग्रह कौन से हैं?",
+    "language": "hi",
+    "domain": "foundation",
+    "difficulty": "beginner",
+    "questionStyle": "what",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "बुध शुक्र पृथ्वी मंगल",
+      "ठोस सतह",
+      "रॉकी प्लैनेट्स"
+    ],
+    "forbiddenClaims": [
+      "supernatural causality",
+      "astrological predictions"
+    ],
+    "expectedAnswerMode": "balanced",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-found-16",
+    "question": "Compare gas giants and ice giants.",
+    "language": "en",
+    "domain": "foundation",
+    "difficulty": "intermediate",
+    "questionStyle": "compare",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Jupiter Saturn gas giants",
+      "Uranus Neptune ice giants",
+      "Hydrogen helium vs water ammonia methane ice"
+    ],
+    "forbiddenClaims": [
+      "supernatural causality",
+      "astrological predictions"
+    ],
+    "expectedAnswerMode": "balanced",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-found-17",
+    "question": "Gas giant aur ice giant me kya difference hai?",
+    "language": "hinglish",
+    "domain": "foundation",
+    "difficulty": "intermediate",
+    "questionStyle": "compare",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Jupiter Saturn me hydrogen helium",
+      "Uranus Neptune me ammonia water ice",
+      "Density difference"
+    ],
+    "forbiddenClaims": [
+      "supernatural causality",
+      "astrological predictions"
+    ],
+    "expectedAnswerMode": "balanced",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-found-18",
+    "question": "गैस जायंट और आइस जायंट में क्या अंतर है?",
+    "language": "hi",
+    "domain": "foundation",
+    "difficulty": "intermediate",
+    "questionStyle": "compare",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "बृहस्पति और शनि",
+      "अरुण और वरुण",
+      "गैस और बर्फ की संरचना"
+    ],
+    "forbiddenClaims": [
+      "supernatural causality",
+      "astrological predictions"
+    ],
+    "expectedAnswerMode": "balanced",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-found-19",
+    "question": "Why is Pluto a dwarf planet?",
+    "language": "en",
+    "domain": "foundation",
+    "difficulty": "intermediate",
+    "questionStyle": "misconception",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "IAU 2006 definition",
+      "Orbit not cleared",
+      "Kuiper belt object"
+    ],
+    "forbiddenClaims": [
+      "supernatural causality",
+      "astrological predictions"
+    ],
+    "expectedAnswerMode": "balanced",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-found-20",
+    "question": "Pluto ab planet kyu nahi hai?",
+    "language": "hinglish",
+    "domain": "foundation",
+    "difficulty": "intermediate",
+    "questionStyle": "misconception",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "2006 IAU niyam",
+      "Apna orbit saaf nahi kiya",
+      "Dwarf planet category"
+    ],
+    "forbiddenClaims": [
+      "supernatural causality",
+      "astrological predictions"
+    ],
+    "expectedAnswerMode": "balanced",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-found-21",
+    "question": "प्लूटो को बौना ग्रह क्यों माना जाता है?",
+    "language": "hi",
+    "domain": "foundation",
+    "difficulty": "intermediate",
+    "questionStyle": "why",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "2006 अंतर्राष्ट्रीय खगोलीय संघ नियम",
+      "कक्षा साफ न होना",
+      "कुइपर बेल्ट"
+    ],
+    "forbiddenClaims": [
+      "supernatural causality",
+      "astrological predictions"
+    ],
+    "expectedAnswerMode": "balanced",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-found-22",
+    "question": "What is Kepler's third law of planetary motion?",
+    "language": "en",
+    "domain": "foundation",
+    "difficulty": "advanced",
+    "questionStyle": "detailed",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "T squared proportional to a cubed",
+      "Orbital period and semi-major axis",
+      "Distant planets move slower"
+    ],
+    "forbiddenClaims": [
+      "supernatural causality",
+      "astrological predictions"
+    ],
+    "expectedAnswerMode": "balanced",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-found-23",
+    "question": "Kepler ka niyam planetary motion ke liye kya hai?",
+    "language": "hinglish",
+    "domain": "foundation",
+    "difficulty": "advanced",
+    "questionStyle": "detailed",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Elliptical orbit",
+      "Equal areas equal times",
+      "T² ∝ a³"
+    ],
+    "forbiddenClaims": [
+      "supernatural causality",
+      "astrological predictions"
+    ],
+    "expectedAnswerMode": "balanced",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-found-24",
+    "question": "केपलर के ग्रहीय गति के नियम क्या हैं?",
+    "language": "hi",
+    "domain": "foundation",
+    "difficulty": "advanced",
+    "questionStyle": "detailed",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "दीर्घवृत्ताकार कक्षा",
+      "समान समय में समान क्षेत्रफल",
+      "परिक्रमण काल नियम"
+    ],
+    "forbiddenClaims": [
+      "supernatural causality",
+      "astrological predictions"
+    ],
+    "expectedAnswerMode": "balanced",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-found-25",
+    "question": "How do space telescopes like JWST work?",
+    "language": "en",
+    "domain": "foundation",
+    "difficulty": "intermediate",
+    "questionStyle": "how",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Infrared light observation",
+      "Lagrange point L2",
+      "Bypasses atmospheric interference"
+    ],
+    "forbiddenClaims": [
+      "supernatural causality",
+      "astrological predictions"
+    ],
+    "expectedAnswerMode": "balanced",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-found-26",
+    "question": "JWST telescope space me kya dekhta hai?",
+    "language": "hinglish",
+    "domain": "foundation",
+    "difficulty": "intermediate",
+    "questionStyle": "what",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Infrared light",
+      "L2 orbit",
+      "Puraane galaxies aur exoplanets"
+    ],
+    "forbiddenClaims": [
+      "supernatural causality",
+      "astrological predictions"
+    ],
+    "expectedAnswerMode": "balanced",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-found-27",
+    "question": "जेम्स वेब स्पेस टेलिस्कोप कैसे काम करता है?",
+    "language": "hi",
+    "domain": "foundation",
+    "difficulty": "intermediate",
+    "questionStyle": "how",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "इन्फ्रारेड प्रकाश",
+      "एल2 कक्षा",
+      "सुदूर आकाशगंगाएँ"
+    ],
+    "forbiddenClaims": [
+      "supernatural causality",
+      "astrological predictions"
+    ],
+    "expectedAnswerMode": "balanced",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-adv-28",
+    "question": "How are stellar black holes formed?",
+    "language": "en",
+    "domain": "advanced",
+    "difficulty": "intermediate",
+    "questionStyle": "how",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Core collapse of massive star",
+      "Supernova explosion",
+      "Event horizon forms"
+    ],
+    "forbiddenClaims": [
+      "sci-fi fantasy physics as reality"
+    ],
+    "expectedAnswerMode": "deep",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-adv-29",
+    "question": "Black hole kaise banta hai?",
+    "language": "hinglish",
+    "domain": "advanced",
+    "difficulty": "intermediate",
+    "questionStyle": "how",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Bade tara ka collapse",
+      "Supernova dhamaka",
+      "Gravity itni zyada ki roshni bhi na bache"
+    ],
+    "forbiddenClaims": [
+      "sci-fi fantasy physics as reality"
+    ],
+    "expectedAnswerMode": "deep",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-adv-30",
+    "question": "ब्लैक होल का निर्माण कैसे होता है?",
+    "language": "hi",
+    "domain": "advanced",
+    "difficulty": "intermediate",
+    "questionStyle": "how",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "अत्यधिक द्रव्यमान वाले तारे",
+      "सुपरनोवा विस्फोट",
+      "गुरुत्वाकर्षण पतन"
+    ],
+    "forbiddenClaims": [
+      "sci-fi fantasy physics as reality"
+    ],
+    "expectedAnswerMode": "deep",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-adv-31",
+    "question": "What is gravitational lensing?",
+    "language": "en",
+    "domain": "advanced",
+    "difficulty": "advanced",
+    "questionStyle": "what",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Mass bends spacetime",
+      "Light path curved around background objects",
+      "Einstein general relativity"
+    ],
+    "forbiddenClaims": [
+      "sci-fi fantasy physics as reality"
+    ],
+    "expectedAnswerMode": "deep",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-adv-32",
+    "question": "Gravitational lensing kya hota hai?",
+    "language": "hinglish",
+    "domain": "advanced",
+    "difficulty": "advanced",
+    "questionStyle": "what",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Spacetime jhukta hai",
+      "Light bend hoti hai",
+      "Einstein ka relativity सिद्धांत"
+    ],
+    "forbiddenClaims": [
+      "sci-fi fantasy physics as reality"
+    ],
+    "expectedAnswerMode": "deep",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-adv-33",
+    "question": "गुरुत्वाकर्षण लेंसिंग क्या है?",
+    "language": "hi",
+    "domain": "advanced",
+    "difficulty": "advanced",
+    "questionStyle": "what",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "सामान्य आपेक्षिकता",
+      "प्रकाश का मुड़ना",
+      "द्रव्यमान द्वारा स्थान-समय का झुकाव"
+    ],
+    "forbiddenClaims": [
+      "sci-fi fantasy physics as reality"
+    ],
+    "expectedAnswerMode": "deep",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-adv-34",
+    "question": "What is a neutron star and pulsar?",
+    "language": "en",
+    "domain": "advanced",
+    "difficulty": "advanced",
+    "questionStyle": "detailed",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Core collapse remnant",
+      "Neutron degeneracy pressure",
+      "Spinning magnetic beams"
+    ],
+    "forbiddenClaims": [
+      "sci-fi fantasy physics as reality"
+    ],
+    "expectedAnswerMode": "deep",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-adv-35",
+    "question": "Neutron star aur pulsar me kya rishta hai?",
+    "language": "hinglish",
+    "domain": "advanced",
+    "difficulty": "advanced",
+    "questionStyle": "detailed",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Extreme density",
+      "Periodic radio pulses",
+      "Rapid rotation"
+    ],
+    "forbiddenClaims": [
+      "sci-fi fantasy physics as reality"
+    ],
+    "expectedAnswerMode": "deep",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-adv-36",
+    "question": "न्यूट्रॉन तारा और पल्सर क्या हैं?",
+    "language": "hi",
+    "domain": "advanced",
+    "difficulty": "advanced",
+    "questionStyle": "detailed",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "अत्यधिक घनत्व",
+      "रेडियो पल्स",
+      "चुंबकीय ध्रुव"
+    ],
+    "forbiddenClaims": [
+      "sci-fi fantasy physics as reality"
+    ],
+    "expectedAnswerMode": "deep",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-adv-37",
+    "question": "What is cosmic microwave background radiation?",
+    "language": "en",
+    "domain": "advanced",
+    "difficulty": "advanced",
+    "questionStyle": "science-first",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Big Bang residual heat",
+      "2.7 Kelvin spectrum",
+      "Oldest light in universe"
+    ],
+    "forbiddenClaims": [
+      "sci-fi fantasy physics as reality"
+    ],
+    "expectedAnswerMode": "deep",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-adv-38",
+    "question": "CMB radiation kya hai aur ye Big Bang ko kaise prove karta hai?",
+    "language": "hinglish",
+    "domain": "advanced",
+    "difficulty": "advanced",
+    "questionStyle": "evidence-first",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Big Bang ka saboot",
+      "2.7 K temperature",
+      "Planck aur WMAP satellites"
+    ],
+    "forbiddenClaims": [
+      "sci-fi fantasy physics as reality"
+    ],
+    "expectedAnswerMode": "deep",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-adv-39",
+    "question": "कॉस्मिक माइक्रोवेव बैकग्राउंड (CMB) रेडिएशन क्या है?",
+    "language": "hi",
+    "domain": "advanced",
+    "difficulty": "advanced",
+    "questionStyle": "science-first",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "बिग बैंग का अवशेष",
+      "2.7 केल्विन तापमान",
+      "प्रारंभिक ब्रह्मांड का चित्र"
+    ],
+    "forbiddenClaims": [
+      "sci-fi fantasy physics as reality"
+    ],
+    "expectedAnswerMode": "deep",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-myst-40",
+    "question": "What is a rogue planet and why is it dangerous?",
+    "language": "en",
+    "domain": "mysteries",
+    "difficulty": "intermediate",
+    "questionStyle": "dark mystery",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Free-floating planet without sun",
+      "Gravitational ejection",
+      "Drifts in cold darkness"
+    ],
+    "forbiddenClaims": [
+      "supernatural ghosts",
+      "apocalyptic conspiracy theories"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-myst-41",
+    "question": "Rogue planet kya hota hai?",
+    "language": "hinglish",
+    "domain": "mysteries",
+    "difficulty": "intermediate",
+    "questionStyle": "curiosity",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Avara grah",
+      "Bina suraj ke antariks me ghoomta hai",
+      "Microlensing se pata chalta hai"
+    ],
+    "forbiddenClaims": [
+      "supernatural ghosts",
+      "apocalyptic conspiracy theories"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-myst-42",
+    "question": "आवारा ग्रह (Rogue Planet) क्या होते हैं?",
+    "language": "hi",
+    "domain": "mysteries",
+    "difficulty": "intermediate",
+    "questionStyle": "dark mystery",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "बिना तारे का ग्रह",
+      "अंतरतारकीय अंतरिक्ष",
+      "गुरुत्वाकर्षण निष्कासन"
+    ],
+    "forbiddenClaims": [
+      "supernatural ghosts",
+      "apocalyptic conspiracy theories"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-myst-43",
+    "question": "What is the Boötes Void?",
+    "language": "en",
+    "domain": "mysteries",
+    "difficulty": "advanced",
+    "questionStyle": "dark mystery",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "330 million light year void",
+      "Very low galaxy density",
+      "Cosmic structure fluctuation"
+    ],
+    "forbiddenClaims": [
+      "supernatural ghosts",
+      "apocalyptic conspiracy theories"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-myst-44",
+    "question": "Bootes void me kya hai?",
+    "language": "hinglish",
+    "domain": "mysteries",
+    "difficulty": "advanced",
+    "questionStyle": "curiosity",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Khaali jagah",
+      "Great nothing",
+      "Kam galaxies"
+    ],
+    "forbiddenClaims": [
+      "supernatural ghosts",
+      "apocalyptic conspiracy theories"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-myst-45",
+    "question": "बूटिस वोइड (Boötes Void) क्या है?",
+    "language": "hi",
+    "domain": "mysteries",
+    "difficulty": "advanced",
+    "questionStyle": "dark mystery",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "330 मिलियन प्रकाश वर्ष खाली क्षेत्र",
+      "कम आकाशगंगाएँ",
+      "महाशून्य"
+    ],
+    "forbiddenClaims": [
+      "supernatural ghosts",
+      "apocalyptic conspiracy theories"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-myst-46",
+    "question": "What is the Fermi Paradox?",
+    "language": "en",
+    "domain": "mysteries",
+    "difficulty": "intermediate",
+    "questionStyle": "philosophical",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "High probability of life vs no evidence",
+      "Enrico Fermi question",
+      "Great filter hypothesis"
+    ],
+    "forbiddenClaims": [
+      "supernatural ghosts",
+      "apocalyptic conspiracy theories"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-myst-47",
+    "question": "Fermi paradox kya hai aur Great Filter kya hota hai?",
+    "language": "hinglish",
+    "domain": "mysteries",
+    "difficulty": "intermediate",
+    "questionStyle": "philosophical",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Aliens kahan hain",
+      "Great filter barrier",
+      "Self destruction or rarity"
+    ],
+    "forbiddenClaims": [
+      "supernatural ghosts",
+      "apocalyptic conspiracy theories"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-myst-48",
+    "question": "फर्मी विरोधाभास (Fermi Paradox) क्या है?",
+    "language": "hi",
+    "domain": "mysteries",
+    "difficulty": "intermediate",
+    "questionStyle": "philosophical",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "एलियन जीवन का अभाव",
+      "एनरिको फर्मी",
+      "ग्रेट फ़िल्टर"
+    ],
+    "forbiddenClaims": [
+      "supernatural ghosts",
+      "apocalyptic conspiracy theories"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-myst-49",
+    "question": "What will happen during the Heat Death of the universe?",
+    "language": "en",
+    "domain": "mysteries",
+    "difficulty": "advanced",
+    "questionStyle": "dark mystery",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Maximum entropy",
+      "Thermodynamic equilibrium",
+      "Stars burn out and black holes evaporate"
+    ],
+    "forbiddenClaims": [
+      "supernatural ghosts",
+      "apocalyptic conspiracy theories"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-myst-50",
+    "question": "Brahmand ka ant Heat Death kaise hoga?",
+    "language": "hinglish",
+    "domain": "mysteries",
+    "difficulty": "advanced",
+    "questionStyle": "dark mystery",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Energy transfer band",
+      "Temperature absolute zero ke paas",
+      "Black hole evaporation"
+    ],
+    "forbiddenClaims": [
+      "supernatural ghosts",
+      "apocalyptic conspiracy theories"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-myst-51",
+    "question": "ब्रह्मांड की ऊष्मीय मृत्यु (Heat Death) क्या है?",
+    "language": "hi",
+    "domain": "mysteries",
+    "difficulty": "advanced",
+    "questionStyle": "dark mystery",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "अधिकतम एंट्रॉपी",
+      "ऊष्मागतिक संतुलन",
+      "तारे और ब्लैक होल का अंत"
+    ],
+    "forbiddenClaims": [
+      "supernatural ghosts",
+      "apocalyptic conspiracy theories"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-dharm-52",
+    "question": "What is the story of Rahu and Ketu in eclipse mythology?",
+    "language": "en",
+    "domain": "dharm-myth",
+    "difficulty": "beginner",
+    "questionStyle": "story-first",
+    "expectedKnowledgeTypes": [
+      "narrative",
+      "science",
+      "boundary"
+    ],
+    "requiredKeyPoints": [
+      "Samudra Manthan",
+      "Swarbhanu severed by Mohini",
+      "Rahu head Ketu tail"
+    ],
+    "forbiddenClaims": [
+      "astrological predictions presented as scientific fact"
+    ],
+    "expectedAnswerMode": "katha-vigyan",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-dharm-53",
+    "question": "Rahu aur Ketu ki kahani kya hai grahan me?",
+    "language": "hinglish",
+    "domain": "dharm-myth",
+    "difficulty": "beginner",
+    "questionStyle": "myth-versus-science",
+    "expectedKnowledgeTypes": [
+      "narrative",
+      "science",
+      "boundary"
+    ],
+    "requiredKeyPoints": [
+      "Samudra Manthan katha",
+      "Mohini Sudarshan chakra",
+      "Vigyan me Rahu Ketu orbital nodes hain"
+    ],
+    "forbiddenClaims": [
+      "astrological predictions presented as scientific fact"
+    ],
+    "expectedAnswerMode": "katha-vigyan",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-dharm-54",
+    "question": "राहु और केतु की पौराणिक कथा और खगोलीय सत्य क्या है?",
+    "language": "hi",
+    "domain": "dharm-myth",
+    "difficulty": "intermediate",
+    "questionStyle": "myth-versus-science",
+    "expectedKnowledgeTypes": [
+      "narrative",
+      "science",
+      "boundary"
+    ],
+    "requiredKeyPoints": [
+      "समुद्र मंथन कथा",
+      "खगोलीय नोड्स (Ascending & Descending nodes)",
+      "कथा और विज्ञान विभाजन"
+    ],
+    "forbiddenClaims": [
+      "astrological predictions presented as scientific fact"
+    ],
+    "expectedAnswerMode": "katha-vigyan",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-dharm-55",
+    "question": "Who is Dhruva Tara in astronomy and tradition?",
+    "language": "en",
+    "domain": "dharm-myth",
+    "difficulty": "beginner",
+    "questionStyle": "story-first",
+    "expectedKnowledgeTypes": [
+      "narrative",
+      "science",
+      "boundary"
+    ],
+    "requiredKeyPoints": [
+      "Prince Dhruva devotion to Vishnu",
+      "Polaris North Star",
+      "Earth rotation axis alignment"
+    ],
+    "forbiddenClaims": [
+      "astrological predictions presented as scientific fact"
+    ],
+    "expectedAnswerMode": "katha-vigyan",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-dharm-56",
+    "question": "Dhruva tara fixed kyu dikhta hai?",
+    "language": "hinglish",
+    "domain": "dharm-myth",
+    "difficulty": "beginner",
+    "questionStyle": "how",
+    "expectedKnowledgeTypes": [
+      "narrative",
+      "science",
+      "boundary"
+    ],
+    "requiredKeyPoints": [
+      "Earth ke rotation axis ki seedh me",
+      "Polaris star",
+      "Dhruva bhakt ki kahani"
+    ],
+    "forbiddenClaims": [
+      "astrological predictions presented as scientific fact"
+    ],
+    "expectedAnswerMode": "katha-vigyan",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-dharm-57",
+    "question": "ध्रुव तारा और सप्तर्षि का क्या महत्व है?",
+    "language": "hi",
+    "domain": "dharm-myth",
+    "difficulty": "intermediate",
+    "questionStyle": "story-first",
+    "expectedKnowledgeTypes": [
+      "narrative",
+      "science",
+      "boundary"
+    ],
+    "requiredKeyPoints": [
+      "विष्णु पुराण ध्रुव कथा",
+      "सप्तर्षि तारामंडल",
+      "उत्तरी ध्रुव अक्षीय संरेखण"
+    ],
+    "forbiddenClaims": [
+      "astrological predictions presented as scientific fact"
+    ],
+    "expectedAnswerMode": "katha-vigyan",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-dharm-58",
+    "question": "What does Rigveda Nasadiya Sukta say about creation?",
+    "language": "en",
+    "domain": "dharm-myth",
+    "difficulty": "advanced",
+    "questionStyle": "philosophical",
+    "expectedKnowledgeTypes": [
+      "narrative",
+      "science",
+      "boundary"
+    ],
+    "requiredKeyPoints": [
+      "Rigveda 10.129 creation hymn",
+      "Deep philosophical inquiry",
+      "Humility regarding cosmic origins"
+    ],
+    "forbiddenClaims": [
+      "astrological predictions presented as scientific fact"
+    ],
+    "expectedAnswerMode": "katha-vigyan",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-dharm-59",
+    "question": "Nasadiya Sukta me brahmand ki srishti ke bare me kya likha hai?",
+    "language": "hinglish",
+    "domain": "dharm-myth",
+    "difficulty": "advanced",
+    "questionStyle": "philosophical",
+    "expectedKnowledgeTypes": [
+      "narrative",
+      "science",
+      "boundary"
+    ],
+    "requiredKeyPoints": [
+      "Rigveda hymn",
+      "Na asad aasiit no sad aasiit",
+      "Srishti ki utpatti par vichar"
+    ],
+    "forbiddenClaims": [
+      "astrological predictions presented as scientific fact"
+    ],
+    "expectedAnswerMode": "katha-vigyan",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-dharm-60",
+    "question": "नासदीय सूक्त क्या है?",
+    "language": "hi",
+    "domain": "dharm-myth",
+    "difficulty": "advanced",
+    "questionStyle": "philosophical",
+    "expectedKnowledgeTypes": [
+      "narrative",
+      "science",
+      "boundary"
+    ],
+    "requiredKeyPoints": [
+      "ऋग्वेद १०.१२९",
+      "सृष्टि उत्पत्ति चिंतन",
+      "दार्शनिक विनम्रता"
+    ],
+    "forbiddenClaims": [
+      "astrological predictions presented as scientific fact"
+    ],
+    "expectedAnswerMode": "katha-vigyan",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-dharm-61",
+    "question": "What is the difference between astronomy and astrology?",
+    "language": "en",
+    "domain": "dharm-myth",
+    "difficulty": "intermediate",
+    "questionStyle": "misconception",
+    "expectedKnowledgeTypes": [
+      "narrative",
+      "science",
+      "boundary"
+    ],
+    "requiredKeyPoints": [
+      "Astronomy is empirical physical science",
+      "Astrology is belief system",
+      "No fortune telling in astronomy"
+    ],
+    "forbiddenClaims": [
+      "astrological predictions presented as scientific fact"
+    ],
+    "expectedAnswerMode": "katha-vigyan",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-dharm-62",
+    "question": "Astronomy aur Astrology me kya fark hai?",
+    "language": "hinglish",
+    "domain": "dharm-myth",
+    "difficulty": "intermediate",
+    "questionStyle": "misconception",
+    "expectedKnowledgeTypes": [
+      "narrative",
+      "science",
+      "boundary"
+    ],
+    "requiredKeyPoints": [
+      "Astronomy vigyan hai",
+      "Astrology bhavishyavani hai",
+      "Vigyan saboot par chalta hai"
+    ],
+    "forbiddenClaims": [
+      "astrological predictions presented as scientific fact"
+    ],
+    "expectedAnswerMode": "katha-vigyan",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-dharm-63",
+    "question": "खगोल विज्ञान और ज्योतिष शास्त्र में क्या अंतर है?",
+    "language": "hi",
+    "domain": "dharm-myth",
+    "difficulty": "intermediate",
+    "questionStyle": "misconception",
+    "expectedKnowledgeTypes": [
+      "narrative",
+      "science",
+      "boundary"
+    ],
+    "requiredKeyPoints": [
+      "खगोल विज्ञान प्रायोगिक विज्ञान है",
+      "ज्योतिष मान्यता पर आधारित है",
+      "अकादमिक सीमा"
+    ],
+    "forbiddenClaims": [
+      "astrological predictions presented as scientific fact"
+    ],
+    "expectedAnswerMode": "katha-vigyan",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-theo-64",
+    "question": "How does Marvel's multiverse compare to real theoretical physics multiverse?",
+    "language": "en",
+    "domain": "theoretical-fiction",
+    "difficulty": "intermediate",
+    "questionStyle": "fictional comparison",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Marvel uses portals and magic",
+      "Tegmark Level I-IV cosmological multiverses",
+      "No physical doorways in real physics"
+    ],
+    "forbiddenClaims": [
+      "fiction presented as proven reality"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-theo-65",
+    "question": "Marvel ka multiverse real me possible hai kya?",
+    "language": "hinglish",
+    "domain": "theoretical-fiction",
+    "difficulty": "intermediate",
+    "questionStyle": "fictional comparison",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "MCU me travel asan hai",
+      "Real physics me inflationary multiverse door hai",
+      "Quantum decoherence"
+    ],
+    "forbiddenClaims": [
+      "fiction presented as proven reality"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-theo-66",
+    "question": "मार्वल का मल्टीवर्स और असली भौतिकी का मल्टीवर्स में क्या अंतर है?",
+    "language": "hi",
+    "domain": "theoretical-fiction",
+    "difficulty": "intermediate",
+    "questionStyle": "fictional comparison",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "काल्पनिक पोर्टल",
+      "कॉस्मोलॉजिकल मल्टीवर्स मॉडल",
+      "क्वांटम डिकॉहेरेंस"
+    ],
+    "forbiddenClaims": [
+      "fiction presented as proven reality"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-theo-67",
+    "question": "What is a wormhole and can humans travel through it?",
+    "language": "en",
+    "domain": "theoretical-fiction",
+    "difficulty": "advanced",
+    "questionStyle": "what-if",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Einstein-Rosen bridge",
+      "Requires exotic negative energy matter to stay open",
+      "Unstable in standard general relativity"
+    ],
+    "forbiddenClaims": [
+      "fiction presented as proven reality"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-theo-68",
+    "question": "Wormhole se time travel ho sakta hai kya?",
+    "language": "hinglish",
+    "domain": "theoretical-fiction",
+    "difficulty": "advanced",
+    "questionStyle": "what-if",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Einstein Rosen bridge",
+      "Exotic matter ki zaroorat",
+      "Causality paradoxes"
+    ],
+    "forbiddenClaims": [
+      "fiction presented as proven reality"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-theo-69",
+    "question": "वॉर्महोल क्या है और क्या समय यात्रा संभव है?",
+    "language": "hi",
+    "domain": "theoretical-fiction",
+    "difficulty": "advanced",
+    "questionStyle": "what-if",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "आइंस्टीन-रोसेन ब्रिज",
+      "सामान्य आपेक्षिकता",
+      "नेगेटिव एनर्जी की आवश्यकता"
+    ],
+    "forbiddenClaims": [
+      "fiction presented as proven reality"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-theo-70",
+    "question": "Can Flash really run faster than light according to physics?",
+    "language": "en",
+    "domain": "theoretical-fiction",
+    "difficulty": "intermediate",
+    "questionStyle": "fictional comparison",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Flash speed force is fiction",
+      "Special relativity speed of light limit c",
+      "Infinite mass and atmospheric fusion"
+    ],
+    "forbiddenClaims": [
+      "fiction presented as proven reality"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-theo-71",
+    "question": "DC ka Flash light speed se tez bhag sakta hai kya science ke hisab se?",
+    "language": "hinglish",
+    "domain": "theoretical-fiction",
+    "difficulty": "intermediate",
+    "questionStyle": "fictional comparison",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Light speed c limit hai",
+      "Infinite energy zaroorat",
+      "Hawa me nuclear fusion ho jayega"
+    ],
+    "forbiddenClaims": [
+      "fiction presented as proven reality"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-oos-72",
+    "question": "What is my horoscope for today?",
+    "language": "en",
+    "domain": "out-of-scope",
+    "difficulty": "beginner",
+    "questionStyle": "out of scope",
+    "expectedKnowledgeTypes": [
+      "boundary"
+    ],
+    "requiredKeyPoints": [
+      "Out of scope",
+      "AkasGatha provides astronomy education not fortune telling"
+    ],
+    "forbiddenClaims": [
+      "answering non-astronomy queries as astronomy"
+    ],
+    "expectedAnswerMode": "balanced",
+    "citationExpectation": false,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-oos-73",
+    "question": "Mera aaj ka rashifal batao?",
+    "language": "hinglish",
+    "domain": "out-of-scope",
+    "difficulty": "beginner",
+    "questionStyle": "out of scope",
+    "expectedKnowledgeTypes": [
+      "boundary"
+    ],
+    "requiredKeyPoints": [
+      "Rashifal out of scope hai",
+      "AkasGatha keval vigyan aur khagol shastra sikhata hai"
+    ],
+    "forbiddenClaims": [
+      "answering non-astronomy queries as astronomy"
+    ],
+    "expectedAnswerMode": "balanced",
+    "citationExpectation": false,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-oos-74",
+    "question": "मेरा आज का राशिफल बताइए",
+    "language": "hi",
+    "domain": "out-of-scope",
+    "difficulty": "beginner",
+    "questionStyle": "out of scope",
+    "expectedKnowledgeTypes": [
+      "boundary"
+    ],
+    "requiredKeyPoints": [
+      "राशिफल दायरे से बाहर है",
+      "केवल खगोल विज्ञान और वैज्ञानिक तथ्य"
+    ],
+    "forbiddenClaims": [
+      "answering non-astronomy queries as astronomy"
+    ],
+    "expectedAnswerMode": "balanced",
+    "citationExpectation": false,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-oos-75",
+    "question": "How do I buy a Samsung Galaxy S24 phone?",
+    "language": "en",
+    "domain": "out-of-scope",
+    "difficulty": "beginner",
+    "questionStyle": "false positive trap",
+    "expectedKnowledgeTypes": [
+      "boundary"
+    ],
+    "requiredKeyPoints": [
+      "Out of scope",
+      "Samsung Galaxy is a consumer smartphone, not astronomy"
+    ],
+    "forbiddenClaims": [
+      "answering non-astronomy queries as astronomy"
+    ],
+    "expectedAnswerMode": "balanced",
+    "citationExpectation": false,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-oos-76",
+    "question": "Galaxy phone ka price kya hai?",
+    "language": "hinglish",
+    "domain": "out-of-scope",
+    "difficulty": "beginner",
+    "questionStyle": "false positive trap",
+    "expectedKnowledgeTypes": [
+      "boundary"
+    ],
+    "requiredKeyPoints": [
+      "Out of scope",
+      "Mobile phone hai, aakashganga (galaxy) nahi"
+    ],
+    "forbiddenClaims": [
+      "answering non-astronomy queries as astronomy"
+    ],
+    "expectedAnswerMode": "balanced",
+    "citationExpectation": false,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-oos-77",
+    "question": "Is Mercury poisoning dangerous for health?",
+    "language": "en",
+    "domain": "out-of-scope",
+    "difficulty": "intermediate",
+    "questionStyle": "false positive trap",
+    "expectedKnowledgeTypes": [
+      "boundary"
+    ],
+    "requiredKeyPoints": [
+      "Out of scope",
+      "Chemical element mercury toxicity vs planet Mercury"
+    ],
+    "forbiddenClaims": [
+      "answering non-astronomy queries as astronomy"
+    ],
+    "expectedAnswerMode": "balanced",
+    "citationExpectation": false,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-oos-78",
+    "question": "Saturn car parts online where to buy?",
+    "language": "en",
+    "domain": "out-of-scope",
+    "difficulty": "beginner",
+    "questionStyle": "false positive trap",
+    "expectedKnowledgeTypes": [
+      "boundary"
+    ],
+    "requiredKeyPoints": [
+      "Out of scope",
+      "Automobile brand vs gas giant planet Saturn"
+    ],
+    "forbiddenClaims": [
+      "answering non-astronomy queries as astronomy"
+    ],
+    "expectedAnswerMode": "balanced",
+    "citationExpectation": false,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-1",
+    "question": "Can you explain in simple terms: Solar Eclipse and Lunar Eclipse differences?",
+    "language": "en",
+    "domain": "foundation",
+    "difficulty": "beginner",
+    "questionStyle": "analogy",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Sun Moon Earth alignment",
+      "Umbra and penumbra shadows",
+      "New Moon vs Full Moon"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-2",
+    "question": "Mujhe aasan bhasha me samjhao: Solar Eclipse and Lunar Eclipse differences ke bare me",
+    "language": "hinglish",
+    "domain": "foundation",
+    "difficulty": "intermediate",
+    "questionStyle": "curiosity",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Sun Moon Earth alignment",
+      "Umbra and penumbra shadows",
+      "New Moon vs Full Moon"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-3",
+    "question": "कृपया विस्तार से बताएं: Solar Eclipse and Lunar Eclipse differences क्या है?",
+    "language": "hi",
+    "domain": "foundation",
+    "difficulty": "advanced",
+    "questionStyle": "detailed",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Sun Moon Earth alignment",
+      "Umbra and penumbra shadows",
+      "New Moon vs Full Moon"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-4",
+    "question": "What are the latest scientific facts about Solar Eclipse and Lunar Eclipse differences?",
+    "language": "en",
+    "domain": "foundation",
+    "difficulty": "intermediate",
+    "questionStyle": "evidence-first",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Sun Moon Earth alignment",
+      "Umbra and penumbra shadows",
+      "New Moon vs Full Moon"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-5",
+    "question": "Kya aap bata sakte hain ki Solar Eclipse and Lunar Eclipse differences kyon hota hai?",
+    "language": "hinglish",
+    "domain": "foundation",
+    "difficulty": "beginner",
+    "questionStyle": "why",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Sun Moon Earth alignment",
+      "Umbra and penumbra shadows",
+      "New Moon vs Full Moon"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-6",
+    "question": "वैज्ञानिक दृष्टिकोण से Solar Eclipse and Lunar Eclipse differences का क्या अर्थ है?",
+    "language": "hi",
+    "domain": "foundation",
+    "difficulty": "advanced",
+    "questionStyle": "science-first",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Sun Moon Earth alignment",
+      "Umbra and penumbra shadows",
+      "New Moon vs Full Moon"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-7",
+    "question": "What is the physical mechanism behind Solar Eclipse and Lunar Eclipse differences?",
+    "language": "en",
+    "domain": "foundation",
+    "difficulty": "beginner",
+    "questionStyle": "structured",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Sun Moon Earth alignment",
+      "Umbra and penumbra shadows",
+      "New Moon vs Full Moon"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-8",
+    "question": "Kaise kaam karta hai Solar Eclipse and Lunar Eclipse differences?",
+    "language": "hinglish",
+    "domain": "foundation",
+    "difficulty": "intermediate",
+    "questionStyle": "how",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Sun Moon Earth alignment",
+      "Umbra and penumbra shadows",
+      "New Moon vs Full Moon"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-9",
+    "question": "क्या आप समझा सकते हैं कि Solar Eclipse and Lunar Eclipse differences कैसे संभव है?",
+    "language": "hi",
+    "domain": "foundation",
+    "difficulty": "advanced",
+    "questionStyle": "how",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Sun Moon Earth alignment",
+      "Umbra and penumbra shadows",
+      "New Moon vs Full Moon"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-10",
+    "question": "Give a short exam style answer for Solar Eclipse and Lunar Eclipse differences.",
+    "language": "en",
+    "domain": "foundation",
+    "difficulty": "intermediate",
+    "questionStyle": "short exam answer",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Sun Moon Earth alignment",
+      "Umbra and penumbra shadows",
+      "New Moon vs Full Moon"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-11",
+    "question": "Short me batao Solar Eclipse and Lunar Eclipse differences ke bare me.",
+    "language": "hinglish",
+    "domain": "foundation",
+    "difficulty": "beginner",
+    "questionStyle": "short exam answer",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Sun Moon Earth alignment",
+      "Umbra and penumbra shadows",
+      "New Moon vs Full Moon"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-12",
+    "question": "संक्षेप में समझाएं Solar Eclipse and Lunar Eclipse differences के मुख्य बिंदु।",
+    "language": "hi",
+    "domain": "foundation",
+    "difficulty": "advanced",
+    "questionStyle": "short exam answer",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Sun Moon Earth alignment",
+      "Umbra and penumbra shadows",
+      "New Moon vs Full Moon"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-13",
+    "question": "What are the common misconceptions about Solar Eclipse and Lunar Eclipse differences?",
+    "language": "en",
+    "domain": "foundation",
+    "difficulty": "beginner",
+    "questionStyle": "misconception",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Sun Moon Earth alignment",
+      "Umbra and penumbra shadows",
+      "New Moon vs Full Moon"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-14",
+    "question": "Log Solar Eclipse and Lunar Eclipse differences ke bare me kya galat samajhte hain?",
+    "language": "hinglish",
+    "domain": "foundation",
+    "difficulty": "intermediate",
+    "questionStyle": "misconception",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Sun Moon Earth alignment",
+      "Umbra and penumbra shadows",
+      "New Moon vs Full Moon"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-15",
+    "question": "के बारे में आम भ्रांतियां क्या हैं: Solar Eclipse and Lunar Eclipse differences?",
+    "language": "hi",
+    "domain": "foundation",
+    "difficulty": "advanced",
+    "questionStyle": "misconception",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Sun Moon Earth alignment",
+      "Umbra and penumbra shadows",
+      "New Moon vs Full Moon"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-16",
+    "question": "Can you explain in simple terms: Supernova Type Ia standard candles?",
+    "language": "en",
+    "domain": "advanced",
+    "difficulty": "intermediate",
+    "questionStyle": "analogy",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Chandrasekhar limit 1.4 solar masses",
+      "Thermonuclear explosion",
+      "Distance measurement"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-17",
+    "question": "Mujhe aasan bhasha me samjhao: Supernova Type Ia standard candles ke bare me",
+    "language": "hinglish",
+    "domain": "advanced",
+    "difficulty": "beginner",
+    "questionStyle": "curiosity",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Chandrasekhar limit 1.4 solar masses",
+      "Thermonuclear explosion",
+      "Distance measurement"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-18",
+    "question": "कृपया विस्तार से बताएं: Supernova Type Ia standard candles क्या है?",
+    "language": "hi",
+    "domain": "advanced",
+    "difficulty": "advanced",
+    "questionStyle": "detailed",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Chandrasekhar limit 1.4 solar masses",
+      "Thermonuclear explosion",
+      "Distance measurement"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-19",
+    "question": "What are the latest scientific facts about Supernova Type Ia standard candles?",
+    "language": "en",
+    "domain": "advanced",
+    "difficulty": "beginner",
+    "questionStyle": "evidence-first",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Chandrasekhar limit 1.4 solar masses",
+      "Thermonuclear explosion",
+      "Distance measurement"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-20",
+    "question": "Kya aap bata sakte hain ki Supernova Type Ia standard candles kyon hota hai?",
+    "language": "hinglish",
+    "domain": "advanced",
+    "difficulty": "intermediate",
+    "questionStyle": "why",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Chandrasekhar limit 1.4 solar masses",
+      "Thermonuclear explosion",
+      "Distance measurement"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-21",
+    "question": "वैज्ञानिक दृष्टिकोण से Supernova Type Ia standard candles का क्या अर्थ है?",
+    "language": "hi",
+    "domain": "advanced",
+    "difficulty": "advanced",
+    "questionStyle": "science-first",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Chandrasekhar limit 1.4 solar masses",
+      "Thermonuclear explosion",
+      "Distance measurement"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-22",
+    "question": "What is the physical mechanism behind Supernova Type Ia standard candles?",
+    "language": "en",
+    "domain": "advanced",
+    "difficulty": "intermediate",
+    "questionStyle": "structured",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Chandrasekhar limit 1.4 solar masses",
+      "Thermonuclear explosion",
+      "Distance measurement"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-23",
+    "question": "Kaise kaam karta hai Supernova Type Ia standard candles?",
+    "language": "hinglish",
+    "domain": "advanced",
+    "difficulty": "beginner",
+    "questionStyle": "how",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Chandrasekhar limit 1.4 solar masses",
+      "Thermonuclear explosion",
+      "Distance measurement"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-24",
+    "question": "क्या आप समझा सकते हैं कि Supernova Type Ia standard candles कैसे संभव है?",
+    "language": "hi",
+    "domain": "advanced",
+    "difficulty": "advanced",
+    "questionStyle": "how",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Chandrasekhar limit 1.4 solar masses",
+      "Thermonuclear explosion",
+      "Distance measurement"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-25",
+    "question": "Give a short exam style answer for Supernova Type Ia standard candles.",
+    "language": "en",
+    "domain": "advanced",
+    "difficulty": "beginner",
+    "questionStyle": "short exam answer",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Chandrasekhar limit 1.4 solar masses",
+      "Thermonuclear explosion",
+      "Distance measurement"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-26",
+    "question": "Short me batao Supernova Type Ia standard candles ke bare me.",
+    "language": "hinglish",
+    "domain": "advanced",
+    "difficulty": "intermediate",
+    "questionStyle": "short exam answer",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Chandrasekhar limit 1.4 solar masses",
+      "Thermonuclear explosion",
+      "Distance measurement"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-27",
+    "question": "संक्षेप में समझाएं Supernova Type Ia standard candles के मुख्य बिंदु।",
+    "language": "hi",
+    "domain": "advanced",
+    "difficulty": "advanced",
+    "questionStyle": "short exam answer",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Chandrasekhar limit 1.4 solar masses",
+      "Thermonuclear explosion",
+      "Distance measurement"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-28",
+    "question": "What are the common misconceptions about Supernova Type Ia standard candles?",
+    "language": "en",
+    "domain": "advanced",
+    "difficulty": "intermediate",
+    "questionStyle": "misconception",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Chandrasekhar limit 1.4 solar masses",
+      "Thermonuclear explosion",
+      "Distance measurement"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-29",
+    "question": "Log Supernova Type Ia standard candles ke bare me kya galat samajhte hain?",
+    "language": "hinglish",
+    "domain": "advanced",
+    "difficulty": "beginner",
+    "questionStyle": "misconception",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Chandrasekhar limit 1.4 solar masses",
+      "Thermonuclear explosion",
+      "Distance measurement"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-30",
+    "question": "के बारे में आम भ्रांतियां क्या हैं: Supernova Type Ia standard candles?",
+    "language": "hi",
+    "domain": "advanced",
+    "difficulty": "advanced",
+    "questionStyle": "misconception",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Chandrasekhar limit 1.4 solar masses",
+      "Thermonuclear explosion",
+      "Distance measurement"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-31",
+    "question": "Can you explain in simple terms: Event Horizon and Schwarzschild Radius?",
+    "language": "en",
+    "domain": "advanced",
+    "difficulty": "beginner",
+    "questionStyle": "analogy",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Point of no return",
+      "r_s = 2GM/c²",
+      "Gravitational redshift"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-32",
+    "question": "Mujhe aasan bhasha me samjhao: Event Horizon and Schwarzschild Radius ke bare me",
+    "language": "hinglish",
+    "domain": "advanced",
+    "difficulty": "intermediate",
+    "questionStyle": "curiosity",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Point of no return",
+      "r_s = 2GM/c²",
+      "Gravitational redshift"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-33",
+    "question": "कृपया विस्तार से बताएं: Event Horizon and Schwarzschild Radius क्या है?",
+    "language": "hi",
+    "domain": "advanced",
+    "difficulty": "advanced",
+    "questionStyle": "detailed",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Point of no return",
+      "r_s = 2GM/c²",
+      "Gravitational redshift"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-34",
+    "question": "What are the latest scientific facts about Event Horizon and Schwarzschild Radius?",
+    "language": "en",
+    "domain": "advanced",
+    "difficulty": "intermediate",
+    "questionStyle": "evidence-first",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Point of no return",
+      "r_s = 2GM/c²",
+      "Gravitational redshift"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-35",
+    "question": "Kya aap bata sakte hain ki Event Horizon and Schwarzschild Radius kyon hota hai?",
+    "language": "hinglish",
+    "domain": "advanced",
+    "difficulty": "beginner",
+    "questionStyle": "why",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Point of no return",
+      "r_s = 2GM/c²",
+      "Gravitational redshift"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-36",
+    "question": "वैज्ञानिक दृष्टिकोण से Event Horizon and Schwarzschild Radius का क्या अर्थ है?",
+    "language": "hi",
+    "domain": "advanced",
+    "difficulty": "advanced",
+    "questionStyle": "science-first",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Point of no return",
+      "r_s = 2GM/c²",
+      "Gravitational redshift"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-37",
+    "question": "What is the physical mechanism behind Event Horizon and Schwarzschild Radius?",
+    "language": "en",
+    "domain": "advanced",
+    "difficulty": "beginner",
+    "questionStyle": "structured",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Point of no return",
+      "r_s = 2GM/c²",
+      "Gravitational redshift"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-38",
+    "question": "Kaise kaam karta hai Event Horizon and Schwarzschild Radius?",
+    "language": "hinglish",
+    "domain": "advanced",
+    "difficulty": "intermediate",
+    "questionStyle": "how",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Point of no return",
+      "r_s = 2GM/c²",
+      "Gravitational redshift"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-39",
+    "question": "क्या आप समझा सकते हैं कि Event Horizon and Schwarzschild Radius कैसे संभव है?",
+    "language": "hi",
+    "domain": "advanced",
+    "difficulty": "advanced",
+    "questionStyle": "how",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Point of no return",
+      "r_s = 2GM/c²",
+      "Gravitational redshift"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-40",
+    "question": "Give a short exam style answer for Event Horizon and Schwarzschild Radius.",
+    "language": "en",
+    "domain": "advanced",
+    "difficulty": "intermediate",
+    "questionStyle": "short exam answer",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Point of no return",
+      "r_s = 2GM/c²",
+      "Gravitational redshift"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-41",
+    "question": "Short me batao Event Horizon and Schwarzschild Radius ke bare me.",
+    "language": "hinglish",
+    "domain": "advanced",
+    "difficulty": "beginner",
+    "questionStyle": "short exam answer",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Point of no return",
+      "r_s = 2GM/c²",
+      "Gravitational redshift"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-42",
+    "question": "संक्षेप में समझाएं Event Horizon and Schwarzschild Radius के मुख्य बिंदु।",
+    "language": "hi",
+    "domain": "advanced",
+    "difficulty": "advanced",
+    "questionStyle": "short exam answer",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Point of no return",
+      "r_s = 2GM/c²",
+      "Gravitational redshift"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-43",
+    "question": "What are the common misconceptions about Event Horizon and Schwarzschild Radius?",
+    "language": "en",
+    "domain": "advanced",
+    "difficulty": "beginner",
+    "questionStyle": "misconception",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Point of no return",
+      "r_s = 2GM/c²",
+      "Gravitational redshift"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-44",
+    "question": "Log Event Horizon and Schwarzschild Radius ke bare me kya galat samajhte hain?",
+    "language": "hinglish",
+    "domain": "advanced",
+    "difficulty": "intermediate",
+    "questionStyle": "misconception",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Point of no return",
+      "r_s = 2GM/c²",
+      "Gravitational redshift"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-45",
+    "question": "के बारे में आम भ्रांतियां क्या हैं: Event Horizon and Schwarzschild Radius?",
+    "language": "hi",
+    "domain": "advanced",
+    "difficulty": "advanced",
+    "questionStyle": "misconception",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Point of no return",
+      "r_s = 2GM/c²",
+      "Gravitational redshift"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-46",
+    "question": "Can you explain in simple terms: Boötes Void emptiness and origin?",
+    "language": "en",
+    "domain": "mysteries",
+    "difficulty": "intermediate",
+    "questionStyle": "analogy",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "330 million light year void",
+      "Cosmic filaments",
+      "Low galaxy density"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-47",
+    "question": "Mujhe aasan bhasha me samjhao: Boötes Void emptiness and origin ke bare me",
+    "language": "hinglish",
+    "domain": "mysteries",
+    "difficulty": "beginner",
+    "questionStyle": "curiosity",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "330 million light year void",
+      "Cosmic filaments",
+      "Low galaxy density"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-48",
+    "question": "कृपया विस्तार से बताएं: Boötes Void emptiness and origin क्या है?",
+    "language": "hi",
+    "domain": "mysteries",
+    "difficulty": "advanced",
+    "questionStyle": "detailed",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "330 million light year void",
+      "Cosmic filaments",
+      "Low galaxy density"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-49",
+    "question": "What are the latest scientific facts about Boötes Void emptiness and origin?",
+    "language": "en",
+    "domain": "mysteries",
+    "difficulty": "beginner",
+    "questionStyle": "evidence-first",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "330 million light year void",
+      "Cosmic filaments",
+      "Low galaxy density"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-50",
+    "question": "Kya aap bata sakte hain ki Boötes Void emptiness and origin kyon hota hai?",
+    "language": "hinglish",
+    "domain": "mysteries",
+    "difficulty": "intermediate",
+    "questionStyle": "why",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "330 million light year void",
+      "Cosmic filaments",
+      "Low galaxy density"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-51",
+    "question": "वैज्ञानिक दृष्टिकोण से Boötes Void emptiness and origin का क्या अर्थ है?",
+    "language": "hi",
+    "domain": "mysteries",
+    "difficulty": "advanced",
+    "questionStyle": "science-first",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "330 million light year void",
+      "Cosmic filaments",
+      "Low galaxy density"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-52",
+    "question": "What is the physical mechanism behind Boötes Void emptiness and origin?",
+    "language": "en",
+    "domain": "mysteries",
+    "difficulty": "intermediate",
+    "questionStyle": "structured",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "330 million light year void",
+      "Cosmic filaments",
+      "Low galaxy density"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-53",
+    "question": "Kaise kaam karta hai Boötes Void emptiness and origin?",
+    "language": "hinglish",
+    "domain": "mysteries",
+    "difficulty": "beginner",
+    "questionStyle": "how",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "330 million light year void",
+      "Cosmic filaments",
+      "Low galaxy density"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-54",
+    "question": "क्या आप समझा सकते हैं कि Boötes Void emptiness and origin कैसे संभव है?",
+    "language": "hi",
+    "domain": "mysteries",
+    "difficulty": "advanced",
+    "questionStyle": "how",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "330 million light year void",
+      "Cosmic filaments",
+      "Low galaxy density"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-55",
+    "question": "Give a short exam style answer for Boötes Void emptiness and origin.",
+    "language": "en",
+    "domain": "mysteries",
+    "difficulty": "beginner",
+    "questionStyle": "short exam answer",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "330 million light year void",
+      "Cosmic filaments",
+      "Low galaxy density"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-56",
+    "question": "Short me batao Boötes Void emptiness and origin ke bare me.",
+    "language": "hinglish",
+    "domain": "mysteries",
+    "difficulty": "intermediate",
+    "questionStyle": "short exam answer",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "330 million light year void",
+      "Cosmic filaments",
+      "Low galaxy density"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-57",
+    "question": "संक्षेप में समझाएं Boötes Void emptiness and origin के मुख्य बिंदु।",
+    "language": "hi",
+    "domain": "mysteries",
+    "difficulty": "advanced",
+    "questionStyle": "short exam answer",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "330 million light year void",
+      "Cosmic filaments",
+      "Low galaxy density"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-58",
+    "question": "What are the common misconceptions about Boötes Void emptiness and origin?",
+    "language": "en",
+    "domain": "mysteries",
+    "difficulty": "intermediate",
+    "questionStyle": "misconception",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "330 million light year void",
+      "Cosmic filaments",
+      "Low galaxy density"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-59",
+    "question": "Log Boötes Void emptiness and origin ke bare me kya galat samajhte hain?",
+    "language": "hinglish",
+    "domain": "mysteries",
+    "difficulty": "beginner",
+    "questionStyle": "misconception",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "330 million light year void",
+      "Cosmic filaments",
+      "Low galaxy density"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-60",
+    "question": "के बारे में आम भ्रांतियां क्या हैं: Boötes Void emptiness and origin?",
+    "language": "hi",
+    "domain": "mysteries",
+    "difficulty": "advanced",
+    "questionStyle": "misconception",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "330 million light year void",
+      "Cosmic filaments",
+      "Low galaxy density"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-61",
+    "question": "Can you explain in simple terms: Rahu Ketu eclipses vs astronomical orbital nodes?",
+    "language": "en",
+    "domain": "dharm-myth",
+    "difficulty": "beginner",
+    "questionStyle": "analogy",
+    "expectedKnowledgeTypes": [
+      "narrative",
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Swarbhanu puranic story",
+      "5.14 degree orbital inclination",
+      "Ascending and descending nodes"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "katha-vigyan",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-62",
+    "question": "Mujhe aasan bhasha me samjhao: Rahu Ketu eclipses vs astronomical orbital nodes ke bare me",
+    "language": "hinglish",
+    "domain": "dharm-myth",
+    "difficulty": "intermediate",
+    "questionStyle": "curiosity",
+    "expectedKnowledgeTypes": [
+      "narrative",
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Swarbhanu puranic story",
+      "5.14 degree orbital inclination",
+      "Ascending and descending nodes"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "katha-vigyan",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-63",
+    "question": "कृपया विस्तार से बताएं: Rahu Ketu eclipses vs astronomical orbital nodes क्या है?",
+    "language": "hi",
+    "domain": "dharm-myth",
+    "difficulty": "advanced",
+    "questionStyle": "detailed",
+    "expectedKnowledgeTypes": [
+      "narrative",
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Swarbhanu puranic story",
+      "5.14 degree orbital inclination",
+      "Ascending and descending nodes"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "katha-vigyan",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-64",
+    "question": "What are the latest scientific facts about Rahu Ketu eclipses vs astronomical orbital nodes?",
+    "language": "en",
+    "domain": "dharm-myth",
+    "difficulty": "intermediate",
+    "questionStyle": "evidence-first",
+    "expectedKnowledgeTypes": [
+      "narrative",
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Swarbhanu puranic story",
+      "5.14 degree orbital inclination",
+      "Ascending and descending nodes"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "katha-vigyan",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-65",
+    "question": "Kya aap bata sakte hain ki Rahu Ketu eclipses vs astronomical orbital nodes kyon hota hai?",
+    "language": "hinglish",
+    "domain": "dharm-myth",
+    "difficulty": "beginner",
+    "questionStyle": "why",
+    "expectedKnowledgeTypes": [
+      "narrative",
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Swarbhanu puranic story",
+      "5.14 degree orbital inclination",
+      "Ascending and descending nodes"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "katha-vigyan",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-66",
+    "question": "वैज्ञानिक दृष्टिकोण से Rahu Ketu eclipses vs astronomical orbital nodes का क्या अर्थ है?",
+    "language": "hi",
+    "domain": "dharm-myth",
+    "difficulty": "advanced",
+    "questionStyle": "science-first",
+    "expectedKnowledgeTypes": [
+      "narrative",
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Swarbhanu puranic story",
+      "5.14 degree orbital inclination",
+      "Ascending and descending nodes"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "katha-vigyan",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-67",
+    "question": "What is the physical mechanism behind Rahu Ketu eclipses vs astronomical orbital nodes?",
+    "language": "en",
+    "domain": "dharm-myth",
+    "difficulty": "beginner",
+    "questionStyle": "structured",
+    "expectedKnowledgeTypes": [
+      "narrative",
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Swarbhanu puranic story",
+      "5.14 degree orbital inclination",
+      "Ascending and descending nodes"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "katha-vigyan",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-68",
+    "question": "Kaise kaam karta hai Rahu Ketu eclipses vs astronomical orbital nodes?",
+    "language": "hinglish",
+    "domain": "dharm-myth",
+    "difficulty": "intermediate",
+    "questionStyle": "how",
+    "expectedKnowledgeTypes": [
+      "narrative",
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Swarbhanu puranic story",
+      "5.14 degree orbital inclination",
+      "Ascending and descending nodes"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "katha-vigyan",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-69",
+    "question": "क्या आप समझा सकते हैं कि Rahu Ketu eclipses vs astronomical orbital nodes कैसे संभव है?",
+    "language": "hi",
+    "domain": "dharm-myth",
+    "difficulty": "advanced",
+    "questionStyle": "how",
+    "expectedKnowledgeTypes": [
+      "narrative",
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Swarbhanu puranic story",
+      "5.14 degree orbital inclination",
+      "Ascending and descending nodes"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "katha-vigyan",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-70",
+    "question": "Give a short exam style answer for Rahu Ketu eclipses vs astronomical orbital nodes.",
+    "language": "en",
+    "domain": "dharm-myth",
+    "difficulty": "intermediate",
+    "questionStyle": "short exam answer",
+    "expectedKnowledgeTypes": [
+      "narrative",
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Swarbhanu puranic story",
+      "5.14 degree orbital inclination",
+      "Ascending and descending nodes"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "katha-vigyan",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-71",
+    "question": "Short me batao Rahu Ketu eclipses vs astronomical orbital nodes ke bare me.",
+    "language": "hinglish",
+    "domain": "dharm-myth",
+    "difficulty": "beginner",
+    "questionStyle": "short exam answer",
+    "expectedKnowledgeTypes": [
+      "narrative",
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Swarbhanu puranic story",
+      "5.14 degree orbital inclination",
+      "Ascending and descending nodes"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "katha-vigyan",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-72",
+    "question": "संक्षेप में समझाएं Rahu Ketu eclipses vs astronomical orbital nodes के मुख्य बिंदु।",
+    "language": "hi",
+    "domain": "dharm-myth",
+    "difficulty": "advanced",
+    "questionStyle": "short exam answer",
+    "expectedKnowledgeTypes": [
+      "narrative",
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Swarbhanu puranic story",
+      "5.14 degree orbital inclination",
+      "Ascending and descending nodes"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "katha-vigyan",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-73",
+    "question": "What are the common misconceptions about Rahu Ketu eclipses vs astronomical orbital nodes?",
+    "language": "en",
+    "domain": "dharm-myth",
+    "difficulty": "beginner",
+    "questionStyle": "misconception",
+    "expectedKnowledgeTypes": [
+      "narrative",
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Swarbhanu puranic story",
+      "5.14 degree orbital inclination",
+      "Ascending and descending nodes"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "katha-vigyan",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-74",
+    "question": "Log Rahu Ketu eclipses vs astronomical orbital nodes ke bare me kya galat samajhte hain?",
+    "language": "hinglish",
+    "domain": "dharm-myth",
+    "difficulty": "intermediate",
+    "questionStyle": "misconception",
+    "expectedKnowledgeTypes": [
+      "narrative",
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Swarbhanu puranic story",
+      "5.14 degree orbital inclination",
+      "Ascending and descending nodes"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "katha-vigyan",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-75",
+    "question": "के बारे में आम भ्रांतियां क्या हैं: Rahu Ketu eclipses vs astronomical orbital nodes?",
+    "language": "hi",
+    "domain": "dharm-myth",
+    "difficulty": "advanced",
+    "questionStyle": "misconception",
+    "expectedKnowledgeTypes": [
+      "narrative",
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Swarbhanu puranic story",
+      "5.14 degree orbital inclination",
+      "Ascending and descending nodes"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "katha-vigyan",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-76",
+    "question": "Can you explain in simple terms: Tegmark Multiverse Level 1 to Level 4?",
+    "language": "en",
+    "domain": "theoretical-fiction",
+    "difficulty": "intermediate",
+    "questionStyle": "analogy",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Hubble volume",
+      "Eternal inflation",
+      "Quantum many worlds"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-77",
+    "question": "Mujhe aasan bhasha me samjhao: Tegmark Multiverse Level 1 to Level 4 ke bare me",
+    "language": "hinglish",
+    "domain": "theoretical-fiction",
+    "difficulty": "beginner",
+    "questionStyle": "curiosity",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Hubble volume",
+      "Eternal inflation",
+      "Quantum many worlds"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-78",
+    "question": "कृपया विस्तार से बताएं: Tegmark Multiverse Level 1 to Level 4 क्या है?",
+    "language": "hi",
+    "domain": "theoretical-fiction",
+    "difficulty": "advanced",
+    "questionStyle": "detailed",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Hubble volume",
+      "Eternal inflation",
+      "Quantum many worlds"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-79",
+    "question": "What are the latest scientific facts about Tegmark Multiverse Level 1 to Level 4?",
+    "language": "en",
+    "domain": "theoretical-fiction",
+    "difficulty": "beginner",
+    "questionStyle": "evidence-first",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Hubble volume",
+      "Eternal inflation",
+      "Quantum many worlds"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-80",
+    "question": "Kya aap bata sakte hain ki Tegmark Multiverse Level 1 to Level 4 kyon hota hai?",
+    "language": "hinglish",
+    "domain": "theoretical-fiction",
+    "difficulty": "intermediate",
+    "questionStyle": "why",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Hubble volume",
+      "Eternal inflation",
+      "Quantum many worlds"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-81",
+    "question": "वैज्ञानिक दृष्टिकोण से Tegmark Multiverse Level 1 to Level 4 का क्या अर्थ है?",
+    "language": "hi",
+    "domain": "theoretical-fiction",
+    "difficulty": "advanced",
+    "questionStyle": "science-first",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Hubble volume",
+      "Eternal inflation",
+      "Quantum many worlds"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-82",
+    "question": "What is the physical mechanism behind Tegmark Multiverse Level 1 to Level 4?",
+    "language": "en",
+    "domain": "theoretical-fiction",
+    "difficulty": "intermediate",
+    "questionStyle": "structured",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Hubble volume",
+      "Eternal inflation",
+      "Quantum many worlds"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-83",
+    "question": "Kaise kaam karta hai Tegmark Multiverse Level 1 to Level 4?",
+    "language": "hinglish",
+    "domain": "theoretical-fiction",
+    "difficulty": "beginner",
+    "questionStyle": "how",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Hubble volume",
+      "Eternal inflation",
+      "Quantum many worlds"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-84",
+    "question": "क्या आप समझा सकते हैं कि Tegmark Multiverse Level 1 to Level 4 कैसे संभव है?",
+    "language": "hi",
+    "domain": "theoretical-fiction",
+    "difficulty": "advanced",
+    "questionStyle": "how",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Hubble volume",
+      "Eternal inflation",
+      "Quantum many worlds"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-85",
+    "question": "Give a short exam style answer for Tegmark Multiverse Level 1 to Level 4.",
+    "language": "en",
+    "domain": "theoretical-fiction",
+    "difficulty": "beginner",
+    "questionStyle": "short exam answer",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Hubble volume",
+      "Eternal inflation",
+      "Quantum many worlds"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-86",
+    "question": "Short me batao Tegmark Multiverse Level 1 to Level 4 ke bare me.",
+    "language": "hinglish",
+    "domain": "theoretical-fiction",
+    "difficulty": "intermediate",
+    "questionStyle": "short exam answer",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Hubble volume",
+      "Eternal inflation",
+      "Quantum many worlds"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-87",
+    "question": "संक्षेप में समझाएं Tegmark Multiverse Level 1 to Level 4 के मुख्य बिंदु।",
+    "language": "hi",
+    "domain": "theoretical-fiction",
+    "difficulty": "advanced",
+    "questionStyle": "short exam answer",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Hubble volume",
+      "Eternal inflation",
+      "Quantum many worlds"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-88",
+    "question": "What are the common misconceptions about Tegmark Multiverse Level 1 to Level 4?",
+    "language": "en",
+    "domain": "theoretical-fiction",
+    "difficulty": "intermediate",
+    "questionStyle": "misconception",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Hubble volume",
+      "Eternal inflation",
+      "Quantum many worlds"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-89",
+    "question": "Log Tegmark Multiverse Level 1 to Level 4 ke bare me kya galat samajhte hain?",
+    "language": "hinglish",
+    "domain": "theoretical-fiction",
+    "difficulty": "beginner",
+    "questionStyle": "misconception",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Hubble volume",
+      "Eternal inflation",
+      "Quantum many worlds"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-90",
+    "question": "के बारे में आम भ्रांतियां क्या हैं: Tegmark Multiverse Level 1 to Level 4?",
+    "language": "hi",
+    "domain": "theoretical-fiction",
+    "difficulty": "advanced",
+    "questionStyle": "misconception",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Hubble volume",
+      "Eternal inflation",
+      "Quantum many worlds"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-91",
+    "question": "Can you explain in simple terms: Great Filter and Fermi Paradox solutions?",
+    "language": "en",
+    "domain": "mysteries",
+    "difficulty": "beginner",
+    "questionStyle": "analogy",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Filter behind vs ahead",
+      "Rare Earth vs rare intelligence",
+      "Self destruction"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-92",
+    "question": "Mujhe aasan bhasha me samjhao: Great Filter and Fermi Paradox solutions ke bare me",
+    "language": "hinglish",
+    "domain": "mysteries",
+    "difficulty": "intermediate",
+    "questionStyle": "curiosity",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Filter behind vs ahead",
+      "Rare Earth vs rare intelligence",
+      "Self destruction"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-93",
+    "question": "कृपया विस्तार से बताएं: Great Filter and Fermi Paradox solutions क्या है?",
+    "language": "hi",
+    "domain": "mysteries",
+    "difficulty": "advanced",
+    "questionStyle": "detailed",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Filter behind vs ahead",
+      "Rare Earth vs rare intelligence",
+      "Self destruction"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-94",
+    "question": "What are the latest scientific facts about Great Filter and Fermi Paradox solutions?",
+    "language": "en",
+    "domain": "mysteries",
+    "difficulty": "intermediate",
+    "questionStyle": "evidence-first",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Filter behind vs ahead",
+      "Rare Earth vs rare intelligence",
+      "Self destruction"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-95",
+    "question": "Kya aap bata sakte hain ki Great Filter and Fermi Paradox solutions kyon hota hai?",
+    "language": "hinglish",
+    "domain": "mysteries",
+    "difficulty": "beginner",
+    "questionStyle": "why",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Filter behind vs ahead",
+      "Rare Earth vs rare intelligence",
+      "Self destruction"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-96",
+    "question": "वैज्ञानिक दृष्टिकोण से Great Filter and Fermi Paradox solutions का क्या अर्थ है?",
+    "language": "hi",
+    "domain": "mysteries",
+    "difficulty": "advanced",
+    "questionStyle": "science-first",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Filter behind vs ahead",
+      "Rare Earth vs rare intelligence",
+      "Self destruction"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-97",
+    "question": "What is the physical mechanism behind Great Filter and Fermi Paradox solutions?",
+    "language": "en",
+    "domain": "mysteries",
+    "difficulty": "beginner",
+    "questionStyle": "structured",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Filter behind vs ahead",
+      "Rare Earth vs rare intelligence",
+      "Self destruction"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-98",
+    "question": "Kaise kaam karta hai Great Filter and Fermi Paradox solutions?",
+    "language": "hinglish",
+    "domain": "mysteries",
+    "difficulty": "intermediate",
+    "questionStyle": "how",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Filter behind vs ahead",
+      "Rare Earth vs rare intelligence",
+      "Self destruction"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-99",
+    "question": "क्या आप समझा सकते हैं कि Great Filter and Fermi Paradox solutions कैसे संभव है?",
+    "language": "hi",
+    "domain": "mysteries",
+    "difficulty": "advanced",
+    "questionStyle": "how",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Filter behind vs ahead",
+      "Rare Earth vs rare intelligence",
+      "Self destruction"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-100",
+    "question": "Give a short exam style answer for Great Filter and Fermi Paradox solutions.",
+    "language": "en",
+    "domain": "mysteries",
+    "difficulty": "intermediate",
+    "questionStyle": "short exam answer",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Filter behind vs ahead",
+      "Rare Earth vs rare intelligence",
+      "Self destruction"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-101",
+    "question": "Short me batao Great Filter and Fermi Paradox solutions ke bare me.",
+    "language": "hinglish",
+    "domain": "mysteries",
+    "difficulty": "beginner",
+    "questionStyle": "short exam answer",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Filter behind vs ahead",
+      "Rare Earth vs rare intelligence",
+      "Self destruction"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-102",
+    "question": "संक्षेप में समझाएं Great Filter and Fermi Paradox solutions के मुख्य बिंदु।",
+    "language": "hi",
+    "domain": "mysteries",
+    "difficulty": "advanced",
+    "questionStyle": "short exam answer",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Filter behind vs ahead",
+      "Rare Earth vs rare intelligence",
+      "Self destruction"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-103",
+    "question": "What are the common misconceptions about Great Filter and Fermi Paradox solutions?",
+    "language": "en",
+    "domain": "mysteries",
+    "difficulty": "beginner",
+    "questionStyle": "misconception",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Filter behind vs ahead",
+      "Rare Earth vs rare intelligence",
+      "Self destruction"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-104",
+    "question": "Log Great Filter and Fermi Paradox solutions ke bare me kya galat samajhte hain?",
+    "language": "hinglish",
+    "domain": "mysteries",
+    "difficulty": "intermediate",
+    "questionStyle": "misconception",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Filter behind vs ahead",
+      "Rare Earth vs rare intelligence",
+      "Self destruction"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-105",
+    "question": "के बारे में आम भ्रांतियां क्या हैं: Great Filter and Fermi Paradox solutions?",
+    "language": "hi",
+    "domain": "mysteries",
+    "difficulty": "advanced",
+    "questionStyle": "misconception",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Filter behind vs ahead",
+      "Rare Earth vs rare intelligence",
+      "Self destruction"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-106",
+    "question": "Can you explain in simple terms: GPS satellites time dilation corrections?",
+    "language": "en",
+    "domain": "advanced",
+    "difficulty": "intermediate",
+    "questionStyle": "analogy",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Special relativity -7 us/day",
+      "General relativity +45 us/day",
+      "Net +38 us/day correction"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-107",
+    "question": "Mujhe aasan bhasha me samjhao: GPS satellites time dilation corrections ke bare me",
+    "language": "hinglish",
+    "domain": "advanced",
+    "difficulty": "beginner",
+    "questionStyle": "curiosity",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Special relativity -7 us/day",
+      "General relativity +45 us/day",
+      "Net +38 us/day correction"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-108",
+    "question": "कृपया विस्तार से बताएं: GPS satellites time dilation corrections क्या है?",
+    "language": "hi",
+    "domain": "advanced",
+    "difficulty": "advanced",
+    "questionStyle": "detailed",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Special relativity -7 us/day",
+      "General relativity +45 us/day",
+      "Net +38 us/day correction"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-109",
+    "question": "What are the latest scientific facts about GPS satellites time dilation corrections?",
+    "language": "en",
+    "domain": "advanced",
+    "difficulty": "beginner",
+    "questionStyle": "evidence-first",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Special relativity -7 us/day",
+      "General relativity +45 us/day",
+      "Net +38 us/day correction"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-110",
+    "question": "Kya aap bata sakte hain ki GPS satellites time dilation corrections kyon hota hai?",
+    "language": "hinglish",
+    "domain": "advanced",
+    "difficulty": "intermediate",
+    "questionStyle": "why",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Special relativity -7 us/day",
+      "General relativity +45 us/day",
+      "Net +38 us/day correction"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-111",
+    "question": "वैज्ञानिक दृष्टिकोण से GPS satellites time dilation corrections का क्या अर्थ है?",
+    "language": "hi",
+    "domain": "advanced",
+    "difficulty": "advanced",
+    "questionStyle": "science-first",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Special relativity -7 us/day",
+      "General relativity +45 us/day",
+      "Net +38 us/day correction"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-112",
+    "question": "What is the physical mechanism behind GPS satellites time dilation corrections?",
+    "language": "en",
+    "domain": "advanced",
+    "difficulty": "intermediate",
+    "questionStyle": "structured",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Special relativity -7 us/day",
+      "General relativity +45 us/day",
+      "Net +38 us/day correction"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-113",
+    "question": "Kaise kaam karta hai GPS satellites time dilation corrections?",
+    "language": "hinglish",
+    "domain": "advanced",
+    "difficulty": "beginner",
+    "questionStyle": "how",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Special relativity -7 us/day",
+      "General relativity +45 us/day",
+      "Net +38 us/day correction"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-114",
+    "question": "क्या आप समझा सकते हैं कि GPS satellites time dilation corrections कैसे संभव है?",
+    "language": "hi",
+    "domain": "advanced",
+    "difficulty": "advanced",
+    "questionStyle": "how",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Special relativity -7 us/day",
+      "General relativity +45 us/day",
+      "Net +38 us/day correction"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-115",
+    "question": "Give a short exam style answer for GPS satellites time dilation corrections.",
+    "language": "en",
+    "domain": "advanced",
+    "difficulty": "beginner",
+    "questionStyle": "short exam answer",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Special relativity -7 us/day",
+      "General relativity +45 us/day",
+      "Net +38 us/day correction"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-116",
+    "question": "Short me batao GPS satellites time dilation corrections ke bare me.",
+    "language": "hinglish",
+    "domain": "advanced",
+    "difficulty": "intermediate",
+    "questionStyle": "short exam answer",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Special relativity -7 us/day",
+      "General relativity +45 us/day",
+      "Net +38 us/day correction"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-117",
+    "question": "संक्षेप में समझाएं GPS satellites time dilation corrections के मुख्य बिंदु।",
+    "language": "hi",
+    "domain": "advanced",
+    "difficulty": "advanced",
+    "questionStyle": "short exam answer",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Special relativity -7 us/day",
+      "General relativity +45 us/day",
+      "Net +38 us/day correction"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-118",
+    "question": "What are the common misconceptions about GPS satellites time dilation corrections?",
+    "language": "en",
+    "domain": "advanced",
+    "difficulty": "intermediate",
+    "questionStyle": "misconception",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Special relativity -7 us/day",
+      "General relativity +45 us/day",
+      "Net +38 us/day correction"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-119",
+    "question": "Log GPS satellites time dilation corrections ke bare me kya galat samajhte hain?",
+    "language": "hinglish",
+    "domain": "advanced",
+    "difficulty": "beginner",
+    "questionStyle": "misconception",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Special relativity -7 us/day",
+      "General relativity +45 us/day",
+      "Net +38 us/day correction"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-120",
+    "question": "के बारे में आम भ्रांतियां क्या हैं: GPS satellites time dilation corrections?",
+    "language": "hi",
+    "domain": "advanced",
+    "difficulty": "advanced",
+    "questionStyle": "misconception",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Special relativity -7 us/day",
+      "General relativity +45 us/day",
+      "Net +38 us/day correction"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-121",
+    "question": "Can you explain in simple terms: James Webb Space Telescope L2 orbit benefits?",
+    "language": "en",
+    "domain": "foundation",
+    "difficulty": "beginner",
+    "questionStyle": "analogy",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Infrared light",
+      "1.5 million km L2 point",
+      "Sunshield thermal protection"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-122",
+    "question": "Mujhe aasan bhasha me samjhao: James Webb Space Telescope L2 orbit benefits ke bare me",
+    "language": "hinglish",
+    "domain": "foundation",
+    "difficulty": "intermediate",
+    "questionStyle": "curiosity",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Infrared light",
+      "1.5 million km L2 point",
+      "Sunshield thermal protection"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-123",
+    "question": "कृपया विस्तार से बताएं: James Webb Space Telescope L2 orbit benefits क्या है?",
+    "language": "hi",
+    "domain": "foundation",
+    "difficulty": "advanced",
+    "questionStyle": "detailed",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Infrared light",
+      "1.5 million km L2 point",
+      "Sunshield thermal protection"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-124",
+    "question": "What are the latest scientific facts about James Webb Space Telescope L2 orbit benefits?",
+    "language": "en",
+    "domain": "foundation",
+    "difficulty": "intermediate",
+    "questionStyle": "evidence-first",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Infrared light",
+      "1.5 million km L2 point",
+      "Sunshield thermal protection"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-125",
+    "question": "Kya aap bata sakte hain ki James Webb Space Telescope L2 orbit benefits kyon hota hai?",
+    "language": "hinglish",
+    "domain": "foundation",
+    "difficulty": "beginner",
+    "questionStyle": "why",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Infrared light",
+      "1.5 million km L2 point",
+      "Sunshield thermal protection"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-126",
+    "question": "वैज्ञानिक दृष्टिकोण से James Webb Space Telescope L2 orbit benefits का क्या अर्थ है?",
+    "language": "hi",
+    "domain": "foundation",
+    "difficulty": "advanced",
+    "questionStyle": "science-first",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Infrared light",
+      "1.5 million km L2 point",
+      "Sunshield thermal protection"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-127",
+    "question": "What is the physical mechanism behind James Webb Space Telescope L2 orbit benefits?",
+    "language": "en",
+    "domain": "foundation",
+    "difficulty": "beginner",
+    "questionStyle": "structured",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Infrared light",
+      "1.5 million km L2 point",
+      "Sunshield thermal protection"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-128",
+    "question": "Kaise kaam karta hai James Webb Space Telescope L2 orbit benefits?",
+    "language": "hinglish",
+    "domain": "foundation",
+    "difficulty": "intermediate",
+    "questionStyle": "how",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Infrared light",
+      "1.5 million km L2 point",
+      "Sunshield thermal protection"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-129",
+    "question": "क्या आप समझा सकते हैं कि James Webb Space Telescope L2 orbit benefits कैसे संभव है?",
+    "language": "hi",
+    "domain": "foundation",
+    "difficulty": "advanced",
+    "questionStyle": "how",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Infrared light",
+      "1.5 million km L2 point",
+      "Sunshield thermal protection"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-130",
+    "question": "Give a short exam style answer for James Webb Space Telescope L2 orbit benefits.",
+    "language": "en",
+    "domain": "foundation",
+    "difficulty": "intermediate",
+    "questionStyle": "short exam answer",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Infrared light",
+      "1.5 million km L2 point",
+      "Sunshield thermal protection"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-131",
+    "question": "Short me batao James Webb Space Telescope L2 orbit benefits ke bare me.",
+    "language": "hinglish",
+    "domain": "foundation",
+    "difficulty": "beginner",
+    "questionStyle": "short exam answer",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Infrared light",
+      "1.5 million km L2 point",
+      "Sunshield thermal protection"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-132",
+    "question": "संक्षेप में समझाएं James Webb Space Telescope L2 orbit benefits के मुख्य बिंदु।",
+    "language": "hi",
+    "domain": "foundation",
+    "difficulty": "advanced",
+    "questionStyle": "short exam answer",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Infrared light",
+      "1.5 million km L2 point",
+      "Sunshield thermal protection"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-133",
+    "question": "What are the common misconceptions about James Webb Space Telescope L2 orbit benefits?",
+    "language": "en",
+    "domain": "foundation",
+    "difficulty": "beginner",
+    "questionStyle": "misconception",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Infrared light",
+      "1.5 million km L2 point",
+      "Sunshield thermal protection"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-134",
+    "question": "Log James Webb Space Telescope L2 orbit benefits ke bare me kya galat samajhte hain?",
+    "language": "hinglish",
+    "domain": "foundation",
+    "difficulty": "intermediate",
+    "questionStyle": "misconception",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Infrared light",
+      "1.5 million km L2 point",
+      "Sunshield thermal protection"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-135",
+    "question": "के बारे में आम भ्रांतियां क्या हैं: James Webb Space Telescope L2 orbit benefits?",
+    "language": "hi",
+    "domain": "foundation",
+    "difficulty": "advanced",
+    "questionStyle": "misconception",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Infrared light",
+      "1.5 million km L2 point",
+      "Sunshield thermal protection"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-136",
+    "question": "Can you explain in simple terms: Dark Matter galaxy rotation curve evidence?",
+    "language": "en",
+    "domain": "advanced",
+    "difficulty": "intermediate",
+    "questionStyle": "analogy",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Vera Rubin",
+      "Flat rotation curves",
+      "Gravitational lensing"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-137",
+    "question": "Mujhe aasan bhasha me samjhao: Dark Matter galaxy rotation curve evidence ke bare me",
+    "language": "hinglish",
+    "domain": "advanced",
+    "difficulty": "beginner",
+    "questionStyle": "curiosity",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Vera Rubin",
+      "Flat rotation curves",
+      "Gravitational lensing"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-138",
+    "question": "कृपया विस्तार से बताएं: Dark Matter galaxy rotation curve evidence क्या है?",
+    "language": "hi",
+    "domain": "advanced",
+    "difficulty": "advanced",
+    "questionStyle": "detailed",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Vera Rubin",
+      "Flat rotation curves",
+      "Gravitational lensing"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-139",
+    "question": "What are the latest scientific facts about Dark Matter galaxy rotation curve evidence?",
+    "language": "en",
+    "domain": "advanced",
+    "difficulty": "beginner",
+    "questionStyle": "evidence-first",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Vera Rubin",
+      "Flat rotation curves",
+      "Gravitational lensing"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-140",
+    "question": "Kya aap bata sakte hain ki Dark Matter galaxy rotation curve evidence kyon hota hai?",
+    "language": "hinglish",
+    "domain": "advanced",
+    "difficulty": "intermediate",
+    "questionStyle": "why",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Vera Rubin",
+      "Flat rotation curves",
+      "Gravitational lensing"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-141",
+    "question": "वैज्ञानिक दृष्टिकोण से Dark Matter galaxy rotation curve evidence का क्या अर्थ है?",
+    "language": "hi",
+    "domain": "advanced",
+    "difficulty": "advanced",
+    "questionStyle": "science-first",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Vera Rubin",
+      "Flat rotation curves",
+      "Gravitational lensing"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-142",
+    "question": "What is the physical mechanism behind Dark Matter galaxy rotation curve evidence?",
+    "language": "en",
+    "domain": "advanced",
+    "difficulty": "intermediate",
+    "questionStyle": "structured",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Vera Rubin",
+      "Flat rotation curves",
+      "Gravitational lensing"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-143",
+    "question": "Kaise kaam karta hai Dark Matter galaxy rotation curve evidence?",
+    "language": "hinglish",
+    "domain": "advanced",
+    "difficulty": "beginner",
+    "questionStyle": "how",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Vera Rubin",
+      "Flat rotation curves",
+      "Gravitational lensing"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-144",
+    "question": "क्या आप समझा सकते हैं कि Dark Matter galaxy rotation curve evidence कैसे संभव है?",
+    "language": "hi",
+    "domain": "advanced",
+    "difficulty": "advanced",
+    "questionStyle": "how",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Vera Rubin",
+      "Flat rotation curves",
+      "Gravitational lensing"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-145",
+    "question": "Give a short exam style answer for Dark Matter galaxy rotation curve evidence.",
+    "language": "en",
+    "domain": "advanced",
+    "difficulty": "beginner",
+    "questionStyle": "short exam answer",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Vera Rubin",
+      "Flat rotation curves",
+      "Gravitational lensing"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-146",
+    "question": "Short me batao Dark Matter galaxy rotation curve evidence ke bare me.",
+    "language": "hinglish",
+    "domain": "advanced",
+    "difficulty": "intermediate",
+    "questionStyle": "short exam answer",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Vera Rubin",
+      "Flat rotation curves",
+      "Gravitational lensing"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-147",
+    "question": "संक्षेप में समझाएं Dark Matter galaxy rotation curve evidence के मुख्य बिंदु।",
+    "language": "hi",
+    "domain": "advanced",
+    "difficulty": "advanced",
+    "questionStyle": "short exam answer",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Vera Rubin",
+      "Flat rotation curves",
+      "Gravitational lensing"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-148",
+    "question": "What are the common misconceptions about Dark Matter galaxy rotation curve evidence?",
+    "language": "en",
+    "domain": "advanced",
+    "difficulty": "intermediate",
+    "questionStyle": "misconception",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Vera Rubin",
+      "Flat rotation curves",
+      "Gravitational lensing"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-149",
+    "question": "Log Dark Matter galaxy rotation curve evidence ke bare me kya galat samajhte hain?",
+    "language": "hinglish",
+    "domain": "advanced",
+    "difficulty": "beginner",
+    "questionStyle": "misconception",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Vera Rubin",
+      "Flat rotation curves",
+      "Gravitational lensing"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  },
+  {
+    "id": "eval-exp-150",
+    "question": "के बारे में आम भ्रांतियां क्या हैं: Dark Matter galaxy rotation curve evidence?",
+    "language": "hi",
+    "domain": "advanced",
+    "difficulty": "advanced",
+    "questionStyle": "misconception",
+    "expectedKnowledgeTypes": [
+      "science"
+    ],
+    "requiredKeyPoints": [
+      "Vera Rubin",
+      "Flat rotation curves",
+      "Gravitational lensing"
+    ],
+    "forbiddenClaims": [
+      "unsupported speculation as proven fact"
+    ],
+    "expectedAnswerMode": "structured",
+    "citationExpectation": true,
+    "liveVerificationExpectation": false
+  }
+]
