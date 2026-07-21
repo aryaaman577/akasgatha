@@ -231,6 +231,44 @@ export async function POST(request: NextRequest) {
           });
           throw error;
         }
+      } else if (input.providerPreference === "gemini") {
+        // Direct Gemini provider call - no fallback
+        logger.info("Using direct Gemini provider (user preference)", {
+          requestId,
+          providerPreference: input.providerPreference,
+        });
+        
+        const { GeminiProvider } = await import("@/lib/server/ai/gemini-provider");
+        
+        try {
+          const geminiProvider = new GeminiProvider();
+          const geminiResult = await geminiProvider.generate({
+            question: input.question,
+            language: input.language,
+            history: input.history,
+            requestId,
+            signal: controller.signal,
+            ragContext,
+          });
+          
+          result = {
+            ...geminiResult,
+            meta: {
+              ...geminiResult.meta,
+              provider: "gemini",
+              fallbackUsed: false,
+              providerAttempts: 1,
+              primaryProvider: "gemini",
+              fallbackProvider: undefined,
+            },
+          };
+        } catch (error) {
+          logger.error("Direct Gemini provider failed", {
+            requestId,
+            error: error instanceof Error ? error.message : String(error),
+          });
+          throw error;
+        }
       } else {
         // Auto mode - use provider router with fallback support
         logger.info("Using automatic provider routing", {

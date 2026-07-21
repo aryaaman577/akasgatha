@@ -38,7 +38,7 @@ export const jigyasaRequestSchema = z.object({
   // Phase 5 UX: AI provider preference (optional, backward-compatible)
   // Only Groq is currently active
   providerPreference: z
-    .enum(["auto", "groq"])
+    .enum(["auto", "groq", "gemini"])
     .default("auto")
     .optional(),
   
@@ -174,8 +174,12 @@ export const healthResponseSchema = z.object({
   }),
   // Phase 5 UX: Available provider capabilities
   capabilities: z.object({
-    providers: z.array(z.enum(["groq", "cerebras"])),
+    providers: z.array(z.enum(["groq", "cerebras", "gemini"])),
     fallbackEnabled: z.boolean(),
+    models: z.object({
+      groq: z.string().nullable().optional(),
+      gemini: z.string().nullable().optional(),
+    }).optional(),
   }).optional(),
   rag: z.union([
     z.object({

@@ -23,7 +23,9 @@
     "ai:test-routing": "tsx scripts/ai/test-routing.ts",
     "ai:preflight-groq": "tsx scripts/ai/preflight-groq.ts",
     "ai:preflight-cloudflare": "tsx scripts/ai/preflight-cloudflare.ts",
-    "ai:test-groq-direct": "tsx scripts/ai/test-groq-direct.ts"
+    "ai:test-groq-direct": "tsx scripts/ai/test-groq-direct.ts",
+    "ai:test-gemini-direct": "tsx scripts/ai/test-gemini-direct.ts",
+    "ai:test-providers-direct": "tsx scripts/ai/test-providers-direct.ts"
   },
   "dependencies": {
     "@cerebras/cerebras_cloud_sdk": "^1.91.0",

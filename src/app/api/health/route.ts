@@ -55,7 +55,7 @@ export async function GET() {
     }
 
     // Determine available providers (Phase 5)
-    const availableProviders: ("groq" | "cerebras")[] = [];
+    const availableProviders: ("groq" | "cerebras" | "gemini")[] = [];
     
     // Check Groq
     if (env.GROQ_API_KEY && (env.GROQ_PRIMARY_MODEL || env.GROQ_MODEL)) {
@@ -67,6 +67,11 @@ export async function GET() {
     // if (env.CEREBRAS_API_KEY && env.CEREBRAS_MODEL) {
     //   availableProviders.push("cerebras");
     // }
+
+    // Check Gemini
+    if (env.GEMINI_API_KEY && env.GEMINI_MODEL) {
+      availableProviders.push("gemini");
+    }
     
     const fallbackEnabled = !!(env.GROQ_SECONDARY_MODEL || (env.AI_FALLBACK_PROVIDER && env.AI_FALLBACK_PROVIDER !== "none"));
 
@@ -116,6 +121,10 @@ export async function GET() {
       capabilities: {
         providers: availableProviders,
         fallbackEnabled,
+        models: {
+          groq: env.GROQ_PRIMARY_MODEL || env.GROQ_MODEL || null,
+          gemini: env.GEMINI_MODEL || null
+        }
       },
       rag: ragStatus,
     };

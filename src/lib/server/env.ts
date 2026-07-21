@@ -13,7 +13,7 @@ import { z } from "zod";
 const envSchema = z.object({
   // AI Provider Configuration
   AI_PROVIDER: z.enum(["mock", "gemini", "groq", "cerebras", "openrouter"]).default("mock"),
-  AI_FALLBACK_PROVIDER: z.enum(["none", "mock", "cerebras", "cloudflare"]).default("none"),
+  AI_FALLBACK_PROVIDER: z.enum(["none", "mock", "cerebras", "cloudflare", "gemini"]).default("none"),
   
   // Model Configuration
   JIGYASA_MODEL: z.string().optional(),

@@ -14,7 +14,7 @@ import type { JigyasaSuccessResponse, JigyasaErrorResponse } from "@/lib/server/
 import type { SpaceTopic } from "@/config/space-topics";
 
 type FormStatus = "idle" | "loading" | "success" | "error";
-type ProviderOption = "auto" | "groq";
+type ProviderOption = "auto" | "groq" | "gemini";
 type ResponseStyleOption = "balanced" | "quick" | "structured" | "deep" | "katha-vigyan";
 
 export function JigyasaMockForm() {

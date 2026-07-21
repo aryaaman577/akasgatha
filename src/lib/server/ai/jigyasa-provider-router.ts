@@ -9,6 +9,7 @@
 
 import type { JigyasaProvider, ProviderInput, ProviderOutput } from "./types";
 import { GroqProvider } from "./groq-provider";
+import { GeminiProvider } from "./gemini-provider";
 import { getServerEnv } from "../env";
 import { categorizeError } from "./provider-errors";
 import { logger } from "../utils/logger";
@@ -52,8 +53,10 @@ export class JigyasaProviderRouter {
           this.primaryProvider = null;
           logger.warn("Cerebras provider disabled due to billing requirement");
           break;
-        case "mock":
         case "gemini":
+          this.primaryProvider = new GeminiProvider();
+          break;
+        case "mock":
         case "openrouter":
           // These providers don't support fallback yet
           this.primaryProvider = null;
@@ -90,6 +93,9 @@ export class JigyasaProviderRouter {
             } else {
               this.fallbackProvider = null;
             }
+            break;
+          case "gemini":
+            this.fallbackProvider = new GeminiProvider();
             break;
           case "mock":
             // Mock not supported as fallback in production
