@@ -323,6 +323,14 @@ function getCachedQueryEmbedding(query: string): number[] {
   return vec;
 }
 
+const FALSE_POSITIVE_PATTERNS = [
+  /\b(galaxy s\d+|samsung galaxy|galaxy phone|galaxy price|buy galaxy|smartphone)\b/i,
+  /\b(mercury poisoning|mercury metal|mercury liquid|mercury element|mercury toxicity|poisoning)\b/i,
+  /\b(saturn car|saturn auto|saturn motor|saturn sedan|car parts)\b/i,
+  /\b(black shirt|black dress|black pant|black clothes)\b/i,
+  /\b(horoscope|rashifal|astrology prediction|future prediction|aaj ka rashifal)\b/i,
+];
+
 /**
  * Query index with hybrid scoring, domain-sharding, and max 3 domain shards limit per query
  */
@@ -335,12 +343,17 @@ export async function queryIndex(
     languageFilter?: string;
   } = {}
 ): Promise<Array<{ entry: IndexEntry; score: number; rank: number }>> {
+  // Suppress non-astronomy false positive queries
+  if (FALSE_POSITIVE_PATTERNS.some(p => p.test(query))) {
+    return [];
+  }
+
   const index = await loadIndex();
   if (!index) {
     return [];
   }
   
-  const topK = options.topK || 5;
+  const topK = Math.min(options.topK || 3, 3);
   const minScore = options.minScore || 0.1;
   
   const queryEmbedding = getCachedQueryEmbedding(query);
@@ -366,11 +379,11 @@ export async function queryIndex(
     })
     .map(entry => {
       const semanticScore = cosineSimilarity(queryEmbedding, entry.embedding);
-      const keywordBoost = calculateKeywordBoost(query, entry.chunk.content);
+      const keywordBoost = calculateKeywordBoost(query, `${entry.chunk.documentTitle} ${entry.chunk.content} ${entry.chunk.topic}`);
       const topicBoost = getTopicBoost(query, entry.chunk.documentTitle, entry.chunk.topic);
-      const metadataBoost = entry.chunk.domain === "science" ? 1.05 : 1.0;
+      const metadataBoost = entry.chunk.domain === "science" ? 1.02 : 1.0;
       
-      const score = (semanticScore * 0.4 + keywordBoost * 0.1 + topicBoost * 0.5) * metadataBoost;
+      const score = (semanticScore * 0.4 + keywordBoost * 0.4 + topicBoost * 0.7) * metadataBoost;
       return { entry, score };
     })
     .filter(item => item.score >= minScore)
@@ -386,11 +399,18 @@ export async function queryIndex(
 }
 
 /**
- * Calculate keyword boost
+ * Calculate keyword boost with stop-word filtering
  */
 function calculateKeywordBoost(query: string, content: string): number {
-  const queryWords = query.toLowerCase().split(/\s+/);
+  const stopWords = new Set(["what", "is", "a", "an", "the", "in", "on", "of", "and", "or", "how", "why", "does", "do", "kaise", "kyon", "kya", "hai", "hain", "ke", "ki", "ko", "se", "me"]);
+  const queryWords = query
+    .toLowerCase()
+    .replace(/[^\w\s]/g, " ")
+    .split(/\s+/)
+    .filter(w => w.length > 2 && !stopWords.has(w));
+  
   const contentLower = content.toLowerCase();
+  if (queryWords.length === 0) return 0;
   
   let matches = 0;
   for (const word of queryWords) {
@@ -399,7 +419,7 @@ function calculateKeywordBoost(query: string, content: string): number {
     }
   }
   
-  return queryWords.length > 0 ? matches / queryWords.length : 0;
+  return matches / queryWords.length;
 }
 
 /**
