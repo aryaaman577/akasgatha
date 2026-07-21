@@ -4,10 +4,10 @@
   "provider": "local",
   "model": "local-tfidf-v1",
   "dimensions": 384,
-  "documentCount": 20,
-  "chunkCount": 20,
-  "corpusHash": "c7be00b9c6a30d397451e609e02458edc75e00cba417a5aea904c52fa338ab4b",
-  "indexHash": "3dd53a4c65c29868b09129e4a2f57cec65f5d1b7b5ed115412dd8b734e044724",
+  "documentCount": 48,
+  "chunkCount": 48,
+  "corpusHash": "85e6914c407048438bccd228a52bfccf7be5bd2ba4c824838187f4e33c230c3b",
+  "indexHash": "13a8bb1b716a1eff0b618165981f77d6fc902284157ad6ba62f6f37a7b074498",
   "createdAt": "2026-07-19T16:25:21.876Z",
-  "updatedAt": "2026-07-19T20:33:27.126Z"
+  "updatedAt": "2026-07-21T16:09:42.013Z"
 }
