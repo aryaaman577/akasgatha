@@ -72,14 +72,14 @@ describe("Security — Request Validation", () => {
     expect(result.success).toBe(false);
   });
 
-  it("should reject unsupported provider - gemini", () => {
+  it("should accept supported provider - gemini", () => {
     const result = jigyasaRequestSchema.safeParse({
       question: "What is a star?",
       language: "en",
       providerPreference: "gemini",
     });
     
-    expect(result.success).toBe(false);
+    expect(result.success).toBe(true);
   });
 
   it("should reject unknown properties", () => {
