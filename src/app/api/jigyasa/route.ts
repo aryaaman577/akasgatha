@@ -17,10 +17,17 @@ import { generateRequestId } from "@/lib/server/utils/request-id";
 import { logger, truncateForLog } from "@/lib/server/utils/logger";
 import { createTimeoutController, isAbortError } from "@/lib/server/utils/timeout";
 import { getRateLimiter } from "@/lib/server/rate-limit/in-memory-limiter";
+import { getConcurrencyLimiter } from "@/lib/server/rate-limit/concurrency-limiter";
 import { isProviderMock } from "@/lib/server/ai/provider-registry";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+
+// Limit request body size to 100KB (prevents DoS via large payloads)
+export const maxDuration = 30; // 30 seconds max execution time
+
+// Next.js App Router body size limit (100KB)
+const MAX_REQUEST_BODY_SIZE = 100 * 1024; // 100KB
 
 export async function POST(request: NextRequest) {
   const requestId = generateRequestId();
@@ -28,6 +35,17 @@ export async function POST(request: NextRequest) {
   
   try {
     const env = getServerEnv();
+
+    // Check request body size (before parsing)
+    const contentLength = request.headers.get("content-length");
+    if (contentLength && parseInt(contentLength, 10) > MAX_REQUEST_BODY_SIZE) {
+      return createErrorResponse(
+        requestId,
+        "INVALID_REQUEST",
+        `Request body exceeds maximum size of ${MAX_REQUEST_BODY_SIZE} bytes`,
+        false
+      );
+    }
 
     // Validate content type
     const contentType = request.headers.get("content-type");
@@ -98,8 +116,33 @@ export async function POST(request: NextRequest) {
             "X-RateLimit-Limit": env.JIGYASA_RATE_LIMIT_REQUESTS.toString(),
             "X-RateLimit-Remaining": rateLimitResult.remaining.toString(),
             "X-RateLimit-Reset": rateLimitResult.resetAt.toString(),
+            "Retry-After": Math.ceil((rateLimitResult.resetAt - Math.floor(Date.now() / 1000))).toString(),
           },
         }
+      );
+    }
+
+    // Concurrent request limiting (prevent resource exhaustion)
+    const concurrencyLimiter = getConcurrencyLimiter();
+    const concurrencyKey = rateLimitKey; // Use same key as rate limit
+
+    try {
+      await concurrencyLimiter.acquire(concurrencyKey);
+    } catch (concurrencyError) {
+      logger.warn("Concurrent request limit exceeded", {
+        requestId,
+        route: "/api/jigyasa",
+        currentCount: concurrencyLimiter.getCount(concurrencyKey),
+      });
+
+      return NextResponse.json(
+        createErrorResponse(
+          requestId,
+          "RATE_LIMITED",
+          "Too many concurrent requests. Please try again in a moment.",
+          true
+        ).body,
+        { status: 429 }
       );
     }
 
@@ -117,7 +160,7 @@ export async function POST(request: NextRequest) {
     });
 
     // Create timeout controller
-    const { controller, cleanup } = createTimeoutController(env.JIGYASA_REQUEST_TIMEOUT_MS);
+    const { controller, cleanup: cleanupTimeout } = createTimeoutController(env.JIGYASA_REQUEST_TIMEOUT_MS);
 
     try {
       // RAG retrieval using local index (Phase 4B-4 + Phase 5)
@@ -244,7 +287,9 @@ export async function POST(request: NextRequest) {
         },
       });
     } finally {
-      cleanup();
+      cleanupTimeout();
+      // Release concurrency slot
+      concurrencyLimiter.release(concurrencyKey);
     }
   } catch (error) {
     const durationMs = Date.now() - startTime;
