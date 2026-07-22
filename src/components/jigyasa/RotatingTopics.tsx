@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import { getRandomTopics, type SpaceTopic } from "@/config/space-topics";
+import { getRandomTopics, spaceTopics, type SpaceTopic } from "@/config/space-topics";
 import { useLanguage } from "@/config/language";
 import "./RotatingTopics.css";
 
@@ -21,7 +21,9 @@ export function RotatingTopics({
   rotationInterval = 15000, // 15 seconds
 }: RotatingTopicsProps) {
   const { language } = useLanguage();
-  const [topics, setTopics] = useState<SpaceTopic[]>(() => getRandomTopics(5));
+  // Keep the server and first client render identical. Randomizing here caused
+  // a hydration mismatch because Math.random() ran independently on both sides.
+  const [topics, setTopics] = useState<SpaceTopic[]>(() => spaceTopics.slice(0, 5));
   const [isHovered, setIsHovered] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -29,6 +31,11 @@ export function RotatingTopics({
 
   // Respect prefers-reduced-motion
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  // Randomize only after hydration has completed.
+  useEffect(() => {
+    setTopics(getRandomTopics(5));
+  }, []);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");

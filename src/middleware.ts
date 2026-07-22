@@ -38,11 +38,12 @@ function applySecurityHeaders(response: NextResponse, request: NextRequest): voi
   // Allows Next.js scripts, styles, WebGL, and same-origin API calls
   const cspDirectives = [
     "default-src 'self'",
-    // Scripts: Next.js requires 'unsafe-eval' in development for Fast Refresh
-    // In production, allow only hashed/nonce scripts
+    // Next.js App Router emits inline bootstrap/RSC scripts. Without a nonce-based
+    // dynamic-rendering setup, production must allow those inline scripts or the
+    // page will render as static HTML without hydration (dead buttons/models).
     isDevelopment
       ? "script-src 'self' 'unsafe-eval' 'unsafe-inline'"
-      : "script-src 'self'",
+      : "script-src 'self' 'unsafe-inline'",
     // Styles: Allow inline styles for CSS-in-JS and Next.js
     "style-src 'self' 'unsafe-inline'",
     // Images: Allow same-origin and data URIs for WebGL textures
