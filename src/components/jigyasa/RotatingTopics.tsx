@@ -28,15 +28,11 @@ export function RotatingTopics({
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   // Respect prefers-reduced-motion
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(() => {
-    if (typeof window !== "undefined") {
-      return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    }
-    return false;
-  });
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setPrefersReducedMotion(mediaQuery.matches);
 
     const handler = (e: MediaQueryListEvent) => {
       setPrefersReducedMotion(e.matches);

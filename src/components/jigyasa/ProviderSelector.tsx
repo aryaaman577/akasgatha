@@ -155,7 +155,7 @@ export function ProviderSelector({ value, onChange, disabled }: ProviderSelector
             onClick={() => isGroqAvailable && onChange("groq")}
             disabled={disabled || !isGroqAvailable}
             aria-pressed={value === "groq"}
-            className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-[var(--space-antique-gold)] flex items-center justify-center border ${!isGeminiAvailable ? "col-span-2" : ""}`}
+            className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-[var(--space-antique-gold)] flex items-center justify-center border`}
             style={{
               borderColor: value === "groq" ? "var(--space-cyan-dim)" : "rgba(189,165,106,0.2)",
               background: value === "groq" ? "rgba(95,166,184,0.15)" : "rgba(7,9,18,0.6)",
@@ -167,23 +167,23 @@ export function ProviderSelector({ value, onChange, disabled }: ProviderSelector
             Groq
           </button>
 
-          {/* Gemini option (only displayed when Gemini integration and real direct verification pass) */}
-          {isGeminiAvailable && (
-            <button
-              type="button"
-              onClick={() => onChange("gemini")}
-              disabled={disabled}
-              aria-pressed={value === "gemini"}
-              className="px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-[var(--space-antique-gold)] flex items-center justify-center border"
-              style={{
-                borderColor: value === "gemini" ? "var(--space-cyan-dim)" : "rgba(189,165,106,0.2)",
-                background: value === "gemini" ? "rgba(95,166,184,0.15)" : "rgba(7,9,18,0.6)",
-                color: value === "gemini" ? "var(--space-cyan-dim)" : "var(--space-moonlight)",
-              }}
-            >
-              Gemini
-            </button>
-          )}
+          {/* Gemini option */}
+          <button
+            type="button"
+            onClick={() => isGeminiAvailable && onChange("gemini")}
+            disabled={disabled || !isGeminiAvailable}
+            aria-pressed={value === "gemini"}
+            className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-[var(--space-antique-gold)] flex items-center justify-center border`}
+            style={{
+              borderColor: value === "gemini" ? "var(--space-cyan-dim)" : "rgba(189,165,106,0.2)",
+              background: value === "gemini" ? "rgba(95,166,184,0.15)" : "rgba(7,9,18,0.6)",
+              color: value === "gemini" ? "var(--space-cyan-dim)" : "var(--space-moonlight)",
+              opacity: isGeminiAvailable ? 1 : 0.4,
+              cursor: isGeminiAvailable && !disabled ? "pointer" : "not-allowed",
+            }}
+          >
+            Gemini
+          </button>
         </div>
       </div>
 

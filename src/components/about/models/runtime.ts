@@ -26,12 +26,17 @@ class AboutModelRuntime {
     if (this.renderer) return;
 
     this.canvas = canvas;
-    this.renderer = new THREE.WebGLRenderer({
-      canvas,
-      alpha: true,
-      antialias: true,
-      powerPreference: "high-performance",
-    });
+    try {
+      this.renderer = new THREE.WebGLRenderer({
+        canvas,
+        alpha: true,
+        antialias: true,
+        powerPreference: "high-performance",
+      });
+    } catch (e) {
+      this.renderer = null;
+      return;
+    }
     
     // Transparent clearing
     this.renderer.setClearColor(0x000000, 0);

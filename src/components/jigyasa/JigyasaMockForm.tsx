@@ -70,9 +70,10 @@ export function JigyasaMockForm() {
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
+      if (e.nativeEvent.isComposing) return;
       e.preventDefault();
       if (question.trim() && status !== "loading") {
-        submitButtonRef.current?.click();
+        handleSubmit();
       }
     }
   };
@@ -147,8 +148,8 @@ export function JigyasaMockForm() {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (e?: React.FormEvent | React.MouseEvent) => {
+    if (e) e.preventDefault();
     messageIdCounter.current += 1;
     await submitQuestion(question, String(messageIdCounter.current));
   };
@@ -177,7 +178,7 @@ export function JigyasaMockForm() {
   return (
     <div className="w-full">
       <GlowCard as="section" atmosphere="violet" clipContent>
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
           {/* Controls Row */}
           <div className="grid gap-4 sm:grid-cols-2">
             <ProviderSelector
@@ -248,7 +249,8 @@ export function JigyasaMockForm() {
             ) : (
               <button
                 ref={submitButtonRef}
-                type="submit"
+                type="button"
+                onClick={handleSubmit}
                 className="inline-flex min-h-[44px] items-center justify-center rounded-full px-7 text-fluid-button font-semibold outline-none transition-all duration-200 hover:opacity-90 focus-visible:ring-2 focus-visible:ring-[var(--space-antique-gold)]"
                 style={{
                   background: "var(--space-moonlight)",

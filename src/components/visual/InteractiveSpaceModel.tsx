@@ -1074,15 +1074,12 @@ export function InteractiveSpaceModel({
     hoverScale: 1,
   });
 
-  const [reducedMotion, setReducedMotion] = useState(
-    () =>
-      typeof window !== "undefined" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches
-  );
+  const [reducedMotion, setReducedMotion] = useState(false);
 
   /* Reduced motion */
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReducedMotion(mq.matches);
     const h = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
     mq.addEventListener("change", h);
     return () => mq.removeEventListener("change", h);

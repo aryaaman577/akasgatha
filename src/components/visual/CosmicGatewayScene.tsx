@@ -37,12 +37,17 @@ export function CosmicGatewayScene({
     const isCoarse = window.matchMedia("(pointer: coarse)").matches;
 
     /* ---- Renderer ---- */
-    const renderer = new THREE.WebGLRenderer({
-      canvas,
-      alpha: true,
-      antialias: !isCoarse,
-      powerPreference: "high-performance",
-    });
+    let renderer: any;
+    try {
+      renderer = new THREE.WebGLRenderer({
+        canvas,
+        alpha: true,
+        antialias: !isCoarse,
+        powerPreference: "high-performance",
+      });
+    } catch (e) {
+      return;
+    }
     renderer.setClearColor(0x000000, 0);
     renderer.setPixelRatio(
       Math.min(window.devicePixelRatio || 1, isCoarse ? 1.25 : 1.65)

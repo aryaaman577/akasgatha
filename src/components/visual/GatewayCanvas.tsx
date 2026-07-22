@@ -40,12 +40,17 @@ export function GatewayCanvasController({ canvasRef, wrapRef }: GatewayCanvasPro
       const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       const isCoarse = window.matchMedia("(pointer: coarse)").matches;
 
-      const renderer = new THREE.WebGLRenderer({
-        canvas,
-        alpha: true,
-        antialias: !isCoarse,
-        powerPreference: "high-performance",
-      });
+      let renderer: any;
+      try {
+        renderer = new THREE.WebGLRenderer({
+          canvas,
+          alpha: true,
+          antialias: !isCoarse,
+          powerPreference: "high-performance",
+        });
+      } catch (e) {
+        return; // gracefully exit if WebGL fails
+      }
       renderer.setClearColor(0x000000, 0);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, isCoarse ? 1.22 : 1.65));
       renderer.outputColorSpace = THREE.SRGBColorSpace;
