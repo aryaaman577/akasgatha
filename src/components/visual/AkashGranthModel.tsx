@@ -63,15 +63,16 @@ export function AkashGranthModel({
   // Pointer interaction with clamping
   const onPointerMove = useCallback((e: React.PointerEvent) => {
     if (!sceneRef.current || reducedMotion) return;
+    if (e.pointerType === "touch") return; // Disable tilt on touch
     const rect = containerRef.current?.getBoundingClientRect();
     if (!rect) return;
     
     const nx = (e.clientX - rect.left - rect.width / 2) / (rect.width / 2);
     const ny = (e.clientY - rect.top - rect.height / 2) / (rect.height / 2);
     
-    // Clamp to ±4° horizontal, ±2° vertical
+    // Clamp to ±4° horizontal, ±3° vertical
     sceneRef.current.targetRotY = nx * (4 * Math.PI / 180);
-    sceneRef.current.targetRotX = -ny * (2 * Math.PI / 180);
+    sceneRef.current.targetRotX = -ny * (3 * Math.PI / 180);
   }, [reducedMotion]);
 
   const onPointerLeave = useCallback(() => {

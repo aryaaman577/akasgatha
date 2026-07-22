@@ -1120,31 +1120,12 @@ export function InteractiveSpaceModel({
         s.currRotY += (s.targetRotY - s.currRotY) * dampingFactor;
       }
 
-      // Models with stable front-facing orientation (no 360° rotation)
-      const stableModels = [
-        "question_orb",
-        "knowledge_library",
-        "planet_orbit",
-        "eclipse_alignment",
-        "moon_phase",
-        "star_map",
-        "mystery_orb",
-        "celestial_cycle",
-        "satellite_orbit",
-      ];
-
       let totalX: number, totalY: number;
-      if (stableModels.includes(variant)) {
-        // Breathing motion: gentle sine wave oscillation (NO 360° rotation)
-        const breathX = Math.sin(s.idle * 0.02) * 1.5;
-        const breathY = Math.cos(s.idle * 0.015) * 1;
-        totalX = breathX + s.currRotX + s.dragRotX;
-        totalY = breathY + s.currRotY + s.dragRotY;
-      } else {
-        // Other models: keep original rotation behavior
-        totalX = s.currRotX + s.dragRotX;
-        totalY = s.idle * 0.3 + s.currRotY + s.dragRotY;
-      }
+      // Breathing motion: gentle sine wave oscillation (NO 360° rotation)
+      const breathX = Math.sin(s.idle * 0.02) * 1.5;
+      const breathY = Math.cos(s.idle * 0.015) * 1;
+      totalX = breathX + s.currRotX;
+      totalY = breathY + s.currRotY;
       
       const scale = baseScale * s.hoverScale;
 
@@ -1164,66 +1145,36 @@ export function InteractiveSpaceModel({
   }, [reducedMotion, interactionMode, size, intensity, variant]);
 
   /* Mouse & Touch Handlers (passive & ref-based) */
-  const updateRotation = useCallback((clientX: number, clientY: number) => {
-    if (reducedMotion || interactionMode !== "tilt" || state.current.isDragging || !containerRef.current) return;
+  const updateRotation = useCallback((clientX: number, clientY: number, isTouch: boolean) => {
+    if (reducedMotion || interactionMode !== "tilt" || !containerRef.current) return;
+    if (isTouch) return; // Disable pointer tilt on touch devices
+    
     const rect = containerRef.current.getBoundingClientRect();
     const nx = (clientX - rect.left - rect.width / 2) / (rect.width / 2);
     const ny = (clientY - rect.top - rect.height / 2) / (rect.height / 2);
     
-    // Stable models: severely limit pointer interaction (subtle parallax only)
-    const stableModels = [
-      "question_orb",
-      "knowledge_library",
-      "planet_orbit",
-      "eclipse_alignment",
-      "moon_phase",
-      "star_map",
-      "mystery_orb",
-      "celestial_cycle",
-      "satellite_orbit",
-    ];
-    
-    if (stableModels.includes(variant)) {
-      state.current.targetRotX = -ny * 2; // Limit vertical: -2 to +2 degrees
-      state.current.targetRotY = nx * 4;  // Limit horizontal: -4 to +4 degrees
-    } else {
-      // Other models: keep original interaction strength
-      state.current.targetRotX = -ny * 20;
-      state.current.targetRotY = nx * 20;
-    }
-  }, [reducedMotion, interactionMode, variant]);
-
-  const onPointerMove = useCallback((e: React.PointerEvent) => {
-    if (interactionMode === "rotate" && state.current.isDragging) {
-      const dx = e.clientX - state.current.dragStart.x;
-      const dy = e.clientY - state.current.dragStart.y;
-      state.current.dragRotX = Math.max(-32, Math.min(32, state.current.dragRotX + dy * 0.4));
-      state.current.dragRotY += dx * 0.5;
-      state.current.dragStart = { x: e.clientX, y: e.clientY };
-    } else {
-      updateRotation(e.clientX, e.clientY);
-    }
-  }, [updateRotation, interactionMode]);
-
-  const onPointerDown = useCallback((e: React.PointerEvent) => {
-    if (reducedMotion || interactionMode !== "rotate") return;
-    state.current.isDragging = true;
-    state.current.dragStart = { x: e.clientX, y: e.clientY };
-    if (containerRef.current) containerRef.current.style.cursor = "grabbing";
+    // Limit vertical: ~3 degrees, horizontal: ~4 degrees for all models
+    state.current.targetRotX = -ny * 3;
+    state.current.targetRotY = nx * 4;
   }, [reducedMotion, interactionMode]);
 
+  const onPointerMove = useCallback((e: React.PointerEvent) => {
+    updateRotation(e.clientX, e.clientY, e.pointerType === "touch");
+  }, [updateRotation]);
+
+  const onPointerDown = useCallback((e: React.PointerEvent) => {
+    // Drag rotation is disabled per user request
+  }, []);
+
   const onPointerUp = useCallback(() => {
-    state.current.isDragging = false;
-    if (containerRef.current && interactionMode === "rotate") containerRef.current.style.cursor = "grab";
-  }, [interactionMode]);
+    // Drag rotation is disabled
+  }, []);
 
   const onPointerLeave = useCallback(() => {
-    state.current.hoverScale = 1;
-    state.current.isDragging = false;
     state.current.targetRotX = 0;
     state.current.targetRotY = 0;
-    if (containerRef.current && interactionMode === "rotate") containerRef.current.style.cursor = "grab";
-  }, [interactionMode]);
+    state.current.hoverScale = 1;
+  }, []);
 
   const onPointerEnter = useCallback(() => {
     state.current.hoverScale = 1.04;

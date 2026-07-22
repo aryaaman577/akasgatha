@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 type ProviderOption = "auto" | "groq" | "gemini";
 
@@ -22,10 +22,12 @@ interface ProviderCapabilities {
 export function ProviderSelector({ value, onChange, disabled }: ProviderSelectorProps) {
   const [capabilities, setCapabilities] = useState<ProviderCapabilities | null>(null);
   const [status, setStatus] = useState<"checking" | "ready" | "unavailable">("checking");
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+    const timeoutId = setTimeout(() => controller.abort(), 10000);
 
     fetch("/api/health", { signal: controller.signal })
       .then((res) => {
@@ -53,74 +55,48 @@ export function ProviderSelector({ value, onChange, disabled }: ProviderSelector
     };
   }, []);
 
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent | TouchEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setIsOpen(false);
+      }
+    }
+    
+    function handleEscape(e: KeyboardEvent) {
+      if (e.key === "Escape") setIsOpen(false);
+    }
+    
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener("touchstart", handleClickOutside);
+      document.addEventListener("keydown", handleEscape);
+    }
+    
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, [isOpen]);
+
   const isGroqAvailable = capabilities?.providers.includes("groq") ?? false;
   const isGeminiAvailable = capabilities?.providers.includes("gemini") ?? false;
 
-  const renderStatus = () => {
-    if (status === "checking") {
-      return (
-        <div className="mt-2 text-xs flex flex-col gap-0.5" style={{ color: "var(--space-stardust)", opacity: 0.7 }}>
-          <div className="flex items-center gap-2">
-            <span className="inline-block w-2 h-2 rounded-full bg-yellow-400 animate-pulse"></span>
-            <span>Checking...</span>
-          </div>
-        </div>
-      );
-    }
-
-    if (status === "unavailable") {
-      return (
-        <div className="mt-2 text-xs flex flex-col gap-0.5" style={{ color: "var(--space-stardust)", opacity: 0.7 }}>
-          <div className="flex items-center gap-2">
-            <span className="inline-block w-2 h-2 rounded-full bg-red-400"></span>
-            <span>Unavailable</span>
-          </div>
-        </div>
-      );
-    }
-
-    if (value === "auto") {
-      const fallbackText = isGeminiAvailable ? "with verified Gemini fallback" : "no fallback";
-      return (
-        <div className="mt-2 text-xs flex flex-col gap-0.5" style={{ color: "var(--space-cyan-dim)", opacity: 0.8 }}>
-          <div className="flex items-center gap-2">
-            <span className="inline-block w-2 h-2 rounded-full bg-green-400"></span>
-            <span className="font-medium">Auto is ready</span>
-          </div>
-          <span className="ml-4 opacity-70">Groq primary {fallbackText}</span>
-        </div>
-      );
-    }
-
-    if (value === "groq") {
-      return (
-        <div className="mt-2 text-xs flex flex-col gap-0.5" style={{ color: "var(--space-cyan-dim)", opacity: 0.8 }}>
-          <div className="flex items-center gap-2">
-            <span className="inline-block w-2 h-2 rounded-full bg-green-400"></span>
-            <span className="font-medium">Groq is ready</span>
-          </div>
-          <span className="ml-4 opacity-70">{capabilities?.models?.groq || "openai/gpt-oss-20b"}</span>
-        </div>
-      );
-    }
-
-    if (value === "gemini") {
-      return (
-        <div className="mt-2 text-xs flex flex-col gap-0.5" style={{ color: "var(--space-cyan-dim)", opacity: 0.8 }}>
-          <div className="flex items-center gap-2">
-            <span className="inline-block w-2 h-2 rounded-full bg-green-400"></span>
-            <span className="font-medium">Gemini is ready</span>
-          </div>
-          <span className="ml-4 opacity-70">{capabilities?.models?.gemini || "gemini-3.1-flash-lite"}</span>
-        </div>
-      );
-    }
-
-    return null;
+  const handleSelect = (option: ProviderOption) => {
+    onChange(option);
+    setIsOpen(false);
   };
 
+  const options: { id: ProviderOption; label: string; subtext?: string; available: boolean }[] = [
+    { id: "auto", label: "Auto", subtext: "Recommended", available: true },
+    { id: "groq", label: "Groq", available: status === "checking" || isGroqAvailable },
+    { id: "gemini", label: "Gemini", available: status === "checking" || isGeminiAvailable }
+  ];
+
+  const selectedOption = options.find(o => o.id === value) || options[0];
+
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col relative" ref={dropdownRef}>
       <label
         className="block text-fluid-button font-medium mb-2"
         style={{ color: "var(--space-stardust)", opacity: 0.8 }}
@@ -128,67 +104,66 @@ export function ProviderSelector({ value, onChange, disabled }: ProviderSelector
         Choose AI
       </label>
 
-      {/* Complete Provider Controls */}
-      <div className="flex flex-col gap-2">
-        {/* Auto — Recommended */}
-        <button
-          type="button"
-          onClick={() => onChange("auto")}
-          disabled={disabled}
-          aria-pressed={value === "auto"}
-          className="w-full min-h-[40px] px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-[var(--space-antique-gold)] disabled:opacity-50 flex items-center justify-between border"
+      <button
+        type="button"
+        onClick={() => !disabled && setIsOpen(!isOpen)}
+        disabled={disabled}
+        aria-haspopup="listbox"
+        aria-expanded={isOpen}
+        className="w-full min-h-[40px] px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-[var(--space-antique-gold)] disabled:opacity-50 flex items-center justify-between border"
+        style={{
+          borderColor: "var(--space-antique-gold)",
+          background: "rgba(189,165,106,0.15)",
+          color: "var(--space-antique-gold)",
+        }}
+      >
+        <span>
+          {selectedOption.label}
+          {selectedOption.subtext && <span className="ml-2 text-xs opacity-75 font-normal">· {selectedOption.subtext}</span>}
+        </span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}>
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+
+      {isOpen && (
+        <ul 
+          role="listbox"
+          className="absolute top-[100%] left-0 right-0 mt-2 py-1 rounded-lg border z-50 shadow-lg"
           style={{
-            borderColor: value === "auto" ? "var(--space-antique-gold)" : "rgba(189,165,106,0.2)",
-            background: value === "auto" ? "rgba(189,165,106,0.15)" : "rgba(7,9,18,0.6)",
-            color: value === "auto" ? "var(--space-antique-gold)" : "var(--space-moonlight)",
+            borderColor: "rgba(189,165,106,0.2)",
+            background: "#070912",
           }}
         >
-          <span>Auto</span>
-          <span className="text-xs opacity-75 font-normal">Recommended</span>
-        </button>
-
-        {/* Manual Provider Options Row */}
-        <div className="grid grid-cols-2 gap-2">
-          {/* Groq option */}
-          <button
-            type="button"
-            onClick={() => isGroqAvailable && onChange("groq")}
-            disabled={disabled || !isGroqAvailable}
-            aria-pressed={value === "groq"}
-            className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-[var(--space-antique-gold)] flex items-center justify-center border`}
-            style={{
-              borderColor: value === "groq" ? "var(--space-cyan-dim)" : "rgba(189,165,106,0.2)",
-              background: value === "groq" ? "rgba(95,166,184,0.15)" : "rgba(7,9,18,0.6)",
-              color: value === "groq" ? "var(--space-cyan-dim)" : "var(--space-moonlight)",
-              opacity: isGroqAvailable ? 1 : 0.4,
-              cursor: isGroqAvailable && !disabled ? "pointer" : "not-allowed",
-            }}
-          >
-            Groq
-          </button>
-
-          {/* Gemini option */}
-          <button
-            type="button"
-            onClick={() => isGeminiAvailable && onChange("gemini")}
-            disabled={disabled || !isGeminiAvailable}
-            aria-pressed={value === "gemini"}
-            className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-[var(--space-antique-gold)] flex items-center justify-center border`}
-            style={{
-              borderColor: value === "gemini" ? "var(--space-cyan-dim)" : "rgba(189,165,106,0.2)",
-              background: value === "gemini" ? "rgba(95,166,184,0.15)" : "rgba(7,9,18,0.6)",
-              color: value === "gemini" ? "var(--space-cyan-dim)" : "var(--space-moonlight)",
-              opacity: isGeminiAvailable ? 1 : 0.4,
-              cursor: isGeminiAvailable && !disabled ? "pointer" : "not-allowed",
-            }}
-          >
-            Gemini
-          </button>
-        </div>
-      </div>
-
-      {/* Immediately below the complete provider controls show only one readiness status for the currently selected option */}
-      {renderStatus()}
+          {options.map((option) => (
+            <li key={option.id}>
+              <button
+                type="button"
+                role="option"
+                aria-selected={value === option.id}
+                disabled={!option.available}
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (option.available) handleSelect(option.id);
+                }}
+                className="w-full text-left px-3 py-2 text-sm transition-all duration-200 outline-none focus-visible:bg-[rgba(189,165,106,0.1)] hover:bg-[rgba(189,165,106,0.1)] disabled:opacity-50 flex items-center justify-between"
+                style={{
+                  color: value === option.id ? "var(--space-antique-gold)" : "var(--space-moonlight)",
+                  cursor: option.available ? "pointer" : "not-allowed",
+                }}
+              >
+                <span>
+                  {option.label}
+                  {option.subtext && <span className="ml-2 text-xs opacity-75 font-normal">· {option.subtext}</span>}
+                </span>
+                {!option.available && status !== "checking" && (
+                  <span className="text-xs text-red-400 opacity-80">Unavailable</span>
+                )}
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
